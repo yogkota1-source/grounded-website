@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simply Seeded - Store</title>
+    <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23D97957" /><text x="50" y="68" font-family="Georgia, serif" font-size="50" font-weight="bold" fill="%231A1A1A" text-anchor="middle">Ss</text></svg>'>
+    <style>
+        @keyframes fadeUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+        body { background-color: #F4EFE6; color: #2C2C2C; font-family: 'Playfair Display', serif; text-align: center; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
+        .content-wrapper { padding: 20px; flex: 1; }
+        .fade-section { animation: fadeUp 0.8s ease-out both; }
+        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; } .delay-3 { animation-delay: 0.3s; }
+        
+        .top-nav { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1000px; margin: 0 auto 20px auto; }
+        .back-link { display: inline-block; text-decoration: none; margin-top: 10px; }
+        .fun-text { font-family: Arial, sans-serif; font-size: 0.9rem; color: #555555; margin-right: 5px; letter-spacing: 2px; }
+        .logo-text { font-family: Arial, sans-serif; font-size: 1.1rem; letter-spacing: 6px; color: #333333; }
+        .back-link:hover .fun-text, .back-link:hover .logo-text { color: #A64B2A; transition: color 0.3s ease; }
+        
+        h1 { font-size: 3rem; margin-bottom: 5px; margin-top: 20px; }
+        p.subtitle { font-family: Arial, sans-serif; letter-spacing: 2px; color: #555; margin-bottom: 40px; }
+        .section-title { font-size: 2rem; margin: 50px 0 20px 0; color: #8A3A1F; border-bottom: 1px solid #D4CAB5; display: inline-block; padding-bottom: 10px; }
+        
+        .product-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; max-width: 1000px; margin: 0 auto; padding-bottom: 60px;}
+        .product-card { background-color: #FFFFFF; border-radius: 8px; padding: 20px; width: 280px; box-shadow: 0px 4px 10px rgba(0,0,0,0.03); transition: transform 0.4s ease, box-shadow 0.4s ease; box-sizing: border-box; overflow: hidden; }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0px 20px 40px rgba(0,0,0,0.08); }
+        
+        .carousel-wrapper { position: relative; width: 100%; height: 320px; border-radius: 6px; margin-bottom: 20px; overflow: hidden; }
+        .carousel-track { display: flex; width: 100%; height: 100%; transition: transform 0.4s ease-in-out; }
+        .slide-placeholder { flex: 0 0 100%; background-color: #EAEAEA; display: flex; align-items: center; justify-content: center; color: #999; font-family: Arial, sans-serif; font-size: 0.9rem; transition: transform 0.5s ease; }
+        .product-card:hover .slide-placeholder { transform: scale(1.03); }
+        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.8); border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; color: #333; z-index: 5; box-shadow: 0px 2px 5px rgba(0,0,0,0.1); font-weight: bold; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+        .carousel-btn:hover { background: #FFFFFF; }
+        .prev-btn { left: 10px; } .next-btn { right: 10px; }
+        
+        .product-card h2 { margin: 10px 0 5px 0; font-size: 1.5rem; }
+        .ingredients { font-family: Arial, sans-serif; font-size: 0.8rem; color: #888; margin: 0 0 15px 0; line-height: 1.5; letter-spacing: 0.5px; }
+        .price { font-family: Arial, sans-serif; font-size: 1.1rem; color: #444; margin-bottom: 20px; font-weight: bold; }
+        .order-btn { background-color: #A64B2A; color: white; padding: 12px; width: 100%; border: none; border-radius: 4px; font-size: 1.1rem; cursor: pointer; font-weight: bold; font-family: 'Playfair Display', serif; transition: background-color 0.3s ease; }
+        .order-btn:hover { background-color: #8A3A1F; }
+
+        .cart-trigger { background-color: #1A1A1A; color: white; padding: 10px 20px; border-radius: 50px; font-family: Arial, sans-serif; font-weight: bold; cursor: pointer; border: none; display: flex; align-items: center; gap: 8px; transition: background 0.3s; }
+        .cart-trigger:hover { background-color: #333; }
+        
+        /* MODALS */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 100; }
+        .modal-content { background-color: #FFF; padding: 30px; border-radius: 8px; width: 90%; max-width: 450px; text-align: left; position: relative; max-height: 80vh; overflow-y: auto; }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #999; }
+        .modal-content h3 { margin-top: 0; font-size: 1.8rem; color: #A64B2A; }
+        .modal-content select { width: 100%; padding: 12px; margin: 15px 0 25px 0; font-size: 1rem; font-family: Arial, sans-serif; box-sizing: border-box; }
+        .pay-btn { background-color: #1A1A1A; color: white; padding: 15px; width: 100%; border: none; border-radius: 4px; font-size: 1.1rem; cursor: pointer; font-weight: bold; margin-top: 15px;}
+        
+        .cart-item { display: flex; justify-content: space-between; font-family: Arial, sans-serif; border-bottom: 1px solid #EEE; padding: 15px 0; }
+        .cart-item-details { flex-grow: 1; }
+        .cart-item-title { font-weight: bold; color: #333; }
+        .cart-item-sweet { font-size: 0.85rem; color: #888; }
+        .cart-item-price { font-weight: bold; color: #A64B2A; }
+        .cart-total-row { display: flex; justify-content: space-between; font-family: Arial, sans-serif; font-weight: bold; font-size: 1.2rem; padding-top: 15px; margin-top: 10px; }
+        .empty-cart-msg { font-family: Arial, sans-serif; color: #888; text-align: center; padding: 20px 0; }
+        
+        .progress-container { background-color: #EAEAEA; border-radius: 10px; height: 10px; width: 100%; margin: 15px 0 5px 0; overflow: hidden; }
+        .progress-bar { background-color: #A64B2A; height: 100%; width: 0%; transition: width 0.5s ease; }
+        .progress-text { font-family: Arial, sans-serif; font-size: 0.85rem; color: #A64B2A; font-weight: bold; text-align: center; margin-bottom: 20px;}
+        .unlocked-text { color: #2E8B57; }
+        .unlocked-bar { background-color: #2E8B57; }
+
+        /* THE ROASTER AI */
+        .ai-bubble-btn { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background-color: #1A1A1A; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 1000; transition: transform 0.3s; font-size: 1.5rem; font-family: 'Playfair Display', serif; border: none; }
+        .ai-bubble-btn:hover { transform: scale(1.08); background-color: #333; }
+        
+        .ai-chat-window { position: fixed; bottom: 100px; right: 30px; width: 320px; background-color: #FFF; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1000; display: none; flex-direction: column; overflow: hidden; border: 1px solid #EAEAEA; animation: fadeUp 0.3s ease-out; text-align: left; }
+        .ai-chat-header { background-color: #1A1A1A; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; font-family: 'Playfair Display', serif; }
+        .ai-name { font-size: 1.2rem; font-weight: bold; margin-bottom: 2px;}
+        .ai-subtitle { font-size: 0.65rem; color: #B3B3B3; font-family: Arial, sans-serif; letter-spacing: 2px; }
+        .ai-close { cursor: pointer; color: #B3B3B3; font-size: 1.5rem; line-height: 1; }
+        .ai-close:hover { color: #FFF; }
+        
+        .ai-chat-body { padding: 20px; height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background-color: #FDFDFD; font-family: Arial, sans-serif; font-size: 0.9rem; }
+        .ai-msg-bot { background-color: #F4EFE6; padding: 12px 15px; border-radius: 12px 12px 12px 2px; color: #333; max-width: 85%; align-self: flex-start; line-height: 1.4; border: 1px solid #EBE4D5;}
+        .ai-msg-user { background-color: #A64B2A; color: white; padding: 12px 15px; border-radius: 12px 12px 2px 12px; max-width: 85%; align-self: flex-end; line-height: 1.4; }
+        
+        .ai-chat-input-area { display: flex; padding: 15px; border-top: 1px solid #EAEAEA; background: #FFF; gap: 10px; }
+        .ai-input { flex-grow: 1; border: 1px solid #DDD; padding: 10px 15px; border-radius: 20px; outline: none; font-family: Arial, sans-serif; font-size: 0.9rem; transition: border-color 0.3s;}
+        .ai-input:focus { border-color: #A64B2A; }
+        .ai-send { background: none; border: none; color: #A64B2A; font-weight: bold; cursor: pointer; font-size: 0.9rem; letter-spacing: 1px; }
+
+        @media (max-width: 768px) { h1 { font-size: 2.2rem; } .section-title { font-size: 1.5rem; } .product-card { width: 100%; max-width: 350px; } 
+        .ai-chat-window { width: calc(100% - 40px); right: 20px; bottom: 90px; } .ai-bubble-btn { right: 20px; bottom: 20px; } }
+    </style>
+</head>
+<body>
+    <div style="background-color: #A64B2A; color: white; text-align: center; padding: 12px; font-family: Arial, sans-serif; font-size: 0.85rem; letter-spacing: 2px; font-weight: bold;">🎉 ₹50 CASHBACK ON YOUR FIRST ORDER!</div>
+
+    <div class="content-wrapper">
+        <div class="top-nav fade-section">
+            <a href="index.html" class="back-link"><span class="fun-text">← BACK TO</span> <span class="logo-text">G R O U N D E D</span></a>
+            <button class="cart-trigger" onclick="openCartModal()">🛒 Cart (<span id="cartCount">0</span>)</button>
+        </div>
+
+        <div class="fade-section">
+            <h1>Simply Seeded</h1>
+            <p class="subtitle">SELECT YOUR CRAFTED JAR</p>
+        </div>
+
+        <!-- ROW 1: SWEETENED -->
+        <h2 class="section-title fade-section delay-1">Sweetened Peanut Butter</h2>
+        <div class="product-grid fade-section delay-1">
+            <div class="product-card">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0"><div class="slide-placeholder">[ 250g Front ]</div><div class="slide-placeholder">[ 250g Back ]</div><div class="slide-placeholder">[ Nutrition ]</div></div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>250g Sweetened</h2>
+                <p class="ingredients">Roasted Peanuts • Date Powder / Monk Fruit • Salt</p>
+                <p class="price">From ₹279</p>
+                <button class="order-btn" onclick="openOptionsModal('250g Sweetened', 'sweet', 279, 404)">Add to Cart</button>
+            </div>
+            
+            <div class="product-card">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0"><div class="slide-placeholder">[ 500g Front ]</div><div class="slide-placeholder">[ 500g Back ]</div><div class="slide-placeholder">[ Nutrition ]</div></div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>500g Sweetened</h2>
+                <p class="ingredients">Roasted Peanuts • Date Powder / Monk Fruit • Salt</p>
+                <p class="price">From ₹499</p>
+                <button class="order-btn" onclick="openOptionsModal('500g Sweetened', 'sweet', 499, 749)">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0"><div class="slide-placeholder">[ 1kg Front ]</div><div class="slide-placeholder">[ 1kg Back ]</div><div class="slide-placeholder">[ Nutrition ]</div></div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>1kg Sweetened</h2>
+                <p class="ingredients">Roasted Peanuts • Date Powder / Monk Fruit • Salt</p>
+                <p class="price">From ₹899</p>
+                <button class="order-btn" onclick="openOptionsModal('1kg Sweetened', 'sweet', 899, 1399)">Add to Cart</button>
+            </div>
+        </div>
+
+        <!-- ROW 2: UNSWEETENED -->
+        <h2 class="section-title fade-section delay-2">Unsweetened Peanut Butter</h2>
+        <div class="product-grid fade-section delay-2">
+            <div class="product-card">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0"><div class="slide-placeholder">[ 250g Front ]</div><div class="slide-placeholder">[ 250g Back ]</div><div class="slide-placeholder">[ Nutrition ]</div></div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>250g Unsweetened</h2>
+                <p class="ingredients">Roasted Peanuts • Salt</p>
+                <p class="price">₹259</p>
+                <button class="order-btn" onclick="addToCartDirectly('250g Unsweetened', 259, 'Unsweetened')">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0"><div class="slide-placeholder">[ 500g Front ]</div><div class="slide-placeholder">[ 500g Back ]</div><div class="slide-placeholder">[ Nutrition ]</div></div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>500g Unsweetened</h2>
+                <p class="ingredients">Roasted Peanuts • Salt</p>
+                <p class="price">₹459</p>
+                <button class="order-btn" onclick="addToCartDirectly('500g Unsweetened', 459, 'Unsweetened')">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0"><div class="slide-placeholder">[ 1kg Front ]</div><div class="slide-placeholder">[ 1kg Back ]</div><div class="slide-placeholder">[ Nutrition ]</div></div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>1kg Unsweetened</h2>
+                <p class="ingredients">Roasted Peanuts • Salt</p>
+                <p class="price">₹819</p>
+                <button class="order-btn" onclick="addToCartDirectly('1kg Unsweetened', 819, 'Unsweetened')">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- OPTIONS MODAL -->
+    <div class="modal-overlay" id="optionsModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('optionsModal')">×</span>
+            <h3>Choose Sweetener</h3>
+            <p id="modalSizeText" style="font-family: Arial; color: #666; font-weight: bold; margin-bottom: 5px;"></p>
+            <select id="sweetenerOption" onchange="updateAddButtonPrice()">
+                <option value="date">Date Powder (Standard)</option>
+                <option value="monk">Monk Fruit Sweetened</option>
+            </select>
+            <button class="pay-btn" id="addToCartBtn" onclick="processOptionsAndAdd()">Add to Cart</button>
+        </div>
+    </div>
+
+    <!-- CART MODAL -->
+    <div class="modal-overlay" id="cartModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('cartModal')">×</span>
+            <h3>Your Cart</h3>
+            <div class="progress-container">
+                <div class="progress-bar" id="shippingBar"></div>
+            </div>
+            <div class="progress-text" id="shippingText">Add ₹1399 more for FREE Shipping!</div>
+            <div id="cartItemsList"></div>
+            <div class="cart-total-row">
+                <span>Subtotal:</span>
+                <span id="cartTotalDisplay">₹0</span>
+            </div>
+            <button class="pay-btn" id="checkoutBtn" onclick="checkoutWhatsApp()">Checkout</button>
+        </div>
+    </div>
+
+    <!-- THE ROASTER AI CHAT INTERFACE -->
+    <button class="ai-bubble-btn" onclick="toggleAIChat()">TR</button>
+    <div class="ai-chat-window" id="aiChatWindow">
+        <div class="ai-chat-header">
+            <div>
+                <div class="ai-name">The Roaster</div>
+                <div class="ai-subtitle">POWERED BY GEMINI</div>
+            </div>
+            <div class="ai-close" onclick="toggleAIChat()">×</div>
+        </div>
+        <div class="ai-chat-body" id="aiChatBody">
+            <div class="ai-msg-bot">Hi! I'm The Roaster. Ask me anything about our small-batch peanut butter, Date Powder vs. Monk Fruit, or how to order!</div>
+        </div>
+        <div class="ai-chat-input-area">
+            <input type="text" class="ai-input" id="aiInput" placeholder="Ask a question..." onkeypress="handleAIKeyPress(event)">
+            <button class="ai-send" onclick="sendAIMessage()">SEND</button>
+        </div>
+    </div>
+
+    <script>
+        // --- CART & CAROUSEL LOGIC ---
+        function moveCarousel(button, direction) { const track = button.parentElement.querySelector('.carousel-track'); let currentSlide = parseInt(track.getAttribute('data-slide')) || 0; currentSlide += direction; if (currentSlide < 0) currentSlide = 2; if (currentSlide > 2) currentSlide = 0; track.setAttribute('data-slide', currentSlide); track.style.transform = `translateX(-${currentSlide * 100}%)`; }
+        let cart = []; const FREE_SHIPPING_THRESHOLD = 1399; const whatsappNumber = "919246185187"; let pendingName = ''; let pendingDatePrice = 0; let pendingMonkPrice = 0;
+        function openOptionsModal(name, type, datePrice, monkPrice) { pendingName = name; pendingDatePrice = datePrice; pendingMonkPrice = monkPrice; document.getElementById("modalSizeText").innerText = name; document.getElementById("sweetenerOption").value = "date"; updateAddButtonPrice(); document.getElementById("optionsModal").style.display = "flex"; }
+        function updateAddButtonPrice() { let choice = document.getElementById("sweetenerOption").value; let finalPrice = (choice === "date") ? pendingDatePrice : pendingMonkPrice; document.getElementById("addToCartBtn").innerText = `Add to Cart (₹${finalPrice})`; }
+        function processOptionsAndAdd() { let choice = document.getElementById("sweetenerOption").value; let sweetenerText = (choice === "date") ? "Date Powder" : "Monk Fruit"; let finalPrice = (choice === "date") ? pendingDatePrice : pendingMonkPrice; cart.push({ name: pendingName, sweetener: sweetenerText, price: finalPrice }); updateCartIcon(); closeModal('optionsModal'); openCartModal(); }
+        function addToCartDirectly(name, price, sweetenerText) { cart.push({ name: name, sweetener: sweetenerText, price: price }); updateCartIcon(); openCartModal(); }
+        function updateCartIcon() { document.getElementById("cartCount").innerText = cart.length; }
+        function openCartModal() { let listHTML = ''; let total = 0; if (cart.length === 0) { listHTML = '<div class="empty-cart-msg">Your cart is empty.</div>'; document.getElementById("checkoutBtn").style.display = "none"; } else { document.getElementById("checkoutBtn").style.display = "block"; cart.forEach((item) => { total += item.price; listHTML += `<div class="cart-item"><div class="cart-item-details"><div class="cart-item-title">${item.name}</div><div class="cart-item-sweet">${item.sweetener}</div></div><div class="cart-item-price">₹${item.price}</div></div>`; }); } document.getElementById("cartItemsList").innerHTML = listHTML; document.getElementById("cartTotalDisplay").innerText = `₹${total}`; updateProgressBar(total); document.getElementById("cartModal").style.display = "flex"; }
+        function updateProgressBar(total) { let bar = document.getElementById("shippingBar"); let text = document.getElementById("shippingText"); if (total >= FREE_SHIPPING_THRESHOLD) { bar.style.width = "100%"; bar.classList.add("unlocked-bar"); text.classList.add("unlocked-text"); text.innerText = "🎉 You unlocked FREE Shipping!"; } else { let percentage = (total / FREE_SHIPPING_THRESHOLD) * 100; let away = FREE_SHIPPING_THRESHOLD - total; bar.style.width = percentage + "%"; bar.classList.remove("unlocked-bar"); text.classList.remove("unlocked-text"); text.innerText = `Add ₹${away} more for FREE Shipping!`; } }
+        function closeModal(modalId) { document.getElementById(modalId).style.display = "none"; }
+        
+        function checkoutWhatsApp() { 
+            let total = 0; let orderDetails = ""; cart.forEach((item) => { total += item.price; orderDetails += `- ${item.name} (${item.sweetener}): ₹${item.price}\n`; }); let shippingStatus = (total >= FREE_SHIPPING_THRESHOLD) ? "FREE" : "Standard"; let message = `Hi Simply Seeded! 🥜 I would like to place an order:\n\n${orderDetails}\nSubtotal: ₹${total}\nShipping: ${shippingStatus}\n\nPlease share your QR code so I can pay!`; window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank'); 
+        }
+
+        // --- SECURE BACKEND AI LOGIC ---
+        function toggleAIChat() {
+            const chat = document.getElementById('aiChatWindow');
+            chat.style.display = (chat.style.display === 'flex') ? 'none' : 'flex';
+        }
+        
+        async function sendAIMessage() {
+            const input = document.getElementById('aiInput');
+            const msg = input.value.trim();
+            if(!msg) return;
+            
+            const body = document.getElementById('aiChatBody');
+            
+            body.innerHTML += `<div class="ai-msg-user">${msg}</div>`;
+            input.value = ''; 
+            body.scrollTop = body.scrollHeight;
+
+            const loadingId = 'loading-' + Date.now();
+            body.innerHTML += `<div class="ai-msg-bot" id="${loadingId}">Thinking...</div>`;
+            body.scrollTop = body.scrollHeight;
+
+            try {
+                const response = await fetch('/.netlify/functions/chat', {
+                    method: 'POST',
+                    body: JSON.stringify({ message: msg, persona: 'roaster' })
+                });
+                
+                const data = await response.json();
+                
+                document.getElementById(loadingId).innerText = data.reply;
+                
+            } catch (error) {
+                document.getElementById(loadingId).innerText = "Sorry, my servers are taking a quick break. Try again in a minute!";
+            }
+            body.scrollTop = body.scrollHeight;
+        }
+        
+        function handleAIKeyPress(e) { if(e.key === 'Enter') sendAIMessage(); }
+    </script>
+</body>
+</html>

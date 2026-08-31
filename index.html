@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G R O U N D E D</title>
+    <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23FFFFFF" /><text x="50" y="72" font-family="Georgia, serif" font-size="60" font-weight="normal" fill="%231A1A1A" text-anchor="middle">G</text></svg>'>
+    <style>
+        /* PREMIUM ANIMATIONS */
+        @keyframes fadeUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
+
+        body { background-color: #FFFFFF; color: #1A1A1A; font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 60px 20px; min-height: 100vh; }
+        
+        .side-accent { position: fixed; top: 50%; font-size: 0.75rem; color: #B3B3B3; letter-spacing: 5px; display: flex; align-items: center; gap: 15px; animation: fadeIn 1s ease-out 0.5s both; }
+        .side-accent::before, .side-accent::after { content: ""; display: block; width: 40px; height: 1px; background-color: #E0E0E0; }
+        .left-side { left: 20px; transform: translateY(-50%) rotate(-90deg); }
+        .right-side { right: 20px; transform: translateY(-50%) rotate(90deg); }
+        
+        .header-section { animation: fadeUp 0.8s ease-out both; }
+        h1.logo { font-size: 2.5rem; letter-spacing: 12px; font-weight: 300; margin-bottom: 5px; margin-top: 20px; }
+        p.subtitle { font-size: 0.9rem; color: #666666; letter-spacing: 3px; margin-bottom: 60px; }
+        
+        .brand-container { display: flex; flex-direction: column; align-items: center; gap: 30px; position: relative; z-index: 10; animation: fadeUp 0.8s ease-out 0.2s both; }
+        
+        .brand-card { border: 1px solid #EAEAEA; padding: 40px; width: 100%; max-width: 450px; border-radius: 8px; box-sizing: border-box; background-color: #FFFFFF; transition: transform 0.4s ease, box-shadow 0.4s ease; }
+        .brand-card:hover { transform: translateY(-5px); box-shadow: 0px 15px 35px rgba(0,0,0,0.06); }
+        
+        .simply-seeded { background-color: #F4EFE6; border: none; }
+        .simply-seeded:hover { background-color: #F0E8DB; box-shadow: 0px 15px 35px rgba(166, 75, 42, 0.1); }
+        
+        .brand-card h2 { margin: 0 0 10px 0; font-family: 'Playfair Display', serif; font-size: 2rem; }
+        
+        .btn { background-color: #A64B2A; color: white; padding: 12px 25px; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; margin-top: 15px; font-family: 'Playfair Display', serif; transition: background-color 0.3s ease; }
+        .btn:hover { background-color: #8A3A1F; }
+        .coming-soon { color: #999999; font-size: 0.9rem; font-style: italic; letter-spacing: 1px; margin-top: 20px; }
+        a { text-decoration: none; }
+
+        /* THE CURATOR AI BUBBLE */
+        .ai-bubble-btn { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background-color: #1A1A1A; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 1000; transition: transform 0.3s; font-size: 1.8rem; border: none; }
+        .ai-bubble-btn:hover { transform: scale(1.08); background-color: #333; }
+        
+        .ai-chat-window { position: fixed; bottom: 100px; right: 30px; width: 320px; background-color: #FFF; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1000; display: none; flex-direction: column; overflow: hidden; border: 1px solid #EAEAEA; animation: fadeUp 0.3s ease-out; text-align: left; }
+        .ai-chat-header { background-color: #1A1A1A; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; font-family: 'Playfair Display', serif; }
+        .ai-name { font-size: 1.2rem; font-weight: bold; margin-bottom: 2px;}
+        .ai-subtitle { font-size: 0.65rem; color: #B3B3B3; font-family: Arial, sans-serif; letter-spacing: 2px; }
+        .ai-close { cursor: pointer; color: #B3B3B3; font-size: 1.5rem; line-height: 1; }
+        .ai-close:hover { color: #FFF; }
+        
+        .ai-chat-body { padding: 20px; height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background-color: #FDFDFD; font-family: Arial, sans-serif; font-size: 0.9rem; }
+        .ai-msg-bot { background-color: #F4EFE6; padding: 12px 15px; border-radius: 12px 12px 12px 2px; color: #333; max-width: 85%; align-self: flex-start; line-height: 1.4; border: 1px solid #EBE4D5;}
+        .ai-msg-user { background-color: #A64B2A; color: white; padding: 12px 15px; border-radius: 12px 12px 2px 12px; max-width: 85%; align-self: flex-end; line-height: 1.4; }
+        
+        .ai-chat-input-area { display: flex; padding: 15px; border-top: 1px solid #EAEAEA; background: #FFF; gap: 10px; }
+        .ai-input { flex-grow: 1; border: 1px solid #DDD; padding: 10px 15px; border-radius: 20px; outline: none; font-family: Arial, sans-serif; font-size: 0.9rem; transition: border-color 0.3s;}
+        .ai-input:focus { border-color: #A64B2A; }
+        .ai-send { background: none; border: none; color: #A64B2A; font-weight: bold; cursor: pointer; font-size: 0.9rem; letter-spacing: 1px; }
+
+        @media (max-width: 768px) { .side-accent { display: none; } h1.logo { font-size: 1.8rem; letter-spacing: 6px; } .brand-card { padding: 30px 20px; } 
+        .ai-chat-window { width: calc(100% - 40px); right: 20px; bottom: 90px; } .ai-bubble-btn { right: 20px; bottom: 20px; } }
+    </style>
+</head>
+<body>
+    <div class="side-accent left-side">EST. 2026</div>
+    <div class="side-accent right-side">PURE FOOD INITIATIVE</div>
+
+    <div class="header-section">
+        <h1 class="logo">G R O U N D E D</h1>
+        <p class="subtitle">PUNE, INDIA</p>
+    </div>
+
+    <div class="brand-container">
+        <div class="brand-card simply-seeded">
+            <h2>Simply Seeded</h2>
+            <p>Small-Batch Crafted Peanut Butter</p>
+            <a href="store.html"><button class="btn">Enter Store</button></a>
+        </div>
+        <div class="brand-card">
+            <h2>Kimchi</h2>
+            <p>Wild Fermented Gut Health</p>
+            <p class="coming-soon">IN DEVELOPMENT</p>
+        </div>
+        <div class="brand-card">
+            <h2>Kombucha</h2>
+            <p>Raw Probiotic Tea</p>
+            <p class="coming-soon">IN DEVELOPMENT</p>
+        </div>
+    </div>
+
+    <!-- THE CURATOR AI CHAT INTERFACE -->
+    <button class="ai-bubble-btn" onclick="toggleAIChat()">✨</button>
+    <div class="ai-chat-window" id="aiChatWindow">
+        <div class="ai-chat-header">
+            <div>
+                <div class="ai-name">The Curator</div>
+                <div class="ai-subtitle">POWERED BY GEMINI</div>
+            </div>
+            <div class="ai-close" onclick="toggleAIChat()">×</div>
+        </div>
+        <div class="ai-chat-body" id="aiChatBody">
+            <div class="ai-msg-bot">Hi! I'm The Curator. Ask me anything about our Pure Food Initiative, upcoming ferments, or the Grounded philosophy!</div>
+        </div>
+        <div class="ai-chat-input-area">
+            <input type="text" class="ai-input" id="aiInput" placeholder="Ask a question..." onkeypress="handleAIKeyPress(event)">
+            <button class="ai-send" onclick="sendAIMessage()">SEND</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleAIChat() {
+            const chat = document.getElementById('aiChatWindow');
+            chat.style.display = (chat.style.display === 'flex') ? 'none' : 'flex';
+        }
+        function sendAIMessage() {
+            const input = document.getElementById('aiInput');
+            const msg = input.value.trim();
+            if(!msg) return;
+            
+            const body = document.getElementById('aiChatBody');
+            body.innerHTML += `<div class="ai-msg-user">${msg}</div>`;
+            input.value = '';
+            body.scrollTop = body.scrollHeight;
+
+            setTimeout(() => {
+                body.innerHTML += `<div class="ai-msg-bot">That's a great question! For this early launch phase, my live Gemini brain isn't fully connected yet, but we will be online soon.</div>`;
+                body.scrollTop = body.scrollHeight;
+            }, 1000);
+        }
+        function handleAIKeyPress(e) {
+            if(e.key === 'Enter') sendAIMessage();
+        }
+    </script>
+</body>
+</html>
