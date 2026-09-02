@@ -337,6 +337,7 @@
             transition: color 0.3s;
         }
         .ai-mic-btn:hover { color: #A64B2A; }
+        .ai-mic-btn:disabled { color: #CCC; cursor: not-allowed; }
         .mic-icon svg { width: 16px; height: 16px; fill: currentColor; }
         
         /* PREMIUM VISUALIZER STYLES */
@@ -637,8 +638,9 @@
         <div class="ai-chat-input-area">
             <div class="ai-input-row">
                 <div class="ai-input-wrapper">
-                    <input type="text" class="ai-input" id="aiInput" placeholder="Ask a question..." maxlength="300" oninput="updateCharCount()" onkeypress="handleAIKeyPress(event)">
-                    <button class="ai-mic-btn" id="aiMicBtn" onclick="toggleSpeechRecognition()" title="Click to speak">
+                    <!-- FIREBASE LOCK APPLIED HERE -->
+                    <input type="text" class="ai-input" id="aiInput" placeholder="Please sign in to chat..." maxlength="300" disabled oninput="updateCharCount()" onkeypress="handleAIKeyPress(event)">
+                    <button class="ai-mic-btn" id="aiMicBtn" onclick="toggleSpeechRecognition()" title="Click to speak" disabled>
                         <div class="mic-icon" id="micIconSvg">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
@@ -650,7 +652,7 @@
                         </div>
                     </button>
                 </div>
-                <button class="ai-send" id="aiSendBtn" onclick="sendAIMessage()">SEND</button>
+                <button class="ai-send" id="aiSendBtn" onclick="sendAIMessage()" disabled>SEND</button>
             </div>
             <div class="ai-char-counter" id="aiCharCounter">0/300</div>
         </div>
@@ -924,10 +926,21 @@
             body.scrollTop = body.scrollHeight;
 
             try {
+                // THE NEW SECURITY: We fetch the user's secret VIP pass right before sending the message!
+                let userToken = "";
+                if (window.firebaseAuth && window.firebaseAuth.currentUser) {
+                    userToken = await window.firebaseAuth.currentUser.getIdToken(true);
+                }
+
                 const response = await fetch("https://grounded-api.theteamgrounded.workers.dev/", {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: msg, persona: "roaster", pageContext: document.title })
+                    body: JSON.stringify({ 
+                        message: msg, 
+                        persona: "roaster", 
+                        pageContext: document.title,
+                        token: userToken // <-- Sending the VIP Pass to your Cloudflare Worker!
+                    })
                 });
                 
                 const data = await response.json();
@@ -955,6 +968,52 @@
 
         function escapeHTML(str) { return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)); }
         function handleAIKeyPress(e) { if(e.key === 'Enter') sendAIMessage(); }
+    </script>
+
+    <!-- FIREBASE AUTHENTICATION SCRIPT (THE BOUNCER) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBKZz6FNizCDMf8LnG7-n9a0H26MU8ZN_I",
+            authDomain: "grounded-store.firebaseapp.com",
+            projectId: "grounded-store",
+            storageBucket: "grounded-store.firebasestorage.app",
+            messagingSenderId: "110467572354",
+            appId: "1:110467572354:web:86747ada335b7289e38a9b",
+            measurementId: "G-HB8L303TNC"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        
+        // We expose this so our sendAIMessage function can grab the secure token!
+        window.firebaseAuth = auth; 
+
+        onAuthStateChanged(auth, (user) => {
+            const chatInput = document.getElementById('aiInput');
+            const sendBtn = document.getElementById('aiSendBtn');
+            const micBtn = document.getElementById('aiMicBtn');
+
+            if (user) {
+                // USER IS LOGGED IN: UNLOCK chat
+                if(chatInput) {
+                    chatInput.disabled = false;
+                    chatInput.placeholder = "Ask The Roaster a question...";
+                    sendBtn.disabled = false;
+                    micBtn.disabled = false;
+                }
+            } else {
+                // USER IS LOGGED OUT: LOCK chat
+                if(chatInput) {
+                    chatInput.disabled = true;
+                    chatInput.placeholder = "Please sign in to chat...";
+                    sendBtn.disabled = true;
+                    micBtn.disabled = true;
+                }
+            }
+        });
     </script>
 </body>
 </html>
