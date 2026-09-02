@@ -515,9 +515,9 @@
         </div>
         <div class="ai-chat-input-area">
             
-            <!-- NEW CLOUDFLARE TURNSTILE WIDGET (Using your Site Key) -->
+            <!-- CLOUDFLARE TURNSTILE WIDGET (Using Test Dummy Key) -->
             <div style="display: flex; justify-content: center;">
-                <div class="cf-turnstile" data-sitekey="0x4AAAAAAEkrQTJTjGZllyNM" data-callback="unlockChat" data-theme="light"></div>
+                <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-callback="unlockChat" data-theme="light"></div>
             </div>
 
             <div class="ai-input-row">
@@ -667,7 +667,6 @@
             body.scrollTop = body.scrollHeight;
 
             try {
-                // I have securely attached your Turnstile token to the API request here!
                 const response = await fetch("https://grounded-api.theteamgrounded.workers.dev/", {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
