@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>G R O U N D E D</title>
     <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23FFFFFF" /><text x="50" y="72" font-family="Georgia, serif" font-size="60" font-weight="normal" fill="%231A1A1A" text-anchor="middle">G</text></svg>'>
+    
+    <!-- CLOUDFLARE TURNSTILE SCRIPT -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
     <style>
         /* PREMIUM ANIMATIONS */
         @keyframes fadeUp { 
@@ -26,7 +30,7 @@
             min-height: 100vh; 
         }
 
-        /* --- NEW AUTHENTICATION UI STYLES --- */
+        /* --- AUTHENTICATION UI STYLES --- */
         .auth-container {
             position: absolute;
             top: 30px;
@@ -59,7 +63,6 @@
             font-family: Arial, sans-serif;
             text-transform: uppercase;
         }
-        /* ------------------------------------ */
         
         .side-accent { 
             position: fixed; 
@@ -326,7 +329,7 @@
             padding: 10px 15px 15px 15px; 
             border-top: 1px solid #EAEAEA; 
             background: #FFF; 
-            gap: 5px; 
+            gap: 10px; 
         }
         
         .ai-input-row { display: flex; gap: 10px; width: 100%; align-items: center; }
@@ -361,6 +364,7 @@
             transition: color 0.3s; 
         }
         .ai-mic-btn:hover { color: #A64B2A; }
+        .ai-mic-btn:disabled { color: #CCC; cursor: not-allowed; }
         .mic-icon svg { width: 16px; height: 16px; fill: currentColor; }
         
         /* PREMIUM VISUALIZER STYLES */
@@ -417,12 +421,10 @@
 </head>
 <body>
 
-    <!-- NEW SIGN-IN BUTTON AREA -->
     <div class="auth-container">
         <button id="google-signin-btn">SIGN IN</button>
         <div id="user-profile">WELCOME, <span id="user-name"></span></div>
     </div>
-    <!-- ----------------------- -->
 
     <div class="side-accent left-side">EST. 2026</div>
     <div class="side-accent right-side">PURE FOOD INITIATIVE</div>
@@ -512,10 +514,17 @@
             </div>
         </div>
         <div class="ai-chat-input-area">
+            
+            <!-- NEW CLOUDFLARE TURNSTILE WIDGET (Using your Site Key) -->
+            <div style="display: flex; justify-content: center;">
+                <div class="cf-turnstile" data-sitekey="0x4AAAAAAEkrQTJTjGZllyNM" data-callback="unlockChat" data-theme="light"></div>
+            </div>
+
             <div class="ai-input-row">
                 <div class="ai-input-wrapper">
-                    <input type="text" class="ai-input" id="aiInput" placeholder="Ask a question..." maxlength="300" oninput="updateCharCount()" onkeypress="handleAIKeyPress(event)">
-                    <button class="ai-mic-btn" id="aiMicBtn" onclick="toggleSpeechRecognition()" title="Click to speak">
+                    <!-- Notice 'disabled' is added here to lock it down initially -->
+                    <input type="text" class="ai-input" id="aiInput" placeholder="Verifying connection..." maxlength="300" disabled oninput="updateCharCount()" onkeypress="handleAIKeyPress(event)">
+                    <button class="ai-mic-btn" id="aiMicBtn" onclick="toggleSpeechRecognition()" title="Click to speak" disabled>
                         <div class="mic-icon" id="micIconSvg">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
@@ -527,13 +536,26 @@
                         </div>
                     </button>
                 </div>
-                <button class="ai-send" id="aiSendBtn" onclick="sendAIMessage()">SEND</button>
+                <button class="ai-send" id="aiSendBtn" onclick="sendAIMessage()" disabled>SEND</button>
             </div>
             <div class="ai-char-counter" id="aiCharCounter">0/300</div>
         </div>
     </div>
 
     <script>
+        // NEW SECURITY VARIABLE
+        let cfToken = "";
+
+        // THIS UNLOCKS THE CHAT WHEN CLOUDFLARE SAYS YOU ARE HUMAN
+        function unlockChat(token) {
+            cfToken = token;
+            const input = document.getElementById('aiInput');
+            input.disabled = false;
+            input.placeholder = "Ask a question...";
+            document.getElementById('aiSendBtn').disabled = false;
+            document.getElementById('aiMicBtn').disabled = false;
+        }
+
         function toggleAIChat() {
             const chat = document.getElementById('aiChatWindow');
             if (chat.style.display === 'flex') {
@@ -645,10 +667,16 @@
             body.scrollTop = body.scrollHeight;
 
             try {
+                // I have securely attached your Turnstile token to the API request here!
                 const response = await fetch("https://grounded-api.theteamgrounded.workers.dev/", {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: msg, persona: "curator", pageContext: document.title })
+                    body: JSON.stringify({ 
+                        message: msg, 
+                        persona: "curator", 
+                        pageContext: document.title,
+                        cfTurnstileToken: cfToken 
+                    })
                 });
 
                 const data = await response.json();
