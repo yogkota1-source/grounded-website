@@ -6,13 +6,38 @@
     <title>Simply Seeded - Store</title>
     <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23D97957" /><text x="50" y="68" font-family="Georgia, serif" font-size="50" font-weight="bold" fill="%231A1A1A" text-anchor="middle">Ss</text></svg>'>
     <style>
-        @keyframes fadeUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
-        body { background-color: #F4EFE6; color: #2C2C2C; font-family: 'Playfair Display', serif; text-align: center; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
+        @keyframes fadeUp { 
+            0% { opacity: 0; transform: translateY(20px); } 
+            100% { opacity: 1; transform: translateY(0); } 
+        }
+
+        body { 
+            background-color: #F4EFE6; 
+            color: #2C2C2C; 
+            font-family: 'Playfair Display', serif; 
+            text-align: center; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+        }
+
         .content-wrapper { padding: 20px; flex: 1; }
-        .fade-section { animation: fadeUp 0.8s ease-out both; }
-        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; } .delay-3 { animation-delay: 0.3s; }
         
-        .top-nav { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1000px; margin: 0 auto 20px auto; }
+        .fade-section { animation: fadeUp 0.8s ease-out both; }
+        .delay-1 { animation-delay: 0.1s; } 
+        .delay-2 { animation-delay: 0.2s; } 
+        .delay-3 { animation-delay: 0.3s; }
+        
+        .top-nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            width: 100%; 
+            max-width: 1000px; 
+            margin: 0 auto 20px auto; 
+        }
+
         .back-link { display: inline-block; text-decoration: none; margin-top: 10px; }
         .fun-text { font-family: Arial, sans-serif; font-size: 0.9rem; color: #555555; margin-right: 5px; letter-spacing: 2px; }
         .logo-text { font-family: Arial, sans-serif; font-size: 1.1rem; letter-spacing: 6px; color: #333333; }
@@ -22,39 +47,169 @@
         p.subtitle { font-family: Arial, sans-serif; letter-spacing: 2px; color: #555; margin-bottom: 40px; }
         .section-title { font-size: 2rem; margin: 50px 0 20px 0; color: #8A3A1F; border-bottom: 1px solid #D4CAB5; display: inline-block; padding-bottom: 10px; }
         
-        .product-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; max-width: 1000px; margin: 0 auto; padding-bottom: 60px;}
-        .product-card { background-color: #FFFFFF; border-radius: 8px; padding: 20px; width: 280px; box-shadow: 0px 4px 10px rgba(0,0,0,0.03); transition: transform 0.4s ease, box-shadow 0.4s ease; box-sizing: border-box; overflow: hidden; }
+        .product-grid { 
+            display: flex; 
+            justify-content: center; 
+            gap: 30px; 
+            flex-wrap: wrap; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding-bottom: 60px;
+        }
+
+        .product-card { 
+            background-color: #FFFFFF; 
+            border-radius: 8px; 
+            padding: 20px; 
+            width: 280px; 
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.03); 
+            transition: transform 0.4s ease, box-shadow 0.4s ease; 
+            box-sizing: border-box; 
+            overflow: hidden; 
+        }
         .product-card:hover { transform: translateY(-8px); box-shadow: 0px 20px 40px rgba(0,0,0,0.08); }
         
         .carousel-wrapper { position: relative; width: 100%; height: 320px; border-radius: 6px; margin-bottom: 20px; overflow: hidden; }
         .carousel-track { display: flex; width: 100%; height: 100%; transition: transform 0.4s ease-in-out; }
-        .slide-placeholder { flex: 0 0 100%; background-color: #EAEAEA; display: flex; align-items: center; justify-content: center; color: #999; font-family: Arial, sans-serif; font-size: 0.9rem; transition: transform 0.5s ease; }
+        .slide-placeholder { 
+            flex: 0 0 100%; 
+            background-color: #EAEAEA; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: #999; 
+            font-family: Arial, sans-serif; 
+            font-size: 0.9rem; 
+            transition: transform 0.5s ease; 
+        }
         .product-card:hover .slide-placeholder { transform: scale(1.03); }
-        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.8); border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; color: #333; z-index: 5; box-shadow: 0px 2px 5px rgba(0,0,0,0.1); font-weight: bold; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+        
+        .carousel-btn { 
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            background: rgba(255, 255, 255, 0.8); 
+            border: none; 
+            border-radius: 50%; 
+            width: 30px; 
+            height: 30px; 
+            cursor: pointer; 
+            color: #333; 
+            z-index: 5; 
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.1); 
+            font-weight: bold; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: background 0.3s; 
+        }
         .carousel-btn:hover { background: #FFFFFF; }
-        .prev-btn { left: 10px; } .next-btn { right: 10px; }
+        .prev-btn { left: 10px; } 
+        .next-btn { right: 10px; }
         
         .product-card h2 { margin: 10px 0 5px 0; font-size: 1.5rem; }
-        .ingredients { font-family: Arial, sans-serif; font-size: 0.8rem; color: #888; margin: 0 0 15px 0; line-height: 1.5; letter-spacing: 0.5px; }
+        .ingredients { font-family: Arial, sans-serif; font-size: 0.8rem; color: #888; margin: 0 0 15px 0; line-height: 1.5; letter-spacing: 0.5px; min-height: 35px; }
         .price { font-family: Arial, sans-serif; font-size: 1.1rem; color: #444; margin-bottom: 20px; font-weight: bold; }
-        .order-btn { background-color: #A64B2A; color: white; padding: 12px; width: 100%; border: none; border-radius: 4px; font-size: 1.1rem; cursor: pointer; font-weight: bold; font-family: 'Playfair Display', serif; transition: background-color 0.3s ease; }
+        
+        .order-btn { 
+            background-color: #A64B2A; 
+            color: white; 
+            padding: 12px; 
+            width: 100%; 
+            border: none; 
+            border-radius: 4px; 
+            font-size: 1.1rem; 
+            cursor: pointer; 
+            font-weight: bold; 
+            font-family: 'Playfair Display', serif; 
+            transition: background-color 0.3s ease; 
+        }
         .order-btn:hover { background-color: #8A3A1F; }
+        .btn-disabled { background-color: #D4CAB5; cursor: not-allowed; color: #888; }
+        .btn-disabled:hover { background-color: #D4CAB5; }
+        .coming-soon-text { color: #8A3A1F; font-size: 0.85rem; font-weight: bold; letter-spacing: 1px; margin-bottom: 10px; }
 
-        .cart-trigger { background-color: #1A1A1A; color: white; padding: 10px 20px; border-radius: 50px; font-family: Arial, sans-serif; font-weight: bold; cursor: pointer; border: none; display: flex; align-items: center; gap: 8px; transition: background 0.3s; }
+        .cart-trigger { 
+            background-color: #1A1A1A; 
+            color: white; 
+            padding: 10px 20px; 
+            border-radius: 50px; 
+            font-family: Arial, sans-serif; 
+            font-weight: bold; 
+            cursor: pointer; 
+            border: none; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            transition: background 0.3s; 
+        }
         .cart-trigger:hover { background-color: #333; }
         
         /* MODALS */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 100; }
-        .modal-content { background-color: #FFF; padding: 30px; border-radius: 8px; width: 90%; max-width: 450px; text-align: left; position: relative; max-height: 80vh; overflow-y: auto; }
-        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #999; }
-        .modal-content h3 { margin-top: 0; font-size: 1.8rem; color: #A64B2A; }
-        .modal-content select { width: 100%; padding: 12px; margin: 15px 0 25px 0; font-size: 1rem; font-family: Arial, sans-serif; box-sizing: border-box; }
-        .pay-btn { background-color: #1A1A1A; color: white; padding: 15px; width: 100%; border: none; border-radius: 4px; font-size: 1.1rem; cursor: pointer; font-weight: bold; margin-top: 15px;}
+        .modal-overlay { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.6); 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 100; 
+            backdrop-filter: blur(3px); 
+        }
+        .modal-content { 
+            background-color: #FFF; 
+            padding: 35px 30px; 
+            border-radius: 12px; 
+            width: 90%; 
+            max-width: 420px; 
+            text-align: left; 
+            position: relative; 
+            max-height: 80vh; 
+            overflow-y: auto; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2); 
+        }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #999; transition: color 0.3s; }
+        .close-btn:hover { color: #333; }
+        .modal-content h3 { margin-top: 0; font-size: 1.8rem; color: #1A1A1A; font-family: 'Playfair Display', serif; margin-bottom: 5px; }
+        .modal-size-label { font-family: Arial, sans-serif; color: #A64B2A; font-weight: bold; font-size: 0.9rem; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; }
         
-        .cart-item { display: flex; justify-content: space-between; font-family: Arial, sans-serif; border-bottom: 1px solid #EEE; padding: 15px 0; }
+        /* MODERN SELECTION PILLS */
+        .select-group { margin-bottom: 25px; }
+        .select-group > label { display: block; font-family: Arial, sans-serif; font-weight: bold; margin-bottom: 10px; color: #444; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; }
+        .pill-grid { display: flex; gap: 10px; width: 100%; }
+        .pill-input { display: none; }
+        .pill-label { 
+            flex: 1; 
+            text-align: center; 
+            background-color: #F9F9F9; 
+            border: 2px solid #EAEAEA; 
+            border-radius: 8px; 
+            padding: 15px 10px; 
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            color: #666; 
+        }
+        .pill-title { font-family: Arial, sans-serif; font-weight: bold; font-size: 1rem; margin-bottom: 4px; color: #333; }
+        .pill-sub { font-family: Arial, sans-serif; font-size: 0.75rem; line-height: 1.2; }
+        
+        .pill-input:checked + .pill-label { background-color: #FFF; border-color: #A64B2A; box-shadow: 0 4px 12px rgba(166, 75, 42, 0.15); }
+        .pill-input:checked + .pill-label .pill-title { color: #A64B2A; }
+
+        .pay-btn { background-color: #1A1A1A; color: white; padding: 16px; width: 100%; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; font-weight: bold; margin-top: 10px; font-family: 'Playfair Display', serif; transition: background 0.3s; }
+        .pay-btn:hover { background-color: #333; }
+        
+        /* CART STYLES */
+        .cart-item { display: flex; justify-content: space-between; align-items: center; font-family: Arial, sans-serif; border-bottom: 1px solid #EEE; padding: 15px 0; }
         .cart-item-details { flex-grow: 1; }
-        .cart-item-title { font-weight: bold; color: #333; }
-        .cart-item-sweet { font-size: 0.85rem; color: #888; }
+        .cart-item-title { font-weight: bold; color: #333; margin-bottom: 4px; }
+        .cart-item-variant { font-size: 0.85rem; color: #888; }
         .cart-item-price { font-weight: bold; color: #A64B2A; }
         .cart-total-row { display: flex; justify-content: space-between; font-family: Arial, sans-serif; font-weight: bold; font-size: 1.2rem; padding-top: 15px; margin-top: 10px; }
         .empty-cart-msg { font-family: Arial, sans-serif; color: #888; text-align: center; padding: 20px 0; }
@@ -66,10 +221,44 @@
         .unlocked-bar { background-color: #2E8B57; }
 
         /* THE ROASTER AI */
-        .ai-bubble-btn { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background-color: #1A1A1A; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 1000; transition: transform 0.3s; font-size: 1.5rem; font-family: 'Playfair Display', serif; border: none; }
+        .ai-bubble-btn { 
+            position: fixed; 
+            bottom: 30px; 
+            right: 30px; 
+            width: 60px; 
+            height: 60px; 
+            background-color: #1A1A1A; 
+            color: white; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
+            z-index: 1000; 
+            transition: transform 0.3s; 
+            font-size: 1.5rem; 
+            font-family: 'Playfair Display', serif; 
+            border: none; 
+        }
         .ai-bubble-btn:hover { transform: scale(1.08); background-color: #333; }
         
-        .ai-chat-window { position: fixed; bottom: 100px; right: 30px; width: 320px; background-color: #FFF; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1000; display: none; flex-direction: column; overflow: hidden; border: 1px solid #EAEAEA; animation: fadeUp 0.3s ease-out; text-align: left; }
+        .ai-chat-window { 
+            position: fixed; 
+            bottom: 100px; 
+            right: 30px; 
+            width: 320px; 
+            background-color: #FFF; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15); 
+            z-index: 1000; 
+            display: none; 
+            flex-direction: column; 
+            overflow: hidden; 
+            border: 1px solid #EAEAEA; 
+            animation: fadeUp 0.3s ease-out; 
+            text-align: left; 
+        }
         .ai-chat-header { background-color: #1A1A1A; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; font-family: 'Playfair Display', serif; }
         .ai-name { font-size: 1.2rem; font-weight: bold; margin-bottom: 2px;}
         .ai-subtitle { font-size: 0.65rem; color: #B3B3B3; font-family: Arial, sans-serif; letter-spacing: 2px; }
@@ -77,16 +266,124 @@
         .ai-close:hover { color: #FFF; }
         
         .ai-chat-body { padding: 20px; height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background-color: #FDFDFD; font-family: Arial, sans-serif; font-size: 0.9rem; }
-        .ai-msg-bot { background-color: #F4EFE6; padding: 12px 15px; border-radius: 12px 12px 12px 2px; color: #333; max-width: 85%; align-self: flex-start; line-height: 1.4; border: 1px solid #EBE4D5;}
+        
+        /* NEW: Flex layout for bot messages */
+        .ai-msg-bot { 
+            background-color: #F4EFE6; 
+            padding: 12px 15px; 
+            border-radius: 12px 12px 12px 2px; 
+            color: #333; 
+            max-width: 85%; 
+            align-self: flex-start; 
+            line-height: 1.4; 
+            border: 1px solid #EBE4D5;
+            display: flex; 
+            gap: 8px; 
+            align-items: flex-start;
+        }
+        .ai-msg-content { flex-grow: 1; }
+        
+        .ai-speaker-btn { 
+            background: none; 
+            border: none; 
+            color: #A64B2A; 
+            cursor: pointer; 
+            padding: 2px; 
+            opacity: 0.6; 
+            transition: all 0.3s; 
+            flex-shrink: 0; 
+            margin-top: 2px; 
+        }
+        .ai-speaker-btn:hover { opacity: 1; transform: scale(1.1); }
+
         .ai-msg-user { background-color: #A64B2A; color: white; padding: 12px 15px; border-radius: 12px 12px 2px 12px; max-width: 85%; align-self: flex-end; line-height: 1.4; }
         
-        .ai-chat-input-area { display: flex; padding: 15px; border-top: 1px solid #EAEAEA; background: #FFF; gap: 10px; }
-        .ai-input { flex-grow: 1; border: 1px solid #DDD; padding: 10px 15px; border-radius: 20px; outline: none; font-family: Arial, sans-serif; font-size: 0.9rem; transition: border-color 0.3s;}
-        .ai-input:focus { border-color: #A64B2A; }
-        .ai-send { background: none; border: none; color: #A64B2A; font-weight: bold; cursor: pointer; font-size: 0.9rem; letter-spacing: 1px; }
+        .ai-chat-input-area { display: flex; flex-direction: column; padding: 10px 15px 15px 15px; border-top: 1px solid #EAEAEA; background: #FFF; gap: 5px; }
+        
+        .ai-input-row { display: flex; gap: 10px; width: 100%; align-items: center; }
+        
+        .ai-input-wrapper {
+            position: relative;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
 
-        @media (max-width: 768px) { h1 { font-size: 2.2rem; } .section-title { font-size: 1.5rem; } .product-card { width: 100%; max-width: 350px; } 
-        .ai-chat-window { width: calc(100% - 40px); right: 20px; bottom: 90px; } .ai-bubble-btn { right: 20px; bottom: 20px; } }
+        .ai-input { 
+            width: 100%; 
+            border: 1px solid #DDD; 
+            padding: 10px 40px 10px 15px; 
+            border-radius: 20px; 
+            outline: none; 
+            font-family: Arial, sans-serif; 
+            font-size: 0.9rem; 
+            transition: border-color 0.3s;
+            box-sizing: border-box; 
+        }
+        .ai-input:focus { border-color: #A64B2A; }
+        .ai-input:disabled { background-color: #F9F9F9; cursor: not-allowed; }
+
+        .ai-mic-btn { 
+            position: absolute;
+            right: 8px;
+            background: none; 
+            border: none; 
+            cursor: pointer; 
+            color: #888; 
+            padding: 5px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            transition: color 0.3s;
+        }
+        .ai-mic-btn:hover { color: #A64B2A; }
+        .mic-icon svg { width: 16px; height: 16px; fill: currentColor; }
+        
+        /* PREMIUM VISUALIZER STYLES */
+        .voice-visualizer { 
+            display: none; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 2px; 
+            height: 16px; 
+            width: 16px; 
+        }
+        .voice-visualizer .bar { 
+            width: 3px; 
+            background-color: #D9534F; 
+            border-radius: 2px; 
+            animation: soundWave 1s infinite ease-in-out; 
+        }
+        .voice-visualizer .bar:nth-child(1) { height: 8px; animation-delay: -1.2s; }
+        .voice-visualizer .bar:nth-child(2) { height: 16px; animation-delay: -1.0s; }
+        .voice-visualizer .bar:nth-child(3) { height: 10px; animation-delay: -0.8s; }
+        .voice-visualizer .bar:nth-child(4) { height: 12px; animation-delay: -0.6s; }
+        
+        @keyframes soundWave {
+            0%, 100% { transform: scaleY(0.4); }
+            50% { transform: scaleY(1); }
+        }
+
+        .ai-send { 
+            background: none; 
+            border: none; 
+            color: #A64B2A; 
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 0.9rem; 
+            letter-spacing: 1px; 
+            flex-shrink: 0; 
+        }
+        .ai-send:disabled { color: #CCC; cursor: not-allowed; }
+        .ai-char-counter { font-size: 0.65rem; color: #AAA; font-family: Arial, sans-serif; text-align: right; margin-right: 10px; }
+
+        @media (max-width: 768px) { 
+            h1 { font-size: 2.2rem; } 
+            .section-title { font-size: 1.5rem; } 
+            .product-card { width: 100%; max-width: 350px; } 
+            .ai-chat-window { width: calc(100% - 40px); right: 20px; bottom: 90px; } 
+            .ai-bubble-btn { right: 20px; bottom: 20px; } 
+        }
     </style>
 </head>
 <body>
@@ -103,83 +400,156 @@
             <p class="subtitle">SELECT YOUR CRAFTED JAR</p>
         </div>
 
-        <!-- ROW 1: SWEETENED -->
         <h2 class="section-title fade-section delay-1">Sweetened Peanut Butter</h2>
         <div class="product-grid fade-section delay-1">
             <div class="product-card">
                 <div class="carousel-wrapper">
                     <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
-                    <div class="carousel-track" data-slide="0"><div class="slide-placeholder">[ 250g Front ]</div><div class="slide-placeholder">[ 250g Back ]</div><div class="slide-placeholder">[ Nutrition ]</div></div>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder">[ 250g Front ]</div>
+                        <div class="slide-placeholder">[ 250g Back ]</div>
+                        <div class="slide-placeholder">[ Nutrition ]</div>
+                    </div>
                     <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
                 </div>
                 <h2>250g Sweetened</h2>
                 <p class="ingredients">Roasted Peanuts • Date Powder / Monk Fruit • Salt</p>
                 <p class="price">From ₹279</p>
-                <button class="order-btn" onclick="openOptionsModal('250g Sweetened', 'sweet', 279, 404)">Add to Cart</button>
+                <button class="order-btn" onclick="openOptionsModal('250g Sweetened', 'sweet', 279, 404)">Customize & Add</button>
             </div>
             
             <div class="product-card">
                 <div class="carousel-wrapper">
                     <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
-                    <div class="carousel-track" data-slide="0"><div class="slide-placeholder">[ 500g Front ]</div><div class="slide-placeholder">[ 500g Back ]</div><div class="slide-placeholder">[ Nutrition ]</div></div>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder">[ 500g Front ]</div>
+                        <div class="slide-placeholder">[ 500g Back ]</div>
+                        <div class="slide-placeholder">[ Nutrition ]</div>
+                    </div>
                     <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
                 </div>
                 <h2>500g Sweetened</h2>
                 <p class="ingredients">Roasted Peanuts • Date Powder / Monk Fruit • Salt</p>
                 <p class="price">From ₹499</p>
-                <button class="order-btn" onclick="openOptionsModal('500g Sweetened', 'sweet', 499, 749)">Add to Cart</button>
+                <button class="order-btn" onclick="openOptionsModal('500g Sweetened', 'sweet', 499, 749)">Customize & Add</button>
             </div>
 
             <div class="product-card">
                 <div class="carousel-wrapper">
                     <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
-                    <div class="carousel-track" data-slide="0"><div class="slide-placeholder">[ 1kg Front ]</div><div class="slide-placeholder">[ 1kg Back ]</div><div class="slide-placeholder">[ Nutrition ]</div></div>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder">[ 1kg Front ]</div>
+                        <div class="slide-placeholder">[ 1kg Back ]</div>
+                        <div class="slide-placeholder">[ Nutrition ]</div>
+                    </div>
                     <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
                 </div>
                 <h2>1kg Sweetened</h2>
                 <p class="ingredients">Roasted Peanuts • Date Powder / Monk Fruit • Salt</p>
                 <p class="price">From ₹899</p>
-                <button class="order-btn" onclick="openOptionsModal('1kg Sweetened', 'sweet', 899, 1399)">Add to Cart</button>
+                <button class="order-btn" onclick="openOptionsModal('1kg Sweetened', 'sweet', 899, 1399)">Customize & Add</button>
             </div>
         </div>
 
-        <!-- ROW 2: UNSWEETENED -->
         <h2 class="section-title fade-section delay-2">Unsweetened Peanut Butter</h2>
         <div class="product-grid fade-section delay-2">
             <div class="product-card">
                 <div class="carousel-wrapper">
                     <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
-                    <div class="carousel-track" data-slide="0"><div class="slide-placeholder">[ 250g Front ]</div><div class="slide-placeholder">[ 250g Back ]</div><div class="slide-placeholder">[ Nutrition ]</div></div>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder">[ 250g Front ]</div>
+                        <div class="slide-placeholder">[ 250g Back ]</div>
+                        <div class="slide-placeholder">[ Nutrition ]</div>
+                    </div>
                     <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
                 </div>
                 <h2>250g Unsweetened</h2>
                 <p class="ingredients">Roasted Peanuts • Salt</p>
                 <p class="price">₹259</p>
-                <button class="order-btn" onclick="addToCartDirectly('250g Unsweetened', 259, 'Unsweetened')">Add to Cart</button>
+                <button class="order-btn" onclick="openOptionsModal('250g Unsweetened', 'unsweet', 259, 259)">Customize & Add</button>
             </div>
 
             <div class="product-card">
                 <div class="carousel-wrapper">
                     <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
-                    <div class="carousel-track" data-slide="0"><div class="slide-placeholder">[ 500g Front ]</div><div class="slide-placeholder">[ 500g Back ]</div><div class="slide-placeholder">[ Nutrition ]</div></div>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder">[ 500g Front ]</div>
+                        <div class="slide-placeholder">[ 500g Back ]</div>
+                        <div class="slide-placeholder">[ Nutrition ]</div>
+                    </div>
                     <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
                 </div>
                 <h2>500g Unsweetened</h2>
                 <p class="ingredients">Roasted Peanuts • Salt</p>
                 <p class="price">₹459</p>
-                <button class="order-btn" onclick="addToCartDirectly('500g Unsweetened', 459, 'Unsweetened')">Add to Cart</button>
+                <button class="order-btn" onclick="openOptionsModal('500g Unsweetened', 'unsweet', 459, 459)">Customize & Add</button>
             </div>
 
             <div class="product-card">
                 <div class="carousel-wrapper">
                     <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
-                    <div class="carousel-track" data-slide="0"><div class="slide-placeholder">[ 1kg Front ]</div><div class="slide-placeholder">[ 1kg Back ]</div><div class="slide-placeholder">[ Nutrition ]</div></div>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder">[ 1kg Front ]</div>
+                        <div class="slide-placeholder">[ 1kg Back ]</div>
+                        <div class="slide-placeholder">[ Nutrition ]</div>
+                    </div>
                     <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
                 </div>
                 <h2>1kg Unsweetened</h2>
                 <p class="ingredients">Roasted Peanuts • Salt</p>
                 <p class="price">₹819</p>
-                <button class="order-btn" onclick="addToCartDirectly('1kg Unsweetened', 819, 'Unsweetened')">Add to Cart</button>
+                <button class="order-btn" onclick="openOptionsModal('1kg Unsweetened', 'unsweet', 819, 819)">Customize & Add</button>
+            </div>
+        </div>
+
+        <h2 class="section-title fade-section delay-3">Specialty Editions</h2>
+        <div class="product-grid fade-section delay-3">
+            <div class="product-card" style="opacity: 0.9;">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ 250g Cocoa ]</div>
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Back Label ]</div>
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Nutrition ]</div>
+                    </div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>250g Cocoa</h2>
+                <p class="ingredients">Roasted Peanuts • Dark Cocoa • Date Powder • Salt</p>
+                <p class="coming-soon-text">IN DEVELOPMENT</p>
+                <button class="order-btn btn-disabled" disabled>Coming Soon</button>
+            </div>
+
+            <div class="product-card" style="opacity: 0.9;">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ 500g Cocoa ]</div>
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Back Label ]</div>
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Nutrition ]</div>
+                    </div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>500g Cocoa</h2>
+                <p class="ingredients">Roasted Peanuts • Dark Cocoa • Date Powder • Salt</p>
+                <p class="coming-soon-text">IN DEVELOPMENT</p>
+                <button class="order-btn btn-disabled" disabled>Coming Soon</button>
+            </div>
+
+            <div class="product-card" style="opacity: 0.9;">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ 1kg Cocoa ]</div>
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Back Label ]</div>
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Nutrition ]</div>
+                    </div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>1kg Cocoa</h2>
+                <p class="ingredients">Roasted Peanuts • Dark Cocoa • Date Powder • Salt</p>
+                <p class="coming-soon-text">IN DEVELOPMENT</p>
+                <button class="order-btn btn-disabled" disabled>Coming Soon</button>
             </div>
         </div>
     </div>
@@ -188,12 +558,43 @@
     <div class="modal-overlay" id="optionsModal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('optionsModal')">×</span>
-            <h3>Choose Sweetener</h3>
-            <p id="modalSizeText" style="font-family: Arial; color: #666; font-weight: bold; margin-bottom: 5px;"></p>
-            <select id="sweetenerOption" onchange="updateAddButtonPrice()">
-                <option value="date">Date Powder (Standard)</option>
-                <option value="monk">Monk Fruit Sweetened</option>
-            </select>
+            <h3>Craft Your Jar</h3>
+            <div class="modal-size-label" id="modalSizeText"></div>
+            
+            <div class="select-group" id="textureGroup">
+                <label>1. Choose Texture</label>
+                <div class="pill-grid">
+                    <input type="radio" name="textureOption" id="texSmooth" value="Smooth" class="pill-input" checked onchange="updateAddButtonPrice()">
+                    <label for="texSmooth" class="pill-label">
+                        <div class="pill-title">Smooth</div>
+                        <div class="pill-sub">Creamy & Rich</div>
+                    </label>
+                    
+                    <input type="radio" name="textureOption" id="texCrunchy" value="Crunchy" class="pill-input" onchange="updateAddButtonPrice()">
+                    <label for="texCrunchy" class="pill-label">
+                        <div class="pill-title">Crunchy</div>
+                        <div class="pill-sub">Loaded with pieces</div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="select-group" id="sweetenerGroup">
+                <label>2. Choose Sweetener</label>
+                <div class="pill-grid">
+                    <input type="radio" name="sweetenerOption" id="sweetDate" value="date" class="pill-input" checked onchange="updateAddButtonPrice()">
+                    <label for="sweetDate" class="pill-label">
+                        <div class="pill-title">Date Powder</div>
+                        <div class="pill-sub">Our Standard</div>
+                    </label>
+                    
+                    <input type="radio" name="sweetenerOption" id="sweetMonk" value="monk" class="pill-input" onchange="updateAddButtonPrice()">
+                    <label for="sweetMonk" class="pill-label">
+                        <div class="pill-title">Monk Fruit</div>
+                        <div class="pill-sub">Keto Friendly</div>
+                    </label>
+                </div>
+            </div>
+
             <button class="pay-btn" id="addToCartBtn" onclick="processOptionsAndAdd()">Add to Cart</button>
         </div>
     </div>
@@ -212,11 +613,10 @@
                 <span>Subtotal:</span>
                 <span id="cartTotalDisplay">₹0</span>
             </div>
-            <button class="pay-btn" id="checkoutBtn" onclick="checkoutWhatsApp()">Checkout</button>
+            <button class="pay-btn" id="checkoutBtn" onclick="checkoutWhatsApp()">Checkout via WhatsApp</button>
         </div>
     </div>
 
-    <!-- THE ROASTER AI CHAT INTERFACE -->
     <button class="ai-bubble-btn" onclick="toggleAIChat()">TR</button>
     <div class="ai-chat-window" id="aiChatWindow">
         <div class="ai-chat-header">
@@ -227,68 +627,333 @@
             <div class="ai-close" onclick="toggleAIChat()">×</div>
         </div>
         <div class="ai-chat-body" id="aiChatBody">
-            <div class="ai-msg-bot">Hi! I'm The Roaster. Ask me anything about our small-batch peanut butter, Date Powder vs. Monk Fruit, or how to order!</div>
+            <div class="ai-msg-bot">
+                <div class="ai-msg-content">Hi! I'm The Roaster. Ask me anything about our small-batch peanut butter, Date Powder vs. Monk Fruit, or how to order!</div>
+                <button class="ai-speaker-btn" onclick="speakText(this.previousElementSibling.innerText)" title="Read aloud">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                </button>
+            </div>
         </div>
         <div class="ai-chat-input-area">
-            <input type="text" class="ai-input" id="aiInput" placeholder="Ask a question..." onkeypress="handleAIKeyPress(event)">
-            <button class="ai-send" onclick="sendAIMessage()">SEND</button>
+            <div class="ai-input-row">
+                <div class="ai-input-wrapper">
+                    <input type="text" class="ai-input" id="aiInput" placeholder="Ask a question..." maxlength="300" oninput="updateCharCount()" onkeypress="handleAIKeyPress(event)">
+                    <button class="ai-mic-btn" id="aiMicBtn" onclick="toggleSpeechRecognition()" title="Click to speak">
+                        <div class="mic-icon" id="micIconSvg">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                            </svg>
+                        </div>
+                        <div class="voice-visualizer" id="voiceVisualizer">
+                            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                        </div>
+                    </button>
+                </div>
+                <button class="ai-send" id="aiSendBtn" onclick="sendAIMessage()">SEND</button>
+            </div>
+            <div class="ai-char-counter" id="aiCharCounter">0/300</div>
         </div>
     </div>
 
     <script>
-        // --- CART & CAROUSEL LOGIC ---
-        function moveCarousel(button, direction) { const track = button.parentElement.querySelector('.carousel-track'); let currentSlide = parseInt(track.getAttribute('data-slide')) || 0; currentSlide += direction; if (currentSlide < 0) currentSlide = 2; if (currentSlide > 2) currentSlide = 0; track.setAttribute('data-slide', currentSlide); track.style.transform = `translateX(-${currentSlide * 100}%)`; }
-        let cart = []; const FREE_SHIPPING_THRESHOLD = 1399; const whatsappNumber = "919246185187"; let pendingName = ''; let pendingDatePrice = 0; let pendingMonkPrice = 0;
-        function openOptionsModal(name, type, datePrice, monkPrice) { pendingName = name; pendingDatePrice = datePrice; pendingMonkPrice = monkPrice; document.getElementById("modalSizeText").innerText = name; document.getElementById("sweetenerOption").value = "date"; updateAddButtonPrice(); document.getElementById("optionsModal").style.display = "flex"; }
-        function updateAddButtonPrice() { let choice = document.getElementById("sweetenerOption").value; let finalPrice = (choice === "date") ? pendingDatePrice : pendingMonkPrice; document.getElementById("addToCartBtn").innerText = `Add to Cart (₹${finalPrice})`; }
-        function processOptionsAndAdd() { let choice = document.getElementById("sweetenerOption").value; let sweetenerText = (choice === "date") ? "Date Powder" : "Monk Fruit"; let finalPrice = (choice === "date") ? pendingDatePrice : pendingMonkPrice; cart.push({ name: pendingName, sweetener: sweetenerText, price: finalPrice }); updateCartIcon(); closeModal('optionsModal'); openCartModal(); }
-        function addToCartDirectly(name, price, sweetenerText) { cart.push({ name: name, sweetener: sweetenerText, price: price }); updateCartIcon(); openCartModal(); }
-        function updateCartIcon() { document.getElementById("cartCount").innerText = cart.length; }
-        function openCartModal() { let listHTML = ''; let total = 0; if (cart.length === 0) { listHTML = '<div class="empty-cart-msg">Your cart is empty.</div>'; document.getElementById("checkoutBtn").style.display = "none"; } else { document.getElementById("checkoutBtn").style.display = "block"; cart.forEach((item) => { total += item.price; listHTML += `<div class="cart-item"><div class="cart-item-details"><div class="cart-item-title">${item.name}</div><div class="cart-item-sweet">${item.sweetener}</div></div><div class="cart-item-price">₹${item.price}</div></div>`; }); } document.getElementById("cartItemsList").innerHTML = listHTML; document.getElementById("cartTotalDisplay").innerText = `₹${total}`; updateProgressBar(total); document.getElementById("cartModal").style.display = "flex"; }
-        function updateProgressBar(total) { let bar = document.getElementById("shippingBar"); let text = document.getElementById("shippingText"); if (total >= FREE_SHIPPING_THRESHOLD) { bar.style.width = "100%"; bar.classList.add("unlocked-bar"); text.classList.add("unlocked-text"); text.innerText = "🎉 You unlocked FREE Shipping!"; } else { let percentage = (total / FREE_SHIPPING_THRESHOLD) * 100; let away = FREE_SHIPPING_THRESHOLD - total; bar.style.width = percentage + "%"; bar.classList.remove("unlocked-bar"); text.classList.remove("unlocked-text"); text.innerText = `Add ₹${away} more for FREE Shipping!`; } }
-        function closeModal(modalId) { document.getElementById(modalId).style.display = "none"; }
+        function moveCarousel(button, direction) { 
+            const track = button.parentElement.querySelector('.carousel-track'); 
+            let currentSlide = parseInt(track.getAttribute('data-slide')) || 0; 
+            currentSlide += direction; 
+            if (currentSlide < 0) currentSlide = 2; 
+            if (currentSlide > 2) currentSlide = 0; 
+            track.setAttribute('data-slide', currentSlide); 
+            track.style.transform = `translateX(-${currentSlide * 100}%)`; 
+        }
+        
+        let cart = JSON.parse(localStorage.getItem('groundedCart')) || []; 
+        const FREE_SHIPPING_THRESHOLD = 1399; 
+        const whatsappNumber = "919246185187"; 
+        
+        let pendingName = ''; 
+        let pendingType = '';
+        let pendingDatePrice = 0; 
+        let pendingMonkPrice = 0;
+
+        function saveCart() {
+            localStorage.setItem('groundedCart', JSON.stringify(cart));
+            updateCartIcon();
+        }
+
+        updateCartIcon();
+
+        function openOptionsModal(name, type, price1, price2) { 
+            pendingName = name; 
+            pendingType = type; 
+            pendingDatePrice = price1; 
+            pendingMonkPrice = price2; 
+            
+            document.getElementById("modalSizeText").innerText = name; 
+            document.getElementById("texSmooth").checked = true;
+            document.getElementById("sweetDate").checked = true;
+            
+            if (type === 'unsweet') {
+                document.getElementById("sweetenerGroup").style.display = "none";
+            } else {
+                document.getElementById("sweetenerGroup").style.display = "block";
+            }
+            
+            updateAddButtonPrice(); 
+            document.getElementById("optionsModal").style.display = "flex"; 
+        }
+
+        function updateAddButtonPrice() { 
+            let finalPrice;
+            if (pendingType === 'unsweet') {
+                finalPrice = pendingDatePrice;
+            } else {
+                let choice = document.querySelector('input[name="sweetenerOption"]:checked').value; 
+                finalPrice = (choice === "date") ? pendingDatePrice : pendingMonkPrice; 
+            }
+            document.getElementById("addToCartBtn").innerText = `Add to Cart (₹${finalPrice})`; 
+        }
+
+        function processOptionsAndAdd() { 
+            let texture = document.querySelector('input[name="textureOption"]:checked').value;
+            let finalPrice;
+            let variantText = texture; 
+            
+            if (pendingType === 'sweet') {
+                let choice = document.querySelector('input[name="sweetenerOption"]:checked').value; 
+                let sweetenerText = (choice === "date") ? "Date Powder" : "Monk Fruit"; 
+                variantText = `${texture} | ${sweetenerText}`;
+                finalPrice = (choice === "date") ? pendingDatePrice : pendingMonkPrice; 
+            } else {
+                variantText = `${texture} | Unsweetened`;
+                finalPrice = pendingDatePrice;
+            }
+            
+            cart.push({ name: pendingName, variant: variantText, price: finalPrice }); 
+            saveCart(); 
+            closeModal('optionsModal'); 
+            openCartModal(); 
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1); 
+            saveCart(); 
+            openCartModal(); 
+        }
+
+        function updateCartIcon() { 
+            document.getElementById("cartCount").innerText = cart.length; 
+        }
+        
+        function openCartModal() { 
+            let listHTML = ''; 
+            let total = 0; 
+            
+            if (cart.length === 0) { 
+                listHTML = '<div class="empty-cart-msg">Your cart is empty.</div>'; 
+                document.getElementById("checkoutBtn").style.display = "none"; 
+            } else { 
+                document.getElementById("checkoutBtn").style.display = "block"; 
+                cart.forEach((item, index) => { 
+                    total += item.price; 
+                    listHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${item.name}</div>
+                            <div class="cart-item-variant">${item.variant}</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div class="cart-item-price">₹${item.price}</div>
+                            <button onclick="removeFromCart(${index})" style="background: none; border: none; color: #D9534F; font-size: 1.5rem; font-weight: bold; cursor: pointer; padding: 0; line-height: 1;" title="Remove Item">&times;</button>
+                        </div>
+                    </div>`; 
+                }); 
+            } 
+            
+            document.getElementById("cartItemsList").innerHTML = listHTML; 
+            document.getElementById("cartTotalDisplay").innerText = `₹${total}`; 
+            updateProgressBar(total); 
+            document.getElementById("cartModal").style.display = "flex"; 
+        }
+
+        function updateProgressBar(total) { 
+            let bar = document.getElementById("shippingBar"); 
+            let text = document.getElementById("shippingText"); 
+            
+            if (total >= FREE_SHIPPING_THRESHOLD) { 
+                bar.style.width = "100%"; 
+                bar.classList.add("unlocked-bar"); 
+                text.classList.add("unlocked-text"); 
+                text.innerText = "🎉 You unlocked FREE Shipping!"; 
+            } else { 
+                let percentage = (total / FREE_SHIPPING_THRESHOLD) * 100; 
+                let away = FREE_SHIPPING_THRESHOLD - total; 
+                bar.style.width = percentage + "%"; 
+                bar.classList.remove("unlocked-bar"); 
+                text.classList.remove("unlocked-text"); 
+                text.innerText = `Add ₹${away} more for FREE Shipping!`; 
+            } 
+        }
+
+        function closeModal(modalId) { 
+            document.getElementById(modalId).style.display = "none"; 
+        }
         
         function checkoutWhatsApp() { 
-            let total = 0; let orderDetails = ""; cart.forEach((item) => { total += item.price; orderDetails += `- ${item.name} (${item.sweetener}): ₹${item.price}\n`; }); let shippingStatus = (total >= FREE_SHIPPING_THRESHOLD) ? "FREE" : "Standard"; let message = `Hi Simply Seeded! 🥜 I would like to place an order:\n\n${orderDetails}\nSubtotal: ₹${total}\nShipping: ${shippingStatus}\n\nPlease share your QR code so I can pay!`; window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank'); 
+            let total = 0; 
+            let orderDetails = ""; 
+            
+            cart.forEach((item) => { 
+                total += item.price; 
+                orderDetails += `- ${item.name} (${item.variant}): ₹${item.price}\n`; 
+            }); 
+            
+            let shippingStatus = (total >= FREE_SHIPPING_THRESHOLD) ? "FREE" : "Standard"; 
+            let message = `Hi Simply Seeded! 🥜 I would like to place an order:\n\n${orderDetails}\nSubtotal: ₹${total}\nShipping: ${shippingStatus}\n\nPlease share your QR code so I can pay!`; 
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank'); 
         }
 
-        // --- SECURE BACKEND AI LOGIC ---
         function toggleAIChat() {
             const chat = document.getElementById('aiChatWindow');
-            chat.style.display = (chat.style.display === 'flex') ? 'none' : 'flex';
+            if (chat.style.display === 'flex') {
+                chat.style.display = 'none';
+                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            } else {
+                chat.style.display = 'flex';
+            }
         }
         
+        function updateCharCount() {
+            const input = document.getElementById('aiInput');
+            const counter = document.getElementById('aiCharCounter');
+            counter.innerText = `${input.value.length}/300`;
+        }
+
+        function speakText(text) {
+            if (!('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel(); 
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-IN'; 
+            utterance.rate = 1.0; 
+            utterance.pitch = 1.0;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = null;
+        let isRecording = false;
+
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-IN'; 
+
+            recognition.onstart = function() {
+                isRecording = true;
+                document.getElementById('micIconSvg').style.display = 'none';
+                document.getElementById('voiceVisualizer').style.display = 'flex';
+                document.getElementById('aiInput').placeholder = "Listening...";
+                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            };
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                const inputField = document.getElementById('aiInput');
+                inputField.value = inputField.value ? inputField.value + " " + transcript : transcript;
+                updateCharCount();
+            };
+
+            recognition.onerror = function(event) {
+                console.error("Speech recognition error", event.error);
+                stopRecordingUI();
+            };
+
+            recognition.onend = function() {
+                stopRecordingUI();
+            };
+        }
+
+        function toggleSpeechRecognition() {
+            if (!recognition) {
+                alert("Sorry, your browser doesn't support voice dictation. Try using Chrome or Safari!");
+                return;
+            }
+            if (isRecording) {
+                recognition.stop();
+            } else {
+                recognition.start();
+            }
+        }
+
+        function stopRecordingUI() {
+            isRecording = false;
+            document.getElementById('micIconSvg').style.display = 'block';
+            document.getElementById('voiceVisualizer').style.display = 'none';
+            document.getElementById('aiInput').placeholder = "Ask a question...";
+        }
+
         async function sendAIMessage() {
             const input = document.getElementById('aiInput');
+            const sendBtn = document.getElementById('aiSendBtn');
+            const micBtn = document.getElementById('aiMicBtn');
             const msg = input.value.trim();
+            
+            if (isRecording && recognition) recognition.stop();
             if(!msg) return;
             
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+
             const body = document.getElementById('aiChatBody');
             
-            body.innerHTML += `<div class="ai-msg-user">${msg}</div>`;
+            body.innerHTML += `<div class="ai-msg-user">${escapeHTML(msg)}</div>`;
             input.value = ''; 
+            updateCharCount();
             body.scrollTop = body.scrollHeight;
 
+            input.disabled = true;
+            sendBtn.disabled = true;
+            micBtn.disabled = true;
+
             const loadingId = 'loading-' + Date.now();
-            body.innerHTML += `<div class="ai-msg-bot" id="${loadingId}">Thinking...</div>`;
+            
+            body.innerHTML += `
+                <div class="ai-msg-bot" id="${loadingId}">
+                    <div class="ai-msg-content">Thinking...</div>
+                </div>`;
             body.scrollTop = body.scrollHeight;
 
             try {
-                const response = await fetch('/.netlify/functions/chat', {
+                const response = await fetch("https://grounded-api.theteamgrounded.workers.dev/", {
                     method: 'POST',
-                    body: JSON.stringify({ message: msg, persona: 'roaster' })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: msg, persona: "roaster", pageContext: document.title })
                 });
                 
                 const data = await response.json();
+                const botMsgDiv = document.getElementById(loadingId);
                 
-                document.getElementById(loadingId).innerText = data.reply;
+                botMsgDiv.innerHTML = `
+                    <div class="ai-msg-content"></div>
+                    <button class="ai-speaker-btn" onclick="speakText(this.previousElementSibling.innerText)" title="Read aloud">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                `;
+                botMsgDiv.querySelector('.ai-msg-content').innerText = data.reply;
                 
             } catch (error) {
-                document.getElementById(loadingId).innerText = "Sorry, my servers are taking a quick break. Try again in a minute!";
+                console.error("API Error:", error);
+                document.getElementById(loadingId).innerHTML = `<div class="ai-msg-content">Oops! My secure backend had a hiccup connecting to the brain.</div>`;
+            } finally {
+                input.disabled = false;
+                sendBtn.disabled = false;
+                micBtn.disabled = false;
+                input.focus();
+                body.scrollTop = body.scrollHeight;
             }
-            body.scrollTop = body.scrollHeight;
         }
-        
+
+        function escapeHTML(str) { return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)); }
         function handleAIKeyPress(e) { if(e.key === 'Enter') sendAIMessage(); }
     </script>
 </body>
