@@ -522,8 +522,7 @@
 
             <div class="ai-input-row">
                 <div class="ai-input-wrapper">
-                    <!-- Notice 'disabled' is added here to lock it down initially -->
-                    <input type="text" class="ai-input" id="aiInput" placeholder="Verifying connection..." maxlength="300" disabled oninput="updateCharCount()" onkeypress="handleAIKeyPress(event)">
+                    <input type="text" class="ai-input" id="aiInput" placeholder="Please sign in to chat..." maxlength="300" disabled oninput="updateCharCount()" onkeypress="handleAIKeyPress(event)">
                     <button class="ai-mic-btn" id="aiMicBtn" onclick="toggleSpeechRecognition()" title="Click to speak" disabled>
                         <div class="mic-icon" id="micIconSvg">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -543,17 +542,11 @@
     </div>
 
     <script>
-        // NEW SECURITY VARIABLE
         let cfToken = "";
 
-        // THIS UNLOCKS THE CHAT WHEN CLOUDFLARE SAYS YOU ARE HUMAN
+        // Cloudflare callback function (still needed for the widget to not break, even if Firebase unlocks)
         function unlockChat(token) {
             cfToken = token;
-            const input = document.getElementById('aiInput');
-            input.disabled = false;
-            input.placeholder = "Ask a question...";
-            document.getElementById('aiSendBtn').disabled = false;
-            document.getElementById('aiMicBtn').disabled = false;
         }
 
         function toggleAIChat() {
@@ -737,13 +730,33 @@
         }
 
         onAuthStateChanged(auth, (user) => {
+            const chatInput = document.getElementById('aiInput');
+            const sendBtn = document.getElementById('aiSendBtn');
+            const micBtn = document.getElementById('aiMicBtn');
+
             if (user && signInBtn && userProfile) {
+                // USER IS LOGGED IN: Show profile and UNLOCK chat
                 signInBtn.style.display = 'none';
                 userProfile.style.display = 'block';
                 userNameSpan.textContent = user.displayName.toUpperCase();
+                
+                if(chatInput) {
+                    chatInput.disabled = false;
+                    chatInput.placeholder = "Ask a question...";
+                    sendBtn.disabled = false;
+                    micBtn.disabled = false;
+                }
             } else if (signInBtn && userProfile) {
+                // USER IS LOGGED OUT: Show Sign In button and LOCK chat
                 signInBtn.style.display = 'block';
                 userProfile.style.display = 'none';
+                
+                if(chatInput) {
+                    chatInput.disabled = true;
+                    chatInput.placeholder = "Please sign in to chat...";
+                    sendBtn.disabled = true;
+                    micBtn.disabled = true;
+                }
             }
         });
     </script>
