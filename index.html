@@ -272,7 +272,7 @@
         
         .ai-chat-body { 
             padding: 20px; 
-            height: 280px; /* Restored back to full height! */
+            height: 280px; 
             overflow-y: auto; 
             display: flex; 
             flex-direction: column; 
@@ -646,14 +646,20 @@
             body.scrollTop = body.scrollHeight;
 
             try {
-                // I removed the cfTurnstileToken from this payload entirely!
+                // THE NEW SECURITY: We fetch the user's secret VIP pass right before sending the message!
+                let userToken = "";
+                if (window.firebaseAuth && window.firebaseAuth.currentUser) {
+                    userToken = await window.firebaseAuth.currentUser.getIdToken(true);
+                }
+
                 const response = await fetch("https://grounded-api.theteamgrounded.workers.dev/", {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
                         message: msg, 
                         persona: "curator", 
-                        pageContext: document.title
+                        pageContext: document.title,
+                        token: userToken // <-- Sending the VIP Pass to your Cloudflare Worker!
                     })
                 });
 
@@ -702,6 +708,9 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
+        
+        // We expose this so our sendAIMessage function can grab the secure token!
+        window.firebaseAuth = auth;
 
         const signInBtn = document.getElementById('google-signin-btn');
         const userProfile = document.getElementById('user-profile');
