@@ -275,7 +275,7 @@
         
         .ai-chat-body { 
             padding: 20px; 
-            height: 280px; 
+            height: 220px; /* Reduced height to make room for Cloudflare widget without squishing */
             overflow-y: auto; 
             display: flex; 
             flex-direction: column; 
@@ -515,9 +515,9 @@
         </div>
         <div class="ai-chat-input-area">
             
-            <!-- CLOUDFLARE TURNSTILE WIDGET (Using Test Dummy Key) -->
+            <!-- CLOUDFLARE TURNSTILE WIDGET (Using your REAL Live Key) -->
             <div style="display: flex; justify-content: center;">
-                <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-callback="unlockChat" data-theme="light"></div>
+                <div class="cf-turnstile" data-sitekey="0x4AAAAAAEkrQTJTjGZllyNM" data-callback="unlockChat" data-theme="light"></div>
             </div>
 
             <div class="ai-input-row">
@@ -544,7 +544,7 @@
     <script>
         let cfToken = "";
 
-        // Cloudflare callback function (still needed for the widget to not break, even if Firebase unlocks)
+        // Cloudflare callback function
         function unlockChat(token) {
             cfToken = token;
         }
