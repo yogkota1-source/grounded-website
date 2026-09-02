@@ -6,9 +6,6 @@
     <title>G R O U N D E D</title>
     <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23FFFFFF" /><text x="50" y="72" font-family="Georgia, serif" font-size="60" font-weight="normal" fill="%231A1A1A" text-anchor="middle">G</text></svg>'>
     
-    <!-- CLOUDFLARE TURNSTILE SCRIPT -->
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
     <style>
         /* PREMIUM ANIMATIONS */
         @keyframes fadeUp { 
@@ -275,7 +272,7 @@
         
         .ai-chat-body { 
             padding: 20px; 
-            height: 220px; /* Reduced height to make room for Cloudflare widget without squishing */
+            height: 280px; /* Restored back to full height! */
             overflow-y: auto; 
             display: flex; 
             flex-direction: column; 
@@ -515,13 +512,9 @@
         </div>
         <div class="ai-chat-input-area">
             
-            <!-- CLOUDFLARE TURNSTILE WIDGET (Using your REAL Live Key) -->
-            <div style="display: flex; justify-content: center;">
-                <div class="cf-turnstile" data-sitekey="0x4AAAAAAEkrQTJTjGZllyNM" data-callback="unlockChat" data-theme="light"></div>
-            </div>
-
             <div class="ai-input-row">
                 <div class="ai-input-wrapper">
+                    <!-- Firebase Auth will unlock this when the user logs in -->
                     <input type="text" class="ai-input" id="aiInput" placeholder="Please sign in to chat..." maxlength="300" disabled oninput="updateCharCount()" onkeypress="handleAIKeyPress(event)">
                     <button class="ai-mic-btn" id="aiMicBtn" onclick="toggleSpeechRecognition()" title="Click to speak" disabled>
                         <div class="mic-icon" id="micIconSvg">
@@ -542,13 +535,6 @@
     </div>
 
     <script>
-        let cfToken = "";
-
-        // Cloudflare callback function
-        function unlockChat(token) {
-            cfToken = token;
-        }
-
         function toggleAIChat() {
             const chat = document.getElementById('aiChatWindow');
             if (chat.style.display === 'flex') {
@@ -660,14 +646,14 @@
             body.scrollTop = body.scrollHeight;
 
             try {
+                // I removed the cfTurnstileToken from this payload entirely!
                 const response = await fetch("https://grounded-api.theteamgrounded.workers.dev/", {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
                         message: msg, 
                         persona: "curator", 
-                        pageContext: document.title,
-                        cfTurnstileToken: cfToken 
+                        pageContext: document.title
                     })
                 });
 
