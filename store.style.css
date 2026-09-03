@@ -41,7 +41,7 @@ p.subtitle { font-family: Arial, sans-serif; letter-spacing: 2px; color: #555; m
 /* --- PREMIUM MOBILE DROPDOWN --- */
 .category-dropdown { position: relative; display: inline-block; width: 90%; max-width: 400px; margin: 0 auto 30px auto; text-align: left; z-index: 50; }
 .dropdown-btn { background-color: #F8F5F0; color: #3E2723; padding: 15px 20px; font-size: 16px; font-weight: bold; border: 2px solid #3E2723; border-radius: 8px; width: 100%; cursor: pointer; display: flex; justify-content: space-between; font-family: 'Playfair Display', serif; }
-.dropdown-content { display: none; position: absolute; background-color: #FFFFFF; width: 100%; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; z-index: 100; margin-top: 5px; text-align: left;}
+.dropdown-content { display: none; position: absolute; background-color: #FFFFFF; width: 100%; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; z-index: 100; top: 100%; margin-top: 0; text-align: left;}
 .category-dropdown:hover .dropdown-content { display: block; }
 .dropdown-content a { color: #3E2723; padding: 15px 20px; text-decoration: none; display: block; border-bottom: 1px solid #f1f1f1; font-weight: 500; font-family: Arial, sans-serif; font-size: 0.9rem;}
 .dropdown-content a.coming-soon { color: #A9A9A9; font-style: italic; font-size: 0.85rem; cursor: default; }
@@ -406,7 +406,8 @@ p.subtitle { font-family: Arial, sans-serif; letter-spacing: 2px; color: #555; m
     right: 0; 
     left: auto; 
     min-width: 220px; 
-    margin-top: 8px; 
+    margin-top: 0; /* FIXED THE HOVER BUG! */
+    top: 100%;
 }
 
 .cart-trigger.compact-cart { 

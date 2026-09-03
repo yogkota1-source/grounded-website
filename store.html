@@ -16,19 +16,18 @@
         <div class="top-nav fade-section">
             <a href="index.html" class="back-link"><span class="fun-text">← BACK</span> <span class="logo-text">G R O U N D E D</span></a>
             
-            <!-- We grouped the Dropdown and Cart together! -->
             <div class="nav-actions">
+                <button class="cart-trigger compact-cart" onclick="openCartModal()">🛒 (<span id="cartCount">0</span>)</button>
                 <div class="category-dropdown compact">
                     <button class="dropdown-btn">Category <span>▼</span></button>
                     <div class="dropdown-content">
                         <a href="#peanut-butter" class="active-category">Peanut Butter</a>
-                        <a href="#" class="coming-soon">Almond (Soon)</a>
-                        <a href="#" class="coming-soon">Pistachio (Soon)</a>
-                        <a href="#" class="coming-soon">Walnut (Soon)</a>
-                        <a href="#" class="coming-soon">Hazelnut (Soon)</a>
+                        <a href="#" class="coming-soon">Almond Butter (Soon)</a>
+                        <a href="#" class="coming-soon">Pistachio Butter (Soon)</a>
+                        <a href="#" class="coming-soon">Walnut Butter (Soon)</a>
+                        <a href="#" class="coming-soon">Hazelnut Butter (Soon)</a>
                     </div>
                 </div>
-                <button class="cart-trigger compact-cart" onclick="openCartModal()">🛒 (<span id="cartCount">0</span>)</button>
             </div>
         </div>
 
@@ -250,7 +249,6 @@
                 <span>Subtotal:</span>
                 <span id="cartTotalDisplay">₹0</span>
             </div>
-            <!-- NOW DEFAULTED TO DISABLED UNTIL FIREBASE UNLOCKS IT -->
             <button class="pay-btn" id="checkoutBtn" onclick="checkoutWhatsApp()" disabled>Sign in to Checkout</button>
         </div>
     </div>
@@ -275,7 +273,6 @@
         <div class="ai-chat-input-area">
             <div class="ai-input-row">
                 <div class="ai-input-wrapper">
-                    <!-- FIREBASE LOCK APPLIED HERE -->
                     <input type="text" class="ai-input" id="aiInput" placeholder="Please sign in to chat..." maxlength="300" disabled oninput="updateCharCount()" onkeypress="handleAIKeyPress(event)">
                     <button class="ai-mic-btn" id="aiMicBtn" onclick="toggleSpeechRecognition()" title="Click to speak" disabled>
                         <div class="mic-icon" id="micIconSvg">
@@ -563,7 +560,6 @@
             body.scrollTop = body.scrollHeight;
 
             try {
-                // THE NEW SECURITY: We fetch the user's secret VIP pass right before sending the message!
                 let userToken = "";
                 if (window.firebaseAuth && window.firebaseAuth.currentUser) {
                     userToken = await window.firebaseAuth.currentUser.getIdToken(true);
@@ -576,7 +572,7 @@
                         message: msg, 
                         persona: "roaster", 
                         pageContext: document.title,
-                        token: userToken // <-- Sending the VIP Pass to your Cloudflare Worker!
+                        token: userToken
                     })
                 });
                 
@@ -625,17 +621,15 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         
-        // We expose this so our sendAIMessage function can grab the secure token!
         window.firebaseAuth = auth; 
 
         onAuthStateChanged(auth, (user) => {
             const chatInput = document.getElementById('aiInput');
             const sendBtn = document.getElementById('aiSendBtn');
             const micBtn = document.getElementById('aiMicBtn');
-            const checkoutBtn = document.getElementById('checkoutBtn'); // <-- NEW: Grab the checkout button!
+            const checkoutBtn = document.getElementById('checkoutBtn');
 
             if (user) {
-                // USER IS LOGGED IN: UNLOCK chat and checkout
                 if(chatInput) {
                     chatInput.disabled = false;
                     chatInput.placeholder = "Ask The Roaster a question...";
@@ -647,7 +641,6 @@
                     checkoutBtn.innerText = "Checkout via WhatsApp";
                 }
             } else {
-                // USER IS LOGGED OUT: LOCK chat and checkout
                 if(chatInput) {
                     chatInput.disabled = true;
                     chatInput.placeholder = "Please sign in to chat...";
