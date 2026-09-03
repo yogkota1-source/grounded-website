@@ -14,25 +14,27 @@
 
     <div class="content-wrapper">
         <div class="top-nav fade-section">
-            <a href="index.html" class="back-link"><span class="fun-text">← BACK TO</span> <span class="logo-text">G R O U N D E D</span></a>
-            <button class="cart-trigger" onclick="openCartModal()">🛒 Cart (<span id="cartCount">0</span>)</button>
+            <a href="index.html" class="back-link"><span class="fun-text">← BACK</span> <span class="logo-text">G R O U N D E D</span></a>
+            
+            <!-- We grouped the Dropdown and Cart together! -->
+            <div class="nav-actions">
+                <div class="category-dropdown compact">
+                    <button class="dropdown-btn">Category <span>▼</span></button>
+                    <div class="dropdown-content">
+                        <a href="#peanut-butter" class="active-category">Peanut Butter</a>
+                        <a href="#" class="coming-soon">Almond (Soon)</a>
+                        <a href="#" class="coming-soon">Pistachio (Soon)</a>
+                        <a href="#" class="coming-soon">Walnut (Soon)</a>
+                        <a href="#" class="coming-soon">Hazelnut (Soon)</a>
+                    </div>
+                </div>
+                <button class="cart-trigger compact-cart" onclick="openCartModal()">🛒 (<span id="cartCount">0</span>)</button>
+            </div>
         </div>
 
         <div class="fade-section">
             <h1>Simply Seeded</h1>
             <p class="subtitle">SELECT YOUR CRAFTED JAR</p>
-        </div>
-
-        <!-- THE PREMIUM DROPDOWN MENU -->
-        <div class="category-dropdown fade-section delay-1">
-            <button class="dropdown-btn">Select Category <span>▼</span></button>
-            <div class="dropdown-content">
-                <a href="#peanut-butter" class="active-category">Peanut Butter</a>
-                <a href="#" class="coming-soon">Almond Butter (Coming Soon)</a>
-                <a href="#" class="coming-soon">Pistachio Butter (Coming Soon)</a>
-                <a href="#" class="coming-soon">Walnut Butter (Coming Soon)</a>
-                <a href="#" class="coming-soon">Hazelnut Butter (Coming Soon)</a>
-            </div>
         </div>
 
         <h2 id="peanut-butter" class="section-title fade-section delay-1">Sweetened Peanut Butter</h2>
