@@ -204,6 +204,7 @@
 
         .pay-btn { background-color: #1A1A1A; color: white; padding: 16px; width: 100%; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; font-weight: bold; margin-top: 10px; font-family: 'Playfair Display', serif; transition: background 0.3s; }
         .pay-btn:hover { background-color: #333; }
+        .pay-btn:disabled { background-color: #D4CAB5; cursor: not-allowed; color: #888; }
         
         /* CART STYLES */
         .cart-item { display: flex; justify-content: space-between; align-items: center; font-family: Arial, sans-serif; border-bottom: 1px solid #EEE; padding: 15px 0; }
@@ -614,7 +615,8 @@
                 <span>Subtotal:</span>
                 <span id="cartTotalDisplay">₹0</span>
             </div>
-            <button class="pay-btn" id="checkoutBtn" onclick="checkoutWhatsApp()">Checkout via WhatsApp</button>
+            <!-- NOW DEFAULTED TO DISABLED UNTIL FIREBASE UNLOCKS IT -->
+            <button class="pay-btn" id="checkoutBtn" onclick="checkoutWhatsApp()" disabled>Sign in to Checkout</button>
         </div>
     </div>
 
@@ -995,22 +997,31 @@
             const chatInput = document.getElementById('aiInput');
             const sendBtn = document.getElementById('aiSendBtn');
             const micBtn = document.getElementById('aiMicBtn');
+            const checkoutBtn = document.getElementById('checkoutBtn'); // <-- NEW: Grab the checkout button!
 
             if (user) {
-                // USER IS LOGGED IN: UNLOCK chat
+                // USER IS LOGGED IN: UNLOCK chat and checkout
                 if(chatInput) {
                     chatInput.disabled = false;
                     chatInput.placeholder = "Ask The Roaster a question...";
                     sendBtn.disabled = false;
                     micBtn.disabled = false;
                 }
+                if(checkoutBtn) {
+                    checkoutBtn.disabled = false;
+                    checkoutBtn.innerText = "Checkout via WhatsApp";
+                }
             } else {
-                // USER IS LOGGED OUT: LOCK chat
+                // USER IS LOGGED OUT: LOCK chat and checkout
                 if(chatInput) {
                     chatInput.disabled = true;
                     chatInput.placeholder = "Please sign in to chat...";
                     sendBtn.disabled = true;
                     micBtn.disabled = true;
+                }
+                if(checkoutBtn) {
+                    checkoutBtn.disabled = true;
+                    checkoutBtn.innerText = "Sign in to Checkout";
                 }
             }
         });
