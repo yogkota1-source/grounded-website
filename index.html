@@ -49,8 +49,8 @@
 
     <div class="story-section">
         <div class="story-flex">
-            <!-- HERE IS THE BULLETPROOF PHOTO LINK WITH EXACT CAPITALIZATION! -->
-            <img src="PBphoto.JPG" alt="Founder making Grounded peanut butter" style="flex: 1; border-radius: 8px; object-fit: cover; width: 100%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            <!-- HERE IS THE PHOTO LINK -->
+            <img src="PBphoto.jpg" alt="Founder making Grounded peanut butter" style="flex: 1; border-radius: 8px; object-fit: cover; width: 100%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
             
             <div class="story-text">
                 <h2>Our Story</h2>
@@ -238,7 +238,6 @@
             body.scrollTop = body.scrollHeight;
 
             try {
-                // THE NEW SECURITY: We fetch the user's secret VIP pass right before sending the message!
                 let userToken = "";
                 if (window.firebaseAuth && window.firebaseAuth.currentUser) {
                     userToken = await window.firebaseAuth.currentUser.getIdToken(true);
@@ -251,7 +250,7 @@
                         message: msg, 
                         persona: "curator", 
                         pageContext: document.title,
-                        token: userToken // <-- Sending the VIP Pass to your Cloudflare Worker!
+                        token: userToken 
                     })
                 });
 
@@ -301,7 +300,6 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
         
-        // We expose this so our sendAIMessage function can grab the secure token!
         window.firebaseAuth = auth;
 
         const signInBtn = document.getElementById('google-signin-btn');
@@ -322,7 +320,6 @@
             const micBtn = document.getElementById('aiMicBtn');
 
             if (user && signInBtn && userProfile) {
-                // USER IS LOGGED IN: Show profile and UNLOCK chat
                 signInBtn.style.display = 'none';
                 userProfile.style.display = 'block';
                 userNameSpan.textContent = user.displayName.toUpperCase();
@@ -334,7 +331,6 @@
                     micBtn.disabled = false;
                 }
             } else if (signInBtn && userProfile) {
-                // USER IS LOGGED OUT: Show Sign In button and LOCK chat
                 signInBtn.style.display = 'block';
                 userProfile.style.display = 'none';
                 
