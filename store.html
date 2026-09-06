@@ -3,268 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simply Seeded - Store</title>
-    <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23D97957" /><text x="50" y="68" font-family="Georgia, serif" font-size="50" font-weight="bold" fill="%231A1A1A" text-anchor="middle">Ss</text></svg>'>
+    <title>Pantry | G R O U N D E D</title>
+    <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23FFFFFF" /><text x="50" y="72" font-family="Georgia, serif" font-size="60" font-weight="normal" fill="%231A1A1A" text-anchor="middle">G</text></svg>'>
     
-    <!-- LINK TO YOUR NEW CSS FILE -->
-    <link rel="stylesheet" href="store.style.css">
+    <!-- Link to your main global CSS so it matches the home page -->
+    <link rel="stylesheet" href="index.style.css">
+
+    <style>
+        /* STORE-SPECIFIC PREMIUM STYLES */
+        .store-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #fff;
+            border-bottom: 1px solid #E0E0E0;
+            margin-top: 40px; /* Leaves room for the auth bar */
+        }
+        .cart-btn {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            letter-spacing: 1px;
+            font-weight: bold;
+            transition: opacity 0.3s ease;
+        }
+        .cart-btn:hover { opacity: 0.6; }
+        
+        /* Product Layout */
+        .product-container {
+            display: flex;
+            max-width: 1050px;
+            margin: 60px auto;
+            background: #fff;
+            padding: 50px;
+            border-radius: 2px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.04);
+        }
+        .product-image {
+            flex: 1;
+            background-color: #F7F7F7; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 500px;
+            color: #A0A0A0;
+            font-style: italic;
+            font-family: Georgia, serif;
+        }
+        .product-details {
+            flex: 1;
+            padding-left: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .product-title {
+            font-family: Georgia, serif;
+            font-size: 2.5rem;
+            font-weight: normal;
+            margin: 0 0 5px 0;
+            color: #1A1A1A;
+        }
+        .accent-color {
+            color: #8A2924; 
+            font-weight: bold;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            margin-top: 0;
+        }
+        .product-price {
+            font-size: 1.4rem;
+            color: #1A1A1A;
+            margin-bottom: 25px;
+        }
+        
+        /* PREMIUM SWEETENER TILES */
+        .sweetener-label {
+            font-family: Georgia, serif; 
+            font-size: 1.1rem; 
+            margin-bottom: 12px; 
+            display: block;
+        }
+        .sweetener-options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+        .sweetener-tile {
+            flex: 1;
+            border: 1px solid #E0E0E0;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+        .sweetener-tile:hover { border-color: #A0A0A0; }
+        .sweetener-tile.active {
+            border: 2px solid #8A2924;
+            background-color: #FDF9F8;
+        }
+        .sweetener-tile h4 {
+            margin: 0 0 5px 0;
+            font-size: 1.05rem;
+            color: #1A1A1A;
+        }
+        .sweetener-tile p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        /* Add to Cart Button */
+        .add-btn {
+            background-color: #8A2924; 
+            color: white;
+            border: none;
+            padding: 18px;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-align: center;
+        }
+        .add-btn:hover { background-color: #6a1f1b; }
+
+        /* PREMIUM SLIDE-OUT CART (Hardware Accelerated) */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            z-index: 999;
+        }
+        .cart-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .cart-panel {
+            position: fixed;
+            top: 0;
+            right: 0; 
+            width: 400px;
+            height: 100%;
+            background: #fff;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            box-sizing: border-box;
+            transform: translateX(100%); 
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
+        .cart-panel.open { transform: translateX(0); }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #1A1A1A;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #1A1A1A;
+            font-weight: lighter;
+            line-height: 1;
+        }
+        .cart-items { flex: 1; overflow-y: auto; }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 0.8rem;
+            cursor: pointer;
+            padding: 0;
+            text-decoration: underline;
+            margin-top: 8px;
+        }
+        .checkout-btn {
+            background-color: #1A1A1A;
+            color: white;
+            border: none;
+            padding: 20px;
+            width: 100%;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 25px;
+            letter-spacing: 2px;
+            transition: background 0.3s;
+        }
+        .checkout-btn:hover { background-color: #8A2924; }
+    </style>
 </head>
 <body>
-    <div style="background-color: #A64B2A; color: white; text-align: center; padding: 12px; font-family: Arial, sans-serif; font-size: 0.85rem; letter-spacing: 2px; font-weight: bold;">🎉 ₹50 CASHBACK ON YOUR FIRST ORDER!</div>
 
-    <div class="content-wrapper">
-        <div class="top-nav fade-section">
-            <a href="index.html" class="back-link"><span class="fun-text">← BACK</span> <span class="logo-text">G R O U N D E D</span></a>
-            
-            <div class="nav-actions">
-                <button class="cart-trigger compact-cart" onclick="openCartModal()">🛒 (<span id="cartCount">0</span>)</button>
-                <div class="category-dropdown compact">
-                    <button class="dropdown-btn">Category <span>▼</span></button>
-                    <div class="dropdown-content">
-                        <a href="#peanut-butter" class="active-category">Peanut Butter</a>
-                        <a href="#" class="coming-soon" title="Currently in development">Almond Butter (Soon)</a>
-                        <a href="#" class="coming-soon" title="Currently in development">Pistachio Butter (Soon)</a>
-                        <a href="#" class="coming-soon" title="Currently in development">Walnut Butter (Soon)</a>
-                        <a href="#" class="coming-soon" title="Currently in development">Hazelnut Butter (Soon)</a>
-                    </div>
-                </div>
-            </div>
+    <!-- 1. YOUR FIREBASE LOGIN BAR -->
+    <div class="auth-container">
+        <button id="google-signin-btn">SIGN IN</button>
+        <div id="user-profile">WELCOME, <span id="user-name"></span></div>
+    </div>
+
+    <!-- 2. YOUR SIDE ACCENTS -->
+    <div class="side-accent left-side">EST. 2026</div>
+    <div class="side-accent right-side">PURE FOOD INITIATIVE</div>
+
+    <!-- 3. PREMIUM CART OVERLAY & PANEL -->
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-header">
+            <h2 style="margin:0; font-family: Georgia, serif; font-weight: normal;">Your Pantry</h2>
+            <button class="close-cart" onclick="closeCart()">×</button>
         </div>
-
-        <div class="fade-section">
-            <h1>Simply Seeded</h1>
-            <p class="subtitle">SELECT YOUR CRAFTED JAR</p>
+        <div class="cart-items" id="cartItemsContainer">
+            <p style="color: #A0A0A0; text-align: center; margin-top: 60px; font-style: italic;">Your pantry is empty.</p>
         </div>
-
-        <h2 id="peanut-butter" class="section-title fade-section delay-1">Sweetened Peanut Butter</h2>
-        <div class="product-grid fade-section delay-1">
-            <div class="product-card">
-                <div class="carousel-wrapper">
-                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
-                    <div class="carousel-track" data-slide="0">
-                        <div class="slide-placeholder">[ 250g Front ]</div>
-                        <div class="slide-placeholder">[ 250g Back ]</div>
-                        <div class="slide-placeholder">[ Nutrition ]</div>
-                    </div>
-                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
-                </div>
-                <h2>250g Sweetened</h2>
-                <p class="ingredients">Roasted Peanuts • Date Powder / Monk Fruit • Salt</p>
-                <p class="price">From ₹279</p>
-                <button class="order-btn" onclick="openOptionsModal('250g Sweetened', 'sweet', 279, 404)">Customize & Add</button>
+        <div style="border-top: 1px solid #eee; padding-top: 20px;">
+            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem;">
+                <span>TOTAL</span>
+                <span id="cartTotal">₹0</span>
             </div>
-            
-            <div class="product-card">
-                <div class="carousel-wrapper">
-                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
-                    <div class="carousel-track" data-slide="0">
-                        <div class="slide-placeholder">[ 500g Front ]</div>
-                        <div class="slide-placeholder">[ 500g Back ]</div>
-                        <div class="slide-placeholder">[ Nutrition ]</div>
-                    </div>
-                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
-                </div>
-                <h2>500g Sweetened</h2>
-                <p class="ingredients">Roasted Peanuts • Date Powder / Monk Fruit • Salt</p>
-                <p class="price">From ₹499</p>
-                <button class="order-btn" onclick="openOptionsModal('500g Sweetened', 'sweet', 499, 749)">Customize & Add</button>
-            </div>
-
-            <div class="product-card">
-                <div class="carousel-wrapper">
-                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
-                    <div class="carousel-track" data-slide="0">
-                        <div class="slide-placeholder">[ 1kg Front ]</div>
-                        <div class="slide-placeholder">[ 1kg Back ]</div>
-                        <div class="slide-placeholder">[ Nutrition ]</div>
-                    </div>
-                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
-                </div>
-                <h2>1kg Sweetened</h2>
-                <p class="ingredients">Roasted Peanuts • Date Powder / Monk Fruit • Salt</p>
-                <p class="price">From ₹899</p>
-                <button class="order-btn" onclick="openOptionsModal('1kg Sweetened', 'sweet', 899, 1399)">Customize & Add</button>
-            </div>
-        </div>
-
-        <h2 class="section-title fade-section delay-2">Unsweetened Peanut Butter</h2>
-        <div class="product-grid fade-section delay-2">
-            <div class="product-card">
-                <div class="carousel-wrapper">
-                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
-                    <div class="carousel-track" data-slide="0">
-                        <div class="slide-placeholder">[ 250g Front ]</div>
-                        <div class="slide-placeholder">[ 250g Back ]</div>
-                        <div class="slide-placeholder">[ Nutrition ]</div>
-                    </div>
-                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
-                </div>
-                <h2>250g Unsweetened</h2>
-                <p class="ingredients">Roasted Peanuts • Salt</p>
-                <p class="price">₹259</p>
-                <button class="order-btn" onclick="openOptionsModal('250g Unsweetened', 'unsweet', 259, 259)">Customize & Add</button>
-            </div>
-
-            <div class="product-card">
-                <div class="carousel-wrapper">
-                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
-                    <div class="carousel-track" data-slide="0">
-                        <div class="slide-placeholder">[ 500g Front ]</div>
-                        <div class="slide-placeholder">[ 500g Back ]</div>
-                        <div class="slide-placeholder">[ Nutrition ]</div>
-                    </div>
-                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
-                </div>
-                <h2>500g Unsweetened</h2>
-                <p class="ingredients">Roasted Peanuts • Salt</p>
-                <p class="price">₹459</p>
-                <button class="order-btn" onclick="openOptionsModal('500g Unsweetened', 'unsweet', 459, 459)">Customize & Add</button>
-            </div>
-
-            <div class="product-card">
-                <div class="carousel-wrapper">
-                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
-                    <div class="carousel-track" data-slide="0">
-                        <div class="slide-placeholder">[ 1kg Front ]</div>
-                        <div class="slide-placeholder">[ 1kg Back ]</div>
-                        <div class="slide-placeholder">[ Nutrition ]</div>
-                    </div>
-                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
-                </div>
-                <h2>1kg Unsweetened</h2>
-                <p class="ingredients">Roasted Peanuts • Salt</p>
-                <p class="price">₹819</p>
-                <button class="order-btn" onclick="openOptionsModal('1kg Unsweetened', 'unsweet', 819, 819)">Customize & Add</button>
-            </div>
-        </div>
-
-        <h2 class="section-title fade-section delay-3">Specialty Editions</h2>
-        <div class="product-grid fade-section delay-3">
-            <div class="product-card" style="opacity: 0.9;">
-                <div class="carousel-wrapper">
-                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
-                    <div class="carousel-track" data-slide="0">
-                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ 250g Cocoa ]</div>
-                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Back Label ]</div>
-                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Nutrition ]</div>
-                    </div>
-                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
-                </div>
-                <h2>250g Cocoa</h2>
-                <p class="ingredients">Roasted Peanuts • Dark Cocoa • Date Powder • Salt</p>
-                <p class="coming-soon-text">IN DEVELOPMENT</p>
-                <button class="order-btn btn-disabled" disabled>Coming Soon</button>
-            </div>
-
-            <div class="product-card" style="opacity: 0.9;">
-                <div class="carousel-wrapper">
-                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
-                    <div class="carousel-track" data-slide="0">
-                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ 500g Cocoa ]</div>
-                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Back Label ]</div>
-                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Nutrition ]</div>
-                    </div>
-                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
-                </div>
-                <h2>500g Cocoa</h2>
-                <p class="ingredients">Roasted Peanuts • Dark Cocoa • Date Powder • Salt</p>
-                <p class="coming-soon-text">IN DEVELOPMENT</p>
-                <button class="order-btn btn-disabled" disabled>Coming Soon</button>
-            </div>
-
-            <div class="product-card" style="opacity: 0.9;">
-                <div class="carousel-wrapper">
-                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
-                    <div class="carousel-track" data-slide="0">
-                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ 1kg Cocoa ]</div>
-                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Back Label ]</div>
-                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Nutrition ]</div>
-                    </div>
-                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
-                </div>
-                <h2>1kg Cocoa</h2>
-                <p class="ingredients">Roasted Peanuts • Dark Cocoa • Date Powder • Salt</p>
-                <p class="coming-soon-text">IN DEVELOPMENT</p>
-                <button class="order-btn btn-disabled" disabled>Coming Soon</button>
-            </div>
+            <button class="checkout-btn" onclick="initiateCheckout()">SECURE CHECKOUT</button>
         </div>
     </div>
 
-    <!-- OPTIONS MODAL -->
-    <div class="modal-overlay" id="optionsModal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('optionsModal')">×</span>
-            <h3>Craft Your Jar</h3>
-            <div class="modal-size-label" id="modalSizeText"></div>
+    <!-- 4. STORE HEADER -->
+    <div class="store-header">
+        <a href="index.html" style="text-decoration: none; color: #1A1A1A; font-size: 0.85rem; letter-spacing: 1px; font-weight: bold;">← HOME</a>
+        <h1 class="logo" style="font-family: Georgia, serif; letter-spacing: 4px; margin: 0; font-size: 1.5rem;">G R O U N D E D</h1>
+        <button class="cart-btn" onclick="openCart()">CART (<span id="cartCount">0</span>)</button>
+    </div>
+
+    <!-- 5. MAIN PRODUCT AREA -->
+    <div class="product-container">
+        <div class="product-image">
+            [ Simply Seeded Photo ]
+        </div>
+        
+        <div class="product-details">
+            <h1 class="product-title">Simply Seeded</h1>
+            <p class="accent-color">SMALL-BATCH PEANUT BUTTER</p>
+            <p class="product-price">₹350</p>
+            <p style="line-height: 1.7; color: #555; margin-bottom: 30px;">
+                Made to order with only three pure ingredients. Deeply roasted peanuts, Himalayan pink salt, and your choice of natural sweetener. 
+            </p>
             
-            <div class="select-group" id="textureGroup">
-                <label>1. Choose Texture</label>
-                <div class="pill-grid">
-                    <input type="radio" name="textureOption" id="texSmooth" value="Smooth" class="pill-input" checked onchange="updateAddButtonPrice()">
-                    <label for="texSmooth" class="pill-label">
-                        <div class="pill-title">Smooth</div>
-                        <div class="pill-sub">Creamy & Rich</div>
-                    </label>
-                    
-                    <input type="radio" name="textureOption" id="texCrunchy" value="Crunchy" class="pill-input" onchange="updateAddButtonPrice()">
-                    <label for="texCrunchy" class="pill-label">
-                        <div class="pill-title">Crunchy</div>
-                        <div class="pill-sub">Loaded with pieces</div>
-                    </label>
+            <span class="sweetener-label">Select Your Sweetener:</span>
+            <div class="sweetener-options">
+                <div class="sweetener-tile active" id="tile-monk" onclick="selectSweetener('Monk Fruit')">
+                    <h4>Monk Fruit</h4>
+                    <p>Zero Calorie</p>
+                </div>
+                <div class="sweetener-tile" id="tile-date" onclick="selectSweetener('Date Powder')">
+                    <h4>Date Powder</h4>
+                    <p>Natural Fiber</p>
                 </div>
             </div>
-
-            <div class="select-group" id="sweetenerGroup">
-                <label>2. Choose Sweetener</label>
-                <div class="pill-grid">
-                    <input type="radio" name="sweetenerOption" id="sweetDate" value="date" class="pill-input" checked onchange="updateAddButtonPrice()">
-                    <label for="sweetDate" class="pill-label">
-                        <div class="pill-title">Date Powder</div>
-                        <div class="pill-sub">Our Standard</div>
-                    </label>
-                    
-                    <input type="radio" name="sweetenerOption" id="sweetMonk" value="monk" class="pill-input" onchange="updateAddButtonPrice()">
-                    <label for="sweetMonk" class="pill-label">
-                        <div class="pill-title">Monk Fruit</div>
-                        <div class="pill-sub">Keto Friendly</div>
-                    </label>
-                </div>
-            </div>
-
-            <button class="pay-btn" id="addToCartBtn" onclick="processOptionsAndAdd()">Add to Cart</button>
+            
+            <button class="add-btn" id="addToCartBtn" onclick="addToCart()">ADD TO PANTRY</button>
         </div>
     </div>
 
-    <!-- CART MODAL -->
-    <div class="modal-overlay" id="cartModal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('cartModal')">×</span>
-            <h3>Your Cart</h3>
-            <div class="progress-container">
-                <div class="progress-bar" id="shippingBar"></div>
-            </div>
-            <div class="progress-text" id="shippingText">Add ₹1399 more for FREE Shipping!</div>
-            <div id="cartItemsList"></div>
-            <div class="cart-total-row">
-                <span>Subtotal:</span>
-                <span id="cartTotalDisplay">₹0</span>
-            </div>
-            <button class="pay-btn" id="checkoutBtn" onclick="checkoutWhatsApp()" disabled>Sign in to Checkout</button>
-        </div>
-    </div>
-
-    <button class="ai-bubble-btn" onclick="toggleAIChat()">TR</button>
+    <!-- 6. THE AI CURATOR CHAT (Restored!) -->
+    <button class="ai-bubble-btn" onclick="toggleAIChat()">TC</button>
     <div class="ai-chat-window" id="aiChatWindow">
         <div class="ai-chat-header">
             <div>
-                <div class="ai-name">The Roaster</div>
+                <div class="ai-name">The Curator</div>
                 <div class="ai-subtitle">POWERED BY GEMINI</div>
             </div>
             <div class="ai-close" onclick="toggleAIChat()">×</div>
         </div>
         <div class="ai-chat-body" id="aiChatBody">
             <div class="ai-msg-bot">
-                <div class="ai-msg-content">Hi! I'm The Roaster. Ask me anything about our small-batch peanut butter, Date Powder vs. Monk Fruit, or how to order!</div>
+                <div class="ai-msg-content">Hi! I'm The Curator. Ask me anything about our Simply Seeded ingredients!</div>
                 <button class="ai-speaker-btn" onclick="speakText(this.previousElementSibling.innerText)" title="Read aloud">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                 </button>
@@ -292,163 +324,97 @@
         </div>
     </div>
 
+    <!-- 7. ALL JAVASCRIPT LOGIC (Store + AI Chat) -->
     <script>
-        function moveCarousel(button, direction) { 
-            const track = button.parentElement.querySelector('.carousel-track'); 
-            let currentSlide = parseInt(track.getAttribute('data-slide')) || 0; 
-            currentSlide += direction; 
-            if (currentSlide < 0) currentSlide = 2; 
-            if (currentSlide > 2) currentSlide = 0; 
-            track.setAttribute('data-slide', currentSlide); 
-            track.style.transform = `translateX(-${currentSlide * 100}%)`; 
-        }
-        
-        let cart = JSON.parse(localStorage.getItem('groundedCart')) || []; 
-        const FREE_SHIPPING_THRESHOLD = 1399; 
-        const whatsappNumber = "919246185187"; 
-        
-        let pendingName = ''; 
-        let pendingType = '';
-        let pendingDatePrice = 0; 
-        let pendingMonkPrice = 0;
+        // --- CART LOGIC ---
+        let cart = [];
+        const PRICE_PER_JAR = 350; 
+        let selectedSweetener = "Monk Fruit"; 
 
-        function saveCart() {
-            localStorage.setItem('groundedCart', JSON.stringify(cart));
-            updateCartIcon();
-        }
-
-        updateCartIcon();
-
-        function openOptionsModal(name, type, price1, price2) { 
-            pendingName = name; 
-            pendingType = type; 
-            pendingDatePrice = price1; 
-            pendingMonkPrice = price2; 
-            
-            document.getElementById("modalSizeText").innerText = name; 
-            document.getElementById("texSmooth").checked = true;
-            document.getElementById("sweetDate").checked = true;
-            
-            if (type === 'unsweet') {
-                document.getElementById("sweetenerGroup").style.display = "none";
+        function selectSweetener(sweetenerType) {
+            selectedSweetener = sweetenerType;
+            document.getElementById('tile-monk').classList.remove('active');
+            document.getElementById('tile-date').classList.remove('active');
+            if(sweetenerType === 'Monk Fruit') {
+                document.getElementById('tile-monk').classList.add('active');
             } else {
-                document.getElementById("sweetenerGroup").style.display = "block";
+                document.getElementById('tile-date').classList.add('active');
             }
-            
-            updateAddButtonPrice(); 
-            document.getElementById("optionsModal").style.display = "flex"; 
         }
 
-        function updateAddButtonPrice() { 
-            let finalPrice;
-            if (pendingType === 'unsweet') {
-                finalPrice = pendingDatePrice;
-            } else {
-                let choice = document.querySelector('input[name="sweetenerOption"]:checked').value; 
-                finalPrice = (choice === "date") ? pendingDatePrice : pendingMonkPrice; 
+        function openCart() {
+            document.getElementById('cartOverlay').classList.add('open');
+            document.getElementById('cartPanel').classList.add('open');
+        }
+
+        function closeCart() {
+            document.getElementById('cartOverlay').classList.remove('open');
+            document.getElementById('cartPanel').classList.remove('open');
+        }
+
+        function addToCart() {
+            const btn = document.getElementById('addToCartBtn');
+            btn.innerText = "ADDING...";
+            btn.style.backgroundColor = "#1A1A1A"; 
+            
+            setTimeout(() => {
+                cart.push({
+                    name: "Simply Seeded",
+                    sweetener: selectedSweetener,
+                    price: PRICE_PER_JAR
+                });
+                updateCartUI();
+                btn.innerText = "ADD TO PANTRY";
+                btn.style.backgroundColor = "#8A2924";
+                openCart(); 
+            }, 400); 
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            document.getElementById('cartCount').innerText = cart.length;
+            const container = document.getElementById('cartItemsContainer');
+            const totalDisplay = document.getElementById('cartTotal');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="color: #A0A0A0; text-align: center; margin-top: 60px; font-style: italic;">Your pantry is empty.</p>';
+                totalDisplay.innerText = '₹0';
+                return;
             }
-            document.getElementById("addToCartBtn").innerText = `Add to Cart (₹${finalPrice})`; 
-        }
 
-        function processOptionsAndAdd() { 
-            let texture = document.querySelector('input[name="textureOption"]:checked').value;
-            let finalPrice;
-            let variantText = texture; 
-            
-            if (pendingType === 'sweet') {
-                let choice = document.querySelector('input[name="sweetenerOption"]:checked').value; 
-                let sweetenerText = (choice === "date") ? "Date Powder" : "Monk Fruit"; 
-                variantText = `${texture} | ${sweetenerText}`;
-                finalPrice = (choice === "date") ? pendingDatePrice : pendingMonkPrice; 
-            } else {
-                variantText = `${texture} | Unsweetened`;
-                finalPrice = pendingDatePrice;
-            }
-            
-            cart.push({ name: pendingName, variant: variantText, price: finalPrice }); 
-            saveCart(); 
-            closeModal('optionsModal'); 
-            openCartModal(); 
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1); 
-            saveCart(); 
-            openCartModal(); 
-        }
-
-        function updateCartIcon() { 
-            document.getElementById("cartCount").innerText = cart.length; 
-        }
-        
-        function openCartModal() { 
-            let listHTML = ''; 
-            let total = 0; 
-            
-            if (cart.length === 0) { 
-                listHTML = '<div class="empty-cart-msg">Your cart is empty.</div>'; 
-                document.getElementById("checkoutBtn").style.display = "none"; 
-            } else { 
-                document.getElementById("checkoutBtn").style.display = "block"; 
-                cart.forEach((item, index) => { 
-                    total += item.price; 
-                    listHTML += `
+            container.innerHTML = '';
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                container.innerHTML += `
                     <div class="cart-item">
-                        <div class="cart-item-details">
-                            <div class="cart-item-title">${item.name}</div>
-                            <div class="cart-item-variant">${item.variant}</div>
+                        <div>
+                            <p style="font-family: Georgia, serif; font-size: 1.1rem; margin: 0 0 5px 0;">${item.name}</p>
+                            <p style="font-size: 0.85rem; color: #666; margin: 0;">Made with ${item.sweetener}</p>
+                            <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 15px;">
-                            <div class="cart-item-price">₹${item.price}</div>
-                            <button onclick="removeFromCart(${index})" style="background: none; border: none; color: #D9534F; font-size: 1.5rem; font-weight: bold; cursor: pointer; padding: 0; line-height: 1;" title="Remove Item">&times;</button>
+                        <div>
+                            <p style="font-weight: bold; margin: 0;">₹${item.price}</p>
                         </div>
-                    </div>`; 
-                }); 
-            } 
-            
-            document.getElementById("cartItemsList").innerHTML = listHTML; 
-            document.getElementById("cartTotalDisplay").innerText = `₹${total}`; 
-            updateProgressBar(total); 
-            document.getElementById("cartModal").style.display = "flex"; 
+                    </div>
+                `;
+            });
+            totalDisplay.innerText = '₹' + total;
         }
 
-        function updateProgressBar(total) { 
-            let bar = document.getElementById("shippingBar"); 
-            let text = document.getElementById("shippingText"); 
-            
-            if (total >= FREE_SHIPPING_THRESHOLD) { 
-                bar.style.width = "100%"; 
-                bar.classList.add("unlocked-bar"); 
-                text.classList.add("unlocked-text"); 
-                text.innerText = "🎉 You unlocked FREE Shipping!"; 
-            } else { 
-                let percentage = (total / FREE_SHIPPING_THRESHOLD) * 100; 
-                let away = FREE_SHIPPING_THRESHOLD - total; 
-                bar.style.width = percentage + "%"; 
-                bar.classList.remove("unlocked-bar"); 
-                text.classList.remove("unlocked-text"); 
-                text.innerText = `Add ₹${away} more for FREE Shipping!`; 
-            } 
+        function initiateCheckout() {
+            const btn = document.querySelector('.checkout-btn');
+            btn.innerText = "LOADING SECURE GATEWAY...";
+            setTimeout(() => {
+                btn.innerText = "SECURE CHECKOUT";
+            }, 2000);
         }
 
-        function closeModal(modalId) { 
-            document.getElementById(modalId).style.display = "none"; 
-        }
-        
-        function checkoutWhatsApp() { 
-            let total = 0; 
-            let orderDetails = ""; 
-            
-            cart.forEach((item) => { 
-                total += item.price; 
-                orderDetails += `- ${item.name} (${item.variant}): ₹${item.price}\n`; 
-            }); 
-            
-            let shippingStatus = (total >= FREE_SHIPPING_THRESHOLD) ? "FREE" : "Standard"; 
-            let message = `Hi Simply Seeded! 🥜 I would like to place an order:\n\n${orderDetails}\nSubtotal: ₹${total}\nShipping: ${shippingStatus}\n\nPlease share your QR code so I can pay!`; 
-            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank'); 
-        }
-
+        // --- AI CHAT LOGIC ---
         function toggleAIChat() {
             const chat = document.getElementById('aiChatWindow');
             if (chat.style.display === 'flex') {
@@ -458,7 +424,7 @@
                 chat.style.display = 'flex';
             }
         }
-        
+
         function updateCharCount() {
             const input = document.getElementById('aiInput');
             const counter = document.getElementById('aiCharCounter');
@@ -537,13 +503,11 @@
             
             if (isRecording && recognition) recognition.stop();
             if(!msg) return;
-            
             if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
             const body = document.getElementById('aiChatBody');
-            
             body.innerHTML += `<div class="ai-msg-user">${escapeHTML(msg)}</div>`;
-            input.value = ''; 
+            input.value = '';
             updateCharCount();
             body.scrollTop = body.scrollHeight;
 
@@ -552,7 +516,6 @@
             micBtn.disabled = true;
 
             const loadingId = 'loading-' + Date.now();
-            
             body.innerHTML += `
                 <div class="ai-msg-bot" id="${loadingId}">
                     <div class="ai-msg-content">Thinking...</div>
@@ -570,12 +533,12 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
                         message: msg, 
-                        persona: "roaster", 
+                        persona: "curator", 
                         pageContext: document.title,
-                        token: userToken
+                        token: userToken 
                     })
                 });
-                
+
                 const data = await response.json();
                 const botMsgDiv = document.getElementById(loadingId);
                 
@@ -603,10 +566,10 @@
         function handleAIKeyPress(e) { if(e.key === 'Enter') sendAIMessage(); }
     </script>
 
-    <!-- FIREBASE AUTHENTICATION SCRIPT (THE BOUNCER) -->
+    <!-- 8. FIREBASE AUTHENTICATION SCRIPT (Restored!) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBKZz6FNizCDMf8LnG7-n9a0H26MU8ZN_I",
@@ -620,36 +583,46 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        
-        window.firebaseAuth = auth; 
+        const provider = new GoogleAuthProvider();
+        window.firebaseAuth = auth;
+
+        const signInBtn = document.getElementById('google-signin-btn');
+        const userProfile = document.getElementById('user-profile');
+        const userNameSpan = document.getElementById('user-name');
+
+        if(signInBtn) {
+            signInBtn.addEventListener('click', () => {
+                signInWithPopup(auth, provider)
+                    .then((result) => console.log("Logged in: ", result.user.displayName))
+                    .catch((error) => console.error("Login failed: ", error));
+            });
+        }
 
         onAuthStateChanged(auth, (user) => {
             const chatInput = document.getElementById('aiInput');
             const sendBtn = document.getElementById('aiSendBtn');
             const micBtn = document.getElementById('aiMicBtn');
-            const checkoutBtn = document.getElementById('checkoutBtn');
 
-            if (user) {
+            if (user && signInBtn && userProfile) {
+                signInBtn.style.display = 'none';
+                userProfile.style.display = 'block';
+                userNameSpan.textContent = user.displayName.toUpperCase();
+                
                 if(chatInput) {
                     chatInput.disabled = false;
-                    chatInput.placeholder = "Ask The Roaster a question...";
+                    chatInput.placeholder = "Ask a question...";
                     sendBtn.disabled = false;
                     micBtn.disabled = false;
                 }
-                if(checkoutBtn) {
-                    checkoutBtn.disabled = false;
-                    checkoutBtn.innerText = "Checkout via WhatsApp";
-                }
-            } else {
+            } else if (signInBtn && userProfile) {
+                signInBtn.style.display = 'block';
+                userProfile.style.display = 'none';
+                
                 if(chatInput) {
                     chatInput.disabled = true;
                     chatInput.placeholder = "Please sign in to chat...";
                     sendBtn.disabled = true;
                     micBtn.disabled = true;
-                }
-                if(checkoutBtn) {
-                    checkoutBtn.disabled = true;
-                    checkoutBtn.innerText = "Sign in to Checkout";
                 }
             }
         });
