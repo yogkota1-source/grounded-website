@@ -5,8 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>G R O U N D E D</title>
     <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23FFFFFF" /><text x="50" y="72" font-family="Georgia, serif" font-size="60" font-weight="normal" fill="%231A1A1A" text-anchor="middle">G</text></svg>'>
-    <!-- LINK TO YOUR NEW CSS FILE -->
+    
+    <!-- LINK TO YOUR MAIN CSS FILE -->
     <link rel="stylesheet" href="index.style.css">
+    
+    <!-- MOBILE UI FIXES FOR THE HOME PAGE -->
+    <style>
+        @media (max-width: 768px) {
+            .story-flex {
+                flex-direction: column;
+            }
+            .brand-container {
+                flex-direction: column;
+            }
+            .story-flex img {
+                max-width: 100% !important;
+                margin-bottom: 25px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -49,7 +66,6 @@
 
     <div class="story-section">
         <div class="story-flex">
-            <!-- HERE IS THE FINAL CASE-SENSITIVE PHOTO LINK -->
             <img src="PBphoto.JPG" alt="Founder making Grounded peanut butter" style="flex: 1; border-radius: 8px; object-fit: cover; width: 100%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
             
             <div class="story-text">
@@ -66,7 +82,6 @@
                     <p style="line-height: 1.6;">This standard is not just a rule for my peanut butter—it is the blueprint for my entire kitchen. I am currently applying this exact philosophy to my upcoming lines of wild-fermented Kimchi (ĀCHAR) and slow-brewed Kombucha (Soma). Whether I am crafting a sweet spread, a complex spicy ferment, or a botanical elixir, my promise to you remains uncompromised: fewer ingredients, better sweeteners, and food crafted with absolute integrity.</p>
                 </div>
 
-                <!-- Sleek separator between the two stories -->
                 <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 45px 0;">
 
                 <h2>A Letter from the Founder</h2>
@@ -74,11 +89,8 @@
                 
                 <div style="line-height: 1.6;">
                     <p style="margin-bottom: 15px;">To be honest, I used to absolutely hate peanut butter. All of it.</p>
-                    
                     <p style="margin-bottom: 15px;">I found the generic supermarket brands too oily, cloyingly sweet, and completely artificial—and to be frank, I still hate them today. But I realized that real food doesn't need a chemistry lab, and it barely needs a recipe.</p>
-                    
                     <p style="margin-bottom: 15px;">I thought to myself: <em>If it only takes a couple of pure ingredients, why can't I just make it myself?</em></p>
-                    
                     <p style="margin-bottom: 15px;">That single thought sparked an obsession. I started roasting and grinding my own batches in my home kitchen, and it sparked a completely different taste. When you strip away the junk, it becomes a pure, rich elixir. I completely fell in love with it. What started as a quest to fix my own breakfast eventually became the foundation for Grounded.</p>
                     
                     <div class="quote-block" style="margin: 25px 0; padding-left: 20px; border-left: 3px solid #1a1a1a;">
@@ -91,6 +103,7 @@
         </div>
     </div>
 
+    <!-- THE AI CURATOR CHAT -->
     <button class="ai-bubble-btn" onclick="toggleAIChat()">TC</button>
     <div class="ai-chat-window" id="aiChatWindow">
         <div class="ai-chat-header">
@@ -109,17 +122,12 @@
             </div>
         </div>
         <div class="ai-chat-input-area">
-            
             <div class="ai-input-row">
                 <div class="ai-input-wrapper">
-                    <!-- Firebase Auth will unlock this when the user logs in -->
                     <input type="text" class="ai-input" id="aiInput" placeholder="Please sign in to chat..." maxlength="300" disabled oninput="updateCharCount()" onkeypress="handleAIKeyPress(event)">
                     <button class="ai-mic-btn" id="aiMicBtn" onclick="toggleSpeechRecognition()" title="Click to speak" disabled>
                         <div class="mic-icon" id="micIconSvg">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-                                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-                            </svg>
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
                         </div>
                         <div class="voice-visualizer" id="voiceVisualizer">
                             <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
@@ -132,6 +140,7 @@
         </div>
     </div>
 
+    <!-- AI LOGIC -->
     <script>
         function toggleAIChat() {
             const chat = document.getElementById('aiChatWindow');
@@ -287,7 +296,7 @@
         function handleAIKeyPress(e) { if(e.key === 'Enter') sendAIMessage(); }
     </script>
 
-    <!-- FIREBASE AUTHENTICATION SCRIPT -->
+    <!-- FIREBASE SECURITY LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
@@ -304,7 +313,10 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        
+        // NEW SECURITY FIX: Forces account selection!
         const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account' });
         
         window.firebaseAuth = auth;
 
