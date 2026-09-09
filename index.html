@@ -6,21 +6,144 @@
     <title>G R O U N D E D</title>
     <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23FFFFFF" /><text x="50" y="72" font-family="Georgia, serif" font-size="60" font-weight="normal" fill="%231A1A1A" text-anchor="middle">G</text></svg>'>
     
-    <!-- LINK TO YOUR MAIN CSS FILE -->
     <link rel="stylesheet" href="index.style.css">
     
-    <!-- MOBILE UI FIXES FOR THE HOME PAGE -->
     <style>
+        /* SWIGGY-STYLE TOP NAVIGATION */
+        .top-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            padding: 20px 40px;
+            background: #fff;
+            border-bottom: 1px solid #E0E0E0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            flex-wrap: wrap;
+        }
+        .nav-item {
+            text-decoration: none;
+            color: #1A1A1A;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-item h3 {
+            margin: 0 0 4px 0;
+            font-family: Georgia, serif;
+            font-size: 1.1rem;
+            font-weight: normal;
+            letter-spacing: 1px;
+        }
+        .nav-tagline {
+            font-size: 0.7rem;
+            color: #8A2924;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .nav-item:hover:not(.locked) {
+            opacity: 0.6;
+        }
+        
+        /* The "Barrier" for In-Development Tabs */
+        .nav-item.locked {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .nav-item.locked::after {
+            content: "IN DEVELOPMENT";
+            position: absolute;
+            bottom: -35px;
+            background: #1A1A1A;
+            color: #fff;
+            padding: 5px 10px;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            border-radius: 3px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+        .nav-item.locked:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* MAGAZINE LAYOUT STYLES */
+        .magazine-section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        .magazine-row {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+        .magazine-row.reverse {
+            flex-direction: row-reverse;
+        }
+        .magazine-img-placeholder {
+            flex: 1;
+            background: #F7F7F7;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #A0A0A0;
+            font-family: Georgia, serif;
+            font-style: italic;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .magazine-text {
+            flex: 1;
+            line-height: 1.8;
+            color: #333;
+        }
+        .magazine-text h2 {
+            font-family: Georgia, serif;
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            color: #1A1A1A;
+        }
+        .magazine-text .accent {
+            color: #8A2924;
+            font-weight: bold;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            display: inline-block;
+        }
+        .magazine-text p {
+            margin-bottom: 20px;
+        }
+
+        /* MOBILE OPTIMIZATION */
         @media (max-width: 768px) {
-            .story-flex {
-                flex-direction: column;
+            .top-nav {
+                gap: 15px;
+                padding: 15px;
             }
-            .brand-container {
-                flex-direction: column;
+            .nav-tagline {
+                display: none; /* Hides taglines on mobile to save space */
             }
-            .story-flex img {
-                max-width: 100% !important;
-                margin-bottom: 25px;
+            .magazine-row, .magazine-row.reverse {
+                flex-direction: column;
+                gap: 30px;
+                margin-bottom: 60px;
+            }
+            .magazine-img-placeholder {
+                width: 100%;
+                min-height: 350px;
             }
         }
     </style>
@@ -35,72 +158,100 @@
     <div class="side-accent left-side">EST. 2026</div>
     <div class="side-accent right-side">PURE FOOD INITIATIVE</div>
 
-    <div class="header-section">
+    <div class="header-section" style="padding-top: 60px; padding-bottom: 20px;">
         <h1 class="logo">G R O U N D E D</h1>
-        
         <div class="parent-brand-header">
             <span>A product of</span>
             <img src="kinduz%20official%20logo.png" alt="Kinduz Logo" class="kinduz-header-img">
         </div>
-
         <p class="subtitle">PUNE, INDIA</p>
     </div>
 
-    <div class="brand-container">
-        <div class="brand-card simply-seeded">
-            <h2>Simply Seeded</h2>
-            <p>Small-Batch Crafted Peanut Butter</p>
-            <a href="store.html"><button class="btn">Enter Store</button></a>
+    <!-- SWIGGY STYLE TOP NAVIGATION -->
+    <nav class="top-nav">
+        <a href="index.html" class="nav-item">
+            <h3>HOME</h3>
+            <span class="nav-tagline">The Grounded Story</span>
+        </a>
+        <a href="store.html" class="nav-item">
+            <h3>SIMPLY SEEDED</h3>
+            <span class="nav-tagline">Small-Batch Peanut Butter</span>
+        </a>
+        <div class="nav-item locked">
+            <h3>ĀCHAR</h3>
+            <span class="nav-tagline">Global Pickles & Ferments</span>
         </div>
-        <div class="brand-card">
-            <h2>ĀCHAR</h2>
-            <p>Wild Fermented Gut Health</p>
-            <p class="coming-soon">IN DEVELOPMENT</p>
+        <div class="nav-item locked">
+            <h3>SOMA</h3>
+            <span class="nav-tagline">Living Probiotic Tea</span>
         </div>
-        <div class="brand-card">
-            <h2>Soma</h2>
-            <p>Raw Probiotic Tea</p>
-            <p class="coming-soon">IN DEVELOPMENT</p>
+    </nav>
+
+    <!-- MAGAZINE LAYOUT BODY -->
+    <div class="magazine-section">
+        
+        <!-- SECTION 1: THE PHILOSOPHY -->
+        <div style="text-align: center; max-width: 800px; margin: 0 auto 80px auto;">
+            <h2 style="font-family: Georgia, serif; font-size: 2.5rem; margin-bottom: 20px;">The Art of Subtraction</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; color: #444;">
+                Whether I am crafting a sweet spread, a complex spicy ferment, or a botanical elixir, my promise to you remains uncompromised: fewer ingredients, pure elements, and food crafted with absolute integrity. Welcome to the Grounded standard.
+            </p>
+            <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 40px auto; width: 50%;">
         </div>
-    </div>
 
-    <div class="story-section">
-        <div class="story-flex">
-            <img src="PBphoto.JPG" alt="Founder making Grounded peanut butter" style="flex: 1; border-radius: 8px; object-fit: cover; width: 100%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-            
-            <div class="story-text">
-                <h2>The Grounded Journey</h2>
-                
-                <div style="margin-top: 25px;">
-                    <h3 style="font-family: Georgia, serif; font-weight: normal; font-size: 1.3rem; margin-bottom: 10px; color: #1a1a1a;">1. The Art of Subtraction</h3>
-                    <p style="margin-bottom: 25px; line-height: 1.6;">If you read the label on a standard supermarket jar today, you are usually met with a dense paragraph of stabilizers, palm oil, and refined syrups. I take the exact opposite approach. My <em>Simply Seeded</em> peanut butter relies on the quiet power of just three pure elements: deeply roasted peanuts, a pinch of Himalayan pink salt, and your choice of a clean sweetener—monk fruit or date powder. It is my exercise in letting real food speak for itself.</p>
-
-                    <h3 style="font-family: Georgia, serif; font-weight: normal; font-size: 1.3rem; margin-bottom: 10px; color: #1a1a1a;">2. The Luxury of Patience</h3>
-                    <p style="margin-bottom: 25px; line-height: 1.6;">Pure ingredients only matter if the process respects them. The truth is, a jar of <em>Simply Seeded</em> doesn't actually exist until you ask for it. I rejected the traditional warehouse model to run strictly on micro-batches. Your jar is roasted, ground, and packed <em>only</em> after your order drops into my system. It demands a little more patience, but the reward is opening a jar at its absolute peak of freshness.</p>
-
-                    <h3 style="font-family: Georgia, serif; font-weight: normal; font-size: 1.3rem; margin-bottom: 10px; color: #1a1a1a;">3. The Bigger Blueprint</h3>
-                    <p style="line-height: 1.6;">This standard is not just a rule for my peanut butter—it is the blueprint for my entire kitchen. I am currently applying this exact philosophy to my upcoming lines of wild-fermented Kimchi (ĀCHAR) and slow-brewed Kombucha (Soma). Whether I am crafting a sweet spread, a complex spicy ferment, or a botanical elixir, my promise to you remains uncompromised: fewer ingredients, better sweeteners, and food crafted with absolute integrity.</p>
-                </div>
-
-                <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 45px 0;">
-
-                <h2>A Letter from the Founder</h2>
-                <span class="story-date" style="display: block; margin-top: 5px; margin-bottom: 25px;">THE GROUNDED STANDARD</span>
-                
-                <div style="line-height: 1.6;">
-                    <p style="margin-bottom: 15px;">To be honest, I used to absolutely hate peanut butter. All of it.</p>
-                    <p style="margin-bottom: 15px;">I found the generic supermarket brands too oily, cloyingly sweet, and completely artificial—and to be frank, I still hate them today. But I realized that real food doesn't need a chemistry lab, and it barely needs a recipe.</p>
-                    <p style="margin-bottom: 15px;">I thought to myself: <em>If it only takes a couple of pure ingredients, why can't I just make it myself?</em></p>
-                    <p style="margin-bottom: 15px;">That single thought sparked an obsession. I started roasting and grinding my own batches in my home kitchen, and it sparked a completely different taste. When you strip away the junk, it becomes a pure, rich elixir. I completely fell in love with it. What started as a quest to fix my own breakfast eventually became the foundation for Grounded.</p>
-                    
-                    <div class="quote-block" style="margin: 25px 0; padding-left: 20px; border-left: 3px solid #1a1a1a;">
-                        <p class="quote-text" style="font-style: italic; font-size: 1.1rem; color: #333;">"The only rule I implemented from day one was simple: If it's not healthy enough for my kitchen, it's not going into yours."</p>
-                    </div>
-                    
-                    <p style="font-family: Georgia, serif; font-size: 1.2rem; color: #1a1a1a; margin-top: 30px;"><strong>— Yog Kota, Founder</strong></p>
-                </div>
+        <!-- PRODUCT 1: SIMPLY SEEDED -->
+        <div class="magazine-row">
+            <div class="magazine-img-placeholder">[ Simply Seeded Jar Photo ]</div>
+            <div class="magazine-text">
+                <h2>Simply Seeded</h2>
+                <span class="accent">SMALL-BATCH CRAFTED PEANUT BUTTER</span>
+                <p>To be completely honest with you: I used to absolutely hate peanut butter. All of it.</p>
+                <p>Growing up, my only experience with it was the generic supermarket brands. I found them way too oily, cloyingly sweet, and completely artificial. If you read the label on a standard supermarket jar today, you are met with a dense, confusing paragraph of stabilizers, cheap palm oil, and refined syrups. It feels more like a chemistry lab experiment than breakfast.</p>
+                <p>That was until I tasted a truly authentic, pure version and realized I had been lied to. I thought to myself: <em>If real peanut butter only requires a couple of pure ingredients, why can't I just make it myself?</em> That single thought sparked an absolute obsession. I started taking over the kitchen, roasting my own peanuts, grinding my own batches, and fine-tuning the texture. When you strip away the junk, it becomes a pure, rich elixir. I completely fell in love with it, and that original kitchen recipe is exactly what I am sharing with you today.</p>
+                <p>Simply Seeded relies on the quiet power of just three pure elements: deeply roasted peanuts, a pinch of Himalayan pink salt, and your choice of a clean, natural sweetener (monk fruit or date powder). Because I refuse to compromise on freshness, I rejected the traditional warehouse model to run strictly on micro-batches. The truth is, your jar doesn’t actually exist until you ask for it. It takes a little more time, but the reward is opening a jar at its absolute peak.</p>
+                <p><em>Thank you for choosing Simply Seeded.</em></p>
+                <a href="store.html"><button class="btn" style="margin-top: 15px;">Shop Now</button></a>
             </div>
         </div>
+
+        <!-- PRODUCT 2: ACHAR -->
+        <div class="magazine-row reverse">
+            <div class="magazine-img-placeholder">[ South Indian & Global Pickles Photo ]</div>
+            <div class="magazine-text">
+                <h2>ĀCHAR</h2>
+                <span class="accent">GLOBAL PICKLES & FERMENTS</span>
+                <p>Our fermentation journey actually began with the massive Korean food craze in India. I was just eight or nine years old, and my family was constantly buying expensive, imported kimchi. Not only was it making a serious impact on our bank account, but the ingredient lists were also packed with weird preservatives.</p>
+                <p>My older sister took matters into her own hands. After endless kitchen experiments and a few gloriously failed batches, she completely perfected the recipe. It tasted infinitely better than the store-bought jars, saved us a ton of money, and was 100% preservative-free. Now that she’s off at college, the massive and highly stressful responsibility of keeping the family kimchi supply alive has fallen entirely on my shoulders. Today, I'm proud to share her exact, original recipe with you.</p>
+                <p>But my roots demand equal attention. I am originally from Hyderabad, which means an absolute addiction to authentic South Indian pickles is literally in my DNA. From spicy <em>Avakay</em> to tangy <em>Gongura Pachadi</em> and classic <em>Nimmakaya</em>, these are the bold, handmade flavors I grew up on. While we are starting our launch with Kimchi, I promise you: these rich, traditional Indian flavors will soon be making their way right to your doorstep.</p>
+                <p>And finally, the classic cucumber pickle. The problem? Generic market brands are loaded with refined sugar, artificial preservatives, and emulsifiers. I realized that if our kitchen could master complex South Indian spices and Korean lacto-fermentation, there was no excuse not to make a clean, perfectly crunchy American pickle. No junk, just real flavor.</p>
+                <p><em>Thank you for choosing ĀCHAR.</em></p>
+            </div>
+        </div>
+
+        <!-- PRODUCT 3: SOMA -->
+        <div class="magazine-row">
+            <div class="magazine-img-placeholder">[ Kombucha Brewing Photo ]</div>
+            <div class="magazine-text">
+                <h2>SOMA</h2>
+                <span class="accent">LIVING PROBIOTIC TEA</span>
+                <p>Kombucha is controversial—I will be the first to admit it. People either absolutely hate it from the bottom of their hearts, or they love it so much they could practically explode. But before you make your final decision, I just ask that you give ours a try.</p>
+                <p>It all started when I realized that while packaged cold drinks and sodas taste incredibly good, there <em>has</em> to be a healthier alternative for us. I started researching everywhere. I went to restaurants, cafes, and roadside lemonade stalls looking for the perfect drink. Then, something clicked: sodas are entirely artificial, and I couldn't exactly package fresh roadside lemonade without loading it with chemical preservatives to make it last.</p>
+                <p>That is when I stumbled across kombucha. I instantly fell in love and started brewing it like my life depended on it. I started with a simple, original tea brew, but quickly realized you don't need artificial laboratory syrups when you can flavor it using real, fresh fruit. I have perfected a whole range of recipes: Original Tea, Mango, Litchi, Ginger, Lemon, and Passion Fruit.</p>
+                <p>And when I say we use real fruit, I mean it. We use organically grown fruit sourced from the best quality dealers, taking the necessary time to maintain the absolute highest standards of hygiene and quality. It takes endless recipe testing and absolute brain exhaustion just to get the flavor exactly right. Right now, we are busy developing hyper-local and combination flavors like Mango Litchi, Mango Jackfruit, Passion Fruit Lime, Karonda, and Jamun. Very soon, you will be able to pop these authentic beverages right in your fridge, pull one out when it's ice-cold, and drink it completely guilt-free.</p>
+                <p><em>Thank you for choosing Soma.</em></p>
+            </div>
+        </div>
+
+        <!-- FOUNDER's LETTER -->
+        <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 40px auto; width: 50%;">
+        <div style="text-align: center; max-width: 800px; margin: 80px auto;">
+            <h2 style="font-family: Georgia, serif; font-size: 2rem;">A Standard Without Compromise</h2>
+            <div class="quote-block" style="margin: 30px 0; padding: 20px; border: 1px solid #e0e0e0; background: #FDF9F8;">
+                <p class="quote-text" style="font-style: italic; font-size: 1.2rem; color: #333; margin: 0;">"The only rule I implemented from day one was simple: If it's not healthy enough for my kitchen, it's not going into yours."</p>
+            </div>
+            <p style="font-family: Georgia, serif; font-size: 1.2rem; color: #1a1a1a; margin-top: 20px;"><strong>— Yog Kota, Founder</strong></p>
+        </div>
+
     </div>
 
     <!-- THE AI CURATOR CHAT -->
@@ -314,7 +465,6 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         
-        // NEW SECURITY FIX: Forces account selection!
         const provider = new GoogleAuthProvider();
         provider.setCustomParameters({ prompt: 'select_account' });
         
