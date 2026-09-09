@@ -23,6 +23,7 @@
             z-index: 100;
             flex-wrap: wrap;
         }
+        
         .nav-item {
             text-decoration: none;
             color: #1A1A1A;
@@ -33,6 +34,7 @@
             transition: all 0.3s ease;
             position: relative;
         }
+        
         .nav-item h3 {
             margin: 0 0 4px 0;
             font-family: Georgia, serif;
@@ -40,6 +42,7 @@
             font-weight: normal;
             letter-spacing: 1px;
         }
+        
         .nav-tagline {
             font-size: 0.7rem;
             color: #8A2924;
@@ -47,6 +50,7 @@
             text-transform: uppercase;
             font-weight: bold;
         }
+        
         .nav-item:hover:not(.locked) {
             opacity: 0.6;
         }
@@ -56,6 +60,7 @@
             opacity: 0.4;
             cursor: not-allowed;
         }
+        
         .nav-item.locked::after {
             content: "IN DEVELOPMENT";
             position: absolute;
@@ -71,6 +76,7 @@
             transition: opacity 0.3s;
             white-space: nowrap;
         }
+        
         .nav-item.locked:hover::after {
             opacity: 1;
             visibility: visible;
@@ -82,15 +88,18 @@
             margin: 60px auto;
             padding: 0 20px;
         }
+        
         .magazine-row {
             display: flex;
             align-items: center;
             gap: 60px;
             margin-bottom: 80px;
         }
+        
         .magazine-row.reverse {
             flex-direction: row-reverse;
         }
+        
         .magazine-img-placeholder {
             flex: 1;
             background: #F7F7F7;
@@ -104,17 +113,20 @@
             border-radius: 4px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
+        
         .magazine-text {
             flex: 1;
             line-height: 1.8;
             color: #333;
         }
+        
         .magazine-text h2 {
             font-family: Georgia, serif;
             font-size: 2.2rem;
             margin-bottom: 5px;
             color: #1A1A1A;
         }
+        
         .magazine-text .accent {
             color: #8A2924;
             font-weight: bold;
@@ -123,6 +135,7 @@
             margin-bottom: 25px;
             display: inline-block;
         }
+        
         .magazine-text p {
             margin-bottom: 20px;
         }
@@ -192,9 +205,13 @@
         
         <!-- SECTION 1: THE PHILOSOPHY -->
         <div style="text-align: center; max-width: 800px; margin: 0 auto 80px auto;">
-            <h2 style="font-family: Georgia, serif; font-size: 2.5rem; margin-bottom: 20px;">The Art of Subtraction</h2>
+            <h2 style="font-family: Georgia, serif; font-size: 2.5rem; margin-bottom: 20px;">
+                The Art of Subtraction
+            </h2>
             <p style="font-size: 1.1rem; line-height: 1.8; color: #444;">
-                Whether I am crafting a sweet spread, a complex spicy ferment, or a botanical elixir, my promise to you remains uncompromised: fewer ingredients, pure elements, and food crafted with absolute integrity. Welcome to the Grounded standard.
+                Whether I am crafting a sweet spread, a complex spicy ferment, or a botanical elixir, 
+                my promise to you remains uncompromised: fewer ingredients, pure elements, and food crafted 
+                with absolute integrity. Welcome to the Grounded standard.
             </p>
             <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 40px auto; width: 50%;">
         </div>
@@ -205,11 +222,43 @@
             <div class="magazine-text">
                 <h2>Simply Seeded</h2>
                 <span class="accent">SMALL-BATCH CRAFTED PEANUT BUTTER</span>
-                <p>To be completely honest with you: I used to absolutely hate peanut butter. All of it.</p>
-                <p>Growing up, my only experience with it was the generic supermarket brands. I found them way too oily, cloyingly sweet, and completely artificial. If you read the label on a standard supermarket jar today, you are met with a dense, confusing paragraph of stabilizers, cheap palm oil, and refined syrups. It feels more like a chemistry lab experiment than breakfast.</p>
-                <p>That was until I tasted a truly authentic, pure version and realized I had been lied to. I thought to myself: <em>If real peanut butter only requires a couple of pure ingredients, why can't I just make it myself?</em> That single thought sparked an absolute obsession. I started taking over the kitchen, roasting my own peanuts, grinding my own batches, and fine-tuning the texture. When you strip away the junk, it becomes a pure, rich elixir. I completely fell in love with it, and that original kitchen recipe is exactly what I am sharing with you today.</p>
-                <p>Simply Seeded relies on the quiet power of just three pure elements: deeply roasted peanuts, a pinch of Himalayan pink salt, and your choice of a clean, natural sweetener (monk fruit or date powder). Because I refuse to compromise on freshness, I rejected the traditional warehouse model to run strictly on micro-batches. The truth is, your jar doesn’t actually exist until you ask for it. It is roasted, ground, and packed only <em>after</em> your order drops into my system. It takes a little more time, but the reward is opening a jar at its absolute peak.</p>
-                <p><em>Thank you for choosing Simply Seeded.</em></p>
+                
+                <p>
+                    To be completely honest with you: I used to absolutely hate peanut butter. All of it.
+                </p>
+                
+                <p>
+                    Growing up, my only experience with it was the generic supermarket brands. I found them 
+                    way too oily, cloyingly sweet, and completely artificial. If you read the label on a 
+                    standard supermarket jar today, you are met with a dense, confusing paragraph of 
+                    stabilizers, cheap palm oil, and refined syrups. It feels more like a chemistry lab 
+                    experiment than breakfast.
+                </p>
+                
+                <p>
+                    That was until I tasted a truly authentic, pure version and realized I had been lied to. 
+                    I thought to myself: <em>If real peanut butter only requires a couple of pure ingredients, 
+                    why can't I just make it myself?</em> That single thought sparked an absolute obsession. 
+                    I started taking over the kitchen, roasting my own peanuts, grinding my own batches, and 
+                    fine-tuning the texture. When you strip away the junk, it becomes a pure, rich elixir. 
+                    I completely fell in love with it, and that original kitchen recipe is exactly what I am 
+                    sharing with you today.
+                </p>
+                
+                <p>
+                    Simply Seeded relies on the quiet power of just three pure elements: deeply roasted peanuts, 
+                    a pinch of Himalayan pink salt, and your choice of a clean, natural sweetener (monk fruit 
+                    or date powder). Because I refuse to compromise on freshness, I rejected the traditional 
+                    warehouse model to run strictly on micro-batches. The truth is, your jar doesn’t actually 
+                    exist until you ask for it. It is roasted, ground, and packed only <em>after</em> your 
+                    order drops into my system. It takes a little more time, but the reward is opening a jar 
+                    at its absolute peak.
+                </p>
+                
+                <p>
+                    <em>Thank you for choosing Simply Seeded.</em>
+                </p>
+                
                 <a href="store.html"><button class="btn" style="margin-top: 15px;">Shop Now</button></a>
             </div>
         </div>
@@ -220,11 +269,43 @@
             <div class="magazine-text">
                 <h2>ĀCHAR</h2>
                 <span class="accent">HERITAGE & GLOBAL PICKLES</span>
-                <p>Our fermentation journey actually began with the massive Korean food craze in India. I was just eight or nine years old, and my family was constantly buying expensive, imported kimchi. Not only was it making a serious impact on our bank account, but the ingredient lists were also packed with weird preservatives.</p>
-                <p>My older sister took matters into her own hands. After endless kitchen experiments and a few gloriously failed batches, she completely perfected the recipe. It tasted infinitely better than the store-bought jars, saved us a ton of money, and was 100% preservative-free. Now that she’s off at college, the massive and highly stressful responsibility of keeping the family kimchi supply alive has fallen entirely on my shoulders. Today, I'm proud to share her exact, original recipe with you.</p>
-                <p>But my roots demand equal attention. I am originally from Hyderabad, which means an absolute addiction to authentic South Indian pickles is literally in my DNA. From spicy <em>Avakay</em> to tangy <em>Gongura Pachadi</em> and classic <em>Nimmakaya</em>, these are the bold, handmade flavors I grew up on. While we are starting our launch with Kimchi, I promise you: these rich, traditional Indian flavors will soon be making their way right to your doorstep.</p>
-                <p>And finally, the classic cucumber pickle. It's a worldwide staple—perfect on burgers, sandwiches, and (if you're truly adventurous) maybe even pizza, though I personally wouldn't recommend it. The problem? Generic market brands are loaded with refined sugar, artificial preservatives, and emulsifiers. I realized that if our kitchen could master complex South Indian spices and Korean lacto-fermentation, there was no excuse not to make a clean, perfectly crunchy American pickle. No junk, just real flavor.</p>
-                <p><em>Thank you for choosing ĀCHAR.</em></p>
+                
+                <p>
+                    Our fermentation journey actually began with the massive Korean food craze in India. 
+                    I was just eight or nine years old, and my family was constantly buying expensive, 
+                    imported kimchi. Not only was it making a serious impact on our bank account, but 
+                    the ingredient lists were also packed with weird preservatives.
+                </p>
+                
+                <p>
+                    My older sister took matters into her own hands. After endless kitchen experiments and 
+                    a few gloriously failed batches, she completely perfected the recipe. It tasted infinitely 
+                    better than the store-bought jars, saved us a ton of money, and was 100% preservative-free. 
+                    Now that she’s off at college, the massive and highly stressful responsibility of keeping 
+                    the family kimchi supply alive has fallen entirely on my shoulders. Today, I'm proud to 
+                    share her exact, original recipe with you.
+                </p>
+                
+                <p>
+                    But my roots demand equal attention. I am originally from Hyderabad, which means an absolute 
+                    addiction to authentic South Indian pickles is literally in my DNA. From spicy <em>Avakay</em> 
+                    to tangy <em>Gongura Pachadi</em> and classic <em>Nimmakaya</em>, these are the bold, handmade 
+                    flavors I grew up on. While we are starting our launch with Kimchi, I promise you: these rich, 
+                    traditional Indian flavors will soon be making their way right to your doorstep.
+                </p>
+                
+                <p>
+                    And finally, the classic cucumber pickle. It's a worldwide staple—perfect on burgers, sandwiches, 
+                    and (if you're truly adventurous) maybe even pizza, though I personally wouldn't recommend it. 
+                    The problem? Generic market brands are loaded with refined sugar, artificial preservatives, and 
+                    emulsifiers. I realized that if our kitchen could master complex South Indian spices and Korean 
+                    lacto-fermentation, there was no excuse not to make a clean, perfectly crunchy American pickle. 
+                    No junk, just real flavor.
+                </p>
+                
+                <p>
+                    <em>Thank you for choosing ĀCHAR.</em>
+                </p>
             </div>
         </div>
 
@@ -234,11 +315,42 @@
             <div class="magazine-text">
                 <h2>SOMA</h2>
                 <span class="accent">LIVING PROBIOTIC TEA</span>
-                <p>Kombucha is controversial—I will be the first to admit it. People either absolutely hate it from the bottom of their hearts, or they love it so much they could practically explode. But before you make your final decision, I just ask that you give ours a try.</p>
-                <p>It all started when I realized that while packaged cold drinks and sodas taste incredibly good, there <em>has</em> to be a healthier alternative for us. I started researching everywhere. I went to restaurants, cafes, and roadside lemonade stalls looking for the perfect drink. Then, something clicked: sodas are entirely artificial, and I couldn't exactly package fresh roadside lemonade without loading it with chemical preservatives to make it last.</p>
-                <p>That is when I stumbled across kombucha. I instantly fell in love and started brewing it like my life depended on it. I started with a simple, original tea brew, but quickly realized you don't need artificial laboratory syrups when you can flavor it using real, fresh fruit. I have perfected a whole range of recipes: Original Tea, Mango, Litchi, Ginger, Lemon, and Passion Fruit.</p>
-                <p>And when I say we use real fruit, I mean it. We source exclusively from organic dealers who sell the absolute highest quality organic produce, taking the necessary time to maintain strict standards of hygiene and quality. It takes endless recipe testing and absolute brain exhaustion just to get the flavor exactly right. Right now, we are busy developing hyper-local and combination flavors like Mango Litchi, Mango Jackfruit, Passion Fruit Lime, Karonda, and Jamun. Very soon, you will be able to pop these authentic beverages right in your fridge, pull one out when it's ice-cold, and drink it completely guilt-free.</p>
-                <p><em>Thank you for choosing Soma.</em></p>
+                
+                <p>
+                    Kombucha is controversial—I will be the first to admit it. People either absolutely hate it 
+                    from the bottom of their hearts, or they love it so much they could practically explode. 
+                    But before you make your final decision, I just ask that you give ours a try.
+                </p>
+                
+                <p>
+                    It all started when I realized that while packaged cold drinks and sodas taste incredibly good, 
+                    there <em>has</em> to be a healthier alternative for us. I started researching everywhere. 
+                    I went to restaurants, cafes, and roadside lemonade stalls looking for the perfect drink. 
+                    Then, something clicked: sodas are entirely artificial, and I couldn't exactly package fresh 
+                    roadside lemonade without loading it with chemical preservatives to make it last.
+                </p>
+                
+                <p>
+                    That is when I stumbled across kombucha. I instantly fell in love and started brewing it like 
+                    my life depended on it. I started with a simple, original tea brew, but quickly realized you 
+                    don't need artificial laboratory syrups when you can flavor it using real, fresh fruit. 
+                    I have perfected a whole range of recipes: Original Tea, Mango, Litchi, Ginger, Lemon, 
+                    and Passion Fruit.
+                </p>
+                
+                <p>
+                    And when I say we use real fruit, I mean it. We source exclusively from organic dealers who 
+                    sell the absolute highest quality organic produce, taking the necessary time to maintain strict 
+                    standards of hygiene and quality. It takes endless recipe testing and absolute brain exhaustion 
+                    just to get the flavor exactly right. Right now, we are busy developing hyper-local and combination 
+                    flavors like Mango Litchi, Mango Jackfruit, Passion Fruit Lime, Karonda, and Jamun. Very soon, 
+                    you will be able to pop these authentic beverages right in your fridge, pull one out when it's 
+                    ice-cold, and drink it completely guilt-free.
+                </p>
+                
+                <p>
+                    <em>Thank you for choosing Soma.</em>
+                </p>
             </div>
         </div>
 
@@ -247,9 +359,14 @@
         <div style="text-align: center; max-width: 800px; margin: 80px auto;">
             <h2 style="font-family: Georgia, serif; font-size: 2rem;">A Standard Without Compromise</h2>
             <div class="quote-block" style="margin: 30px 0; padding: 20px; border: 1px solid #e0e0e0; background: #FDF9F8;">
-                <p class="quote-text" style="font-style: italic; font-size: 1.2rem; color: #333; margin: 0;">"The only rule I implemented from day one was simple: If it's not healthy enough for my kitchen, it's not going into yours."</p>
+                <p class="quote-text" style="font-style: italic; font-size: 1.2rem; color: #333; margin: 0;">
+                    "The only rule I implemented from day one was simple: If it's not healthy enough for my kitchen, 
+                    it's not going into yours."
+                </p>
             </div>
-            <p style="font-family: Georgia, serif; font-size: 1.2rem; color: #1a1a1a; margin-top: 20px;"><strong>— Yog Kota, Founder</strong></p>
+            <p style="font-family: Georgia, serif; font-size: 1.2rem; color: #1a1a1a; margin-top: 20px;">
+                <strong>— Yog Kota, Founder</strong>
+            </p>
         </div>
 
     </div>
@@ -266,9 +383,14 @@
         </div>
         <div class="ai-chat-body" id="aiChatBody">
             <div class="ai-msg-bot">
-                <div class="ai-msg-content">Hi! I'm The Curator. Ask me anything about our Pure Food Initiative, upcoming ferments, or the Grounded philosophy!</div>
+                <div class="ai-msg-content">
+                    Hi! I'm The Curator. Ask me anything about our Pure Food Initiative, upcoming ferments, 
+                    or the Grounded philosophy!
+                </div>
                 <button class="ai-speaker-btn" onclick="speakText(this.previousElementSibling.innerText)" title="Read aloud">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                    </svg>
                 </button>
             </div>
         </div>
@@ -278,7 +400,10 @@
                     <input type="text" class="ai-input" id="aiInput" placeholder="Please sign in to chat..." maxlength="300" disabled oninput="updateCharCount()" onkeypress="handleAIKeyPress(event)">
                     <button class="ai-mic-btn" id="aiMicBtn" onclick="toggleSpeechRecognition()" title="Click to speak" disabled>
                         <div class="mic-icon" id="micIconSvg">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                            </svg>
                         </div>
                         <div class="voice-visualizer" id="voiceVisualizer">
                             <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
@@ -426,14 +551,18 @@
                 botMsgDiv.innerHTML = `
                     <div class="ai-msg-content"></div>
                     <button class="ai-speaker-btn" onclick="speakText(this.previousElementSibling.innerText)" title="Read aloud">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                        </svg>
                     </button>
                 `;
                 botMsgDiv.querySelector('.ai-msg-content').innerText = data.reply;
                 
             } catch (error) {
                 console.error("API Error:", error);
-                document.getElementById(loadingId).innerHTML = `<div class="ai-msg-content">Oops! My secure backend had a hiccup connecting to the brain.</div>`;
+                document.getElementById(loadingId).innerHTML = `
+                    <div class="ai-msg-content">Oops! My secure backend had a hiccup connecting to the brain.</div>
+                `;
             } finally {
                 input.disabled = false;
                 sendBtn.disabled = false;
@@ -443,8 +572,15 @@
             }
         }
 
-        function escapeHTML(str) { return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)); }
-        function handleAIKeyPress(e) { if(e.key === 'Enter') sendAIMessage(); }
+        function escapeHTML(str) { 
+            return str.replace(/[&<>'"]/g, tag => ({ 
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' 
+            }[tag] || tag)); 
+        }
+        
+        function handleAIKeyPress(e) { 
+            if(e.key === 'Enter') sendAIMessage(); 
+        }
     </script>
 
     <!-- FIREBASE SECURITY LOGIC -->
