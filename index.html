@@ -6,8 +6,10 @@
     <title>G R O U N D E D</title>
     <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23FFFFFF" /><text x="50" y="72" font-family="Georgia, serif" font-size="60" font-weight="normal" fill="%231A1A1A" text-anchor="middle">G</text></svg>'>
     
+    <!-- LINK TO YOUR NEW CSS FILE -->
     <link rel="stylesheet" href="index.style.css">
-    
+
+    <!-- INJECTED STYLES FOR NEW LAYOUT -->
     <style>
         /* SWIGGY-STYLE TOP NAVIGATION */
         .top-nav {
@@ -168,12 +170,16 @@
         <div id="user-profile">WELCOME, <span id="user-name"></span></div>
     </div>
 
-    <div class="header-section" style="padding-top: 60px; padding-bottom: 20px;">
+    <!-- REMOVED EST 2026 AND PURE FOOD INITIATIVE SIDE ACCENTS -->
+
+    <div class="header-section">
         <h1 class="logo">G R O U N D E D</h1>
+        
         <div class="parent-brand-header">
             <span>A product of</span>
             <img src="kinduz%20official%20logo.png" alt="Kinduz Logo" class="kinduz-header-img">
         </div>
+
         <p class="subtitle">PUNE, INDIA</p>
     </div>
 
@@ -215,7 +221,9 @@
 
         <!-- PRODUCT 1: SIMPLY SEEDED -->
         <div class="magazine-row">
-            <div class="magazine-img-placeholder">[ Simply Seeded Jar Photo ]</div>
+            <div class="magazine-img-placeholder">
+                <img src="PBphoto.JPG" alt="Founder making Grounded peanut butter" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+            </div>
             <div class="magazine-text">
                 <h2>Simply Seeded</h2>
                 <span class="accent">SMALL-BATCH CRAFTED PEANUT BUTTER</span>
@@ -256,7 +264,7 @@
                     <em>Thank you for choosing Simply Seeded.</em>
                 </p>
                 
-                <a href="store.html"><button class="btn" style="margin-top: 15px;">Shop Now</button></a>
+                <a href="store.html"><button class="btn" style="margin-top: 15px;">Enter Store</button></a>
             </div>
         </div>
 
@@ -357,18 +365,16 @@
             <h2 style="font-family: Georgia, serif; font-size: 2rem;">A Standard Without Compromise</h2>
             <div class="quote-block" style="margin: 30px 0; padding: 20px; border: 1px solid #e0e0e0; background: #FDF9F8;">
                 <p class="quote-text" style="font-style: italic; font-size: 1.2rem; color: #333; margin: 0;">
-                    "The only rule I implemented from day one was simple: If it's not healthy enough for my kitchen, 
-                    it's not going into yours."
+                    "The only rule I implemented from day one was simple: If it's not healthy enough for my kitchen, it's not going into yours."
                 </p>
             </div>
             <p style="font-family: Georgia, serif; font-size: 1.2rem; color: #1a1a1a; margin-top: 20px;">
                 <strong>— Yog Kota, Founder</strong>
             </p>
         </div>
-
     </div>
 
-    <!-- THE AI CURATOR CHAT -->
+    <!-- AI CHAT WINDOW -->
     <button class="ai-bubble-btn" onclick="toggleAIChat()">TC</button>
     <div class="ai-chat-window" id="aiChatWindow">
         <div class="ai-chat-header">
@@ -380,14 +386,9 @@
         </div>
         <div class="ai-chat-body" id="aiChatBody">
             <div class="ai-msg-bot">
-                <div class="ai-msg-content">
-                    Hi! I'm The Curator. Ask me anything about our Pure Food Initiative, upcoming ferments, 
-                    or the Grounded philosophy!
-                </div>
+                <div class="ai-msg-content">Hi! I'm The Curator. Ask me anything about our Pure Food Initiative, upcoming ferments, or the Grounded philosophy!</div>
                 <button class="ai-speaker-btn" onclick="speakText(this.previousElementSibling.innerText)" title="Read aloud">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-                    </svg>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                 </button>
             </div>
         </div>
@@ -548,18 +549,14 @@
                 botMsgDiv.innerHTML = `
                     <div class="ai-msg-content"></div>
                     <button class="ai-speaker-btn" onclick="speakText(this.previousElementSibling.innerText)" title="Read aloud">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-                        </svg>
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
                     </button>
                 `;
                 botMsgDiv.querySelector('.ai-msg-content').innerText = data.reply;
                 
             } catch (error) {
                 console.error("API Error:", error);
-                document.getElementById(loadingId).innerHTML = `
-                    <div class="ai-msg-content">Oops! My secure backend had a hiccup connecting to the brain.</div>
-                `;
+                document.getElementById(loadingId).innerHTML = `<div class="ai-msg-content">Oops! My secure backend had a hiccup connecting to the brain.</div>`;
             } finally {
                 input.disabled = false;
                 sendBtn.disabled = false;
@@ -569,18 +566,11 @@
             }
         }
 
-        function escapeHTML(str) { 
-            return str.replace(/[&<>'"]/g, tag => ({ 
-                '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' 
-            }[tag] || tag)); 
-        }
-        
-        function handleAIKeyPress(e) { 
-            if(e.key === 'Enter') sendAIMessage(); 
-        }
+        function escapeHTML(str) { return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)); }
+        function handleAIKeyPress(e) { if(e.key === 'Enter') sendAIMessage(); }
     </script>
 
-    <!-- FIREBASE SECURITY LOGIC -->
+    <!-- FIREBASE AUTHENTICATION SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
@@ -597,8 +587,9 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        
         const provider = new GoogleAuthProvider();
+        
+        /* THIS IS THE CRITICAL SECURITY INJECTION FOR SHARED DEVICES */
         provider.setCustomParameters({ prompt: 'select_account' });
         
         window.firebaseAuth = auth;
