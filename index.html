@@ -143,6 +143,34 @@
             margin-bottom: 20px;
         }
 
+        /* AUTHENTICATION UI STYLES */
+        .auth-btn {
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            letter-spacing: 1px;
+            border-radius: 2px;
+            transition: opacity 0.2s;
+        }
+        .auth-btn:hover { opacity: 0.8; }
+        
+        .input-group {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            background: #fff;
+            padding: 5px 15px;
+        }
+        .input-group input {
+            border: none;
+            outline: none;
+            padding: 8px;
+            font-size: 1rem;
+            width: 150px;
+        }
+
         /* MOBILE OPTIMIZATION */
         @media (max-width: 768px) {
             .top-nav {
@@ -161,34 +189,56 @@
                 width: 100%;
                 min-height: 350px;
             }
+            #auth-options {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. UPDATED FIREBASE LOGIN BAR (PHONE/SMS) -->
-    <div class="auth-container" style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; padding: 15px;">
+    <!-- CLEAN AUTHENTICATION MENU -->
+    <div style="background: #FDF9F8; padding: 15px; border-bottom: 1px solid #E0E0E0; text-align: center; min-height: 50px; display: flex; justify-content: center; align-items: center;">
         
-        <!-- Phone Number Input -->
-        <div id="phone-ui" style="display: flex; gap: 10px;">
-            <input type="tel" id="phone-number" placeholder="+91 9999999999" style="padding: 10px; border: 1px solid #ccc; font-family: Arial;">
-            <button id="send-code-btn" style="background: #1A1A1A; color: white; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold;">SEND OTP</button>
+        <!-- Default State: Sign In Button -->
+        <div id="logged-out-ui">
+            <button id="main-signin-btn" class="auth-btn" style="background: #1A1A1A; color: white;">SIGN IN</button>
         </div>
 
-        <!-- OTP Input (Hidden until SMS is sent) -->
-        <div id="otp-ui" style="display: none; gap: 10px;">
-            <input type="text" id="otp-code" placeholder="Enter 6-digit OTP" style="padding: 10px; border: 1px solid #ccc; font-family: Arial;">
-            <button id="verify-code-btn" style="background: #8A2924; color: white; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold;">VERIFY</button>
+        <!-- Step 2: Choose Login Method -->
+        <div id="auth-options" style="display: none; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <button id="btn-google" class="auth-btn" style="background: #4285F4; color: white; display: flex; align-items: center; gap: 10px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/></svg>
+                Continue with Google
+            </button>
+            <button id="btn-phone" class="auth-btn" style="background: #1A1A1A; color: white;">Continue with Phone</button>
         </div>
 
-        <!-- Invisible reCAPTCHA container required by Firebase -->
-        <div id="recaptcha-container"></div>
+        <!-- Step 3: Phone Input (Indian Format) -->
+        <div id="phone-ui" style="display: none; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <div class="input-group">
+                <span style="font-size: 1.2rem; margin-right: 8px;">🇮🇳</span>
+                <span style="font-weight: bold; color: #555; margin-right: 5px;">+91</span>
+                <input type="tel" id="phone-number" placeholder="9999999999" maxlength="10">
+            </div>
+            <button id="send-code-btn" class="auth-btn" style="background: #1A1A1A; color: white;">SEND OTP</button>
+        </div>
+
+        <!-- Step 4: OTP Input -->
+        <div id="otp-ui" style="display: none; justify-content: center; gap: 10px; flex-wrap: wrap;">
+            <input type="text" id="otp-code" placeholder="Enter 6-digit OTP" style="padding: 10px; border: 1px solid #ccc; font-family: Arial; width: 150px; text-align: center;">
+            <button id="verify-code-btn" class="auth-btn" style="background: #8A2924; color: white;">VERIFY</button>
+        </div>
 
         <!-- Logged In State -->
-        <div id="user-profile" style="display: none; align-items: center; gap: 15px; font-weight: bold; letter-spacing: 1px;">
-            WELCOME, <span id="user-name"></span>
-            <button id="logout-btn" style="background: none; border: none; text-decoration: underline; cursor: pointer; font-size: 0.85rem;">Logout</button>
+        <div id="user-profile" style="display: none; align-items: center; gap: 15px; font-weight: bold; letter-spacing: 1px; color: #1A1A1A;">
+            WELCOME, <span id="user-name" style="color: #8A2924;"></span>
+            <button id="logout-btn" style="background: none; border: none; text-decoration: underline; cursor: pointer; font-size: 0.85rem; color: #555;">Logout</button>
         </div>
+
+        <!-- Firebase reCAPTCHA -->
+        <div id="recaptcha-container"></div>
     </div>
 
     <div class="header-section">
@@ -612,10 +662,10 @@
         function handleAIKeyPress(e) { if(e.key === 'Enter') sendAIMessage(); }
     </script>
 
-    <!-- FIREBASE PHONE AUTHENTICATION SCRIPT -->
+    <!-- FIREBASE COMBINED AUTHENTICATION SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-        import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+        import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBKZz6FNizCDMf8LnG7-n9a0H26MU8ZN_I",
@@ -631,16 +681,25 @@
         const auth = getAuth(app);
         window.firebaseAuth = auth;
 
-        // 1. Setup invisible reCAPTCHA (proves the user is human before sending SMS)
+        const googleProvider = new GoogleAuthProvider();
+        googleProvider.setCustomParameters({ prompt: 'select_account' });
+
+        // 1. Setup invisible reCAPTCHA
         window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
             'size': 'invisible'
         });
 
         // UI Elements
+        const loggedOutUi = document.getElementById('logged-out-ui');
+        const authOptions = document.getElementById('auth-options');
         const phoneUi = document.getElementById('phone-ui');
         const otpUi = document.getElementById('otp-ui');
         const userProfile = document.getElementById('user-profile');
         const userNameSpan = document.getElementById('user-name');
+        
+        const mainSignInBtn = document.getElementById('main-signin-btn');
+        const btnGoogle = document.getElementById('btn-google');
+        const btnPhone = document.getElementById('btn-phone');
         
         const phoneInput = document.getElementById('phone-number');
         const sendBtn = document.getElementById('send-code-btn');
@@ -648,20 +707,34 @@
         const verifyBtn = document.getElementById('verify-code-btn');
         const logoutBtn = document.getElementById('logout-btn');
 
-        // 2. Send the OTP
+        // UI Toggles
+        mainSignInBtn.addEventListener('click', () => {
+            loggedOutUi.style.display = 'none';
+            authOptions.style.display = 'flex';
+        });
+
+        btnGoogle.addEventListener('click', () => {
+            signInWithPopup(auth, googleProvider).catch((error) => console.error("Google Login failed: ", error));
+        });
+
+        btnPhone.addEventListener('click', () => {
+            authOptions.style.display = 'none';
+            phoneUi.style.display = 'flex';
+        });
+
+        // Phone Login Logic
         sendBtn.addEventListener('click', () => {
-            const phoneNumber = phoneInput.value.trim();
-            // Firebase requires the country code (e.g., +91)
-            if(!phoneNumber.startsWith('+')) {
-                alert("Please include the country code, e.g., +91");
+            const rawNumber = phoneInput.value.trim();
+            if(rawNumber.length !== 10) {
+                alert("Please enter a valid 10-digit Indian mobile number.");
                 return;
             }
 
+            const fullPhoneNumber = "+91" + rawNumber;
             sendBtn.innerText = "SENDING...";
             
-            signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
+            signInWithPhoneNumber(auth, fullPhoneNumber, window.recaptchaVerifier)
                 .then((confirmationResult) => {
-                    // SMS sent successfully
                     window.confirmationResult = confirmationResult;
                     phoneUi.style.display = 'none';
                     otpUi.style.display = 'flex';
@@ -672,13 +745,11 @@
                 });
         });
 
-        // 3. Verify the OTP
         verifyBtn.addEventListener('click', () => {
             const code = otpInput.value.trim();
             verifyBtn.innerText = "VERIFYING...";
 
             window.confirmationResult.confirm(code).then((result) => {
-                // User signed in successfully
                 console.log("Phone Auth Success!");
             }).catch((error) => {
                 console.error("Bad OTP", error);
@@ -687,23 +758,25 @@
             });
         });
 
-        // 4. Logout
         logoutBtn.addEventListener('click', () => {
             signOut(auth);
         });
 
-        // 5. Watch for login state changes
+        // Watch for login state changes
         onAuthStateChanged(auth, (user) => {
             const chatInput = document.getElementById('aiInput');
             const sendChatBtn = document.getElementById('aiSendBtn');
             const micBtn = document.getElementById('aiMicBtn');
 
             if (user) {
+                loggedOutUi.style.display = 'none';
+                authOptions.style.display = 'none';
                 phoneUi.style.display = 'none';
                 otpUi.style.display = 'none';
                 userProfile.style.display = 'flex';
-                // Display their phone number
-                userNameSpan.textContent = user.phoneNumber;
+                
+                // Show name for Google, or phone number for SMS
+                userNameSpan.textContent = user.displayName ? user.displayName.toUpperCase() : user.phoneNumber;
 
                 if(chatInput) {
                     chatInput.disabled = false;
@@ -712,9 +785,12 @@
                     micBtn.disabled = false;
                 }
             } else {
-                phoneUi.style.display = 'flex';
+                loggedOutUi.style.display = 'block';
+                authOptions.style.display = 'none';
+                phoneUi.style.display = 'none';
                 otpUi.style.display = 'none';
                 userProfile.style.display = 'none';
+                
                 phoneInput.value = '';
                 otpInput.value = '';
                 sendBtn.innerText = "SEND OTP";
