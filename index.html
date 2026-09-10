@@ -189,17 +189,16 @@
                 width: 100%;
                 min-height: 350px;
             }
-            #auth-options {
-                flex-direction: column;
-                align-items: center;
+            #auth-options, #phone-ui, #otp-ui, #user-profile {
+                justify-content: center !important; /* Centers auth on mobile so it doesn't break */
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- CLEAN AUTHENTICATION MENU -->
-    <div style="background: #FDF9F8; padding: 15px; border-bottom: 1px solid #E0E0E0; text-align: center; min-height: 50px; display: flex; justify-content: center; align-items: center;">
+    <!-- CLEAN AUTHENTICATION MENU (PUSHED TO TOP RIGHT) -->
+    <div style="background: #FDF9F8; padding: 15px 30px; border-bottom: 1px solid #E0E0E0; text-align: right; min-height: 50px; display: flex; justify-content: flex-end; align-items: center;">
         
         <!-- Default State: Sign In Button -->
         <div id="logged-out-ui">
@@ -207,7 +206,7 @@
         </div>
 
         <!-- Step 2: Choose Login Method -->
-        <div id="auth-options" style="display: none; gap: 15px; justify-content: center; flex-wrap: wrap;">
+        <div id="auth-options" style="display: none; gap: 15px; justify-content: flex-end; flex-wrap: wrap;">
             <button id="btn-google" class="auth-btn" style="background: #4285F4; color: white; display: flex; align-items: center; gap: 10px;">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/></svg>
                 Continue with Google
@@ -216,7 +215,7 @@
         </div>
 
         <!-- Step 3: Phone Input (Indian Format) -->
-        <div id="phone-ui" style="display: none; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <div id="phone-ui" style="display: none; justify-content: flex-end; align-items: center; gap: 10px; flex-wrap: wrap;">
             <div class="input-group">
                 <span style="font-size: 1.2rem; margin-right: 8px;">🇮🇳</span>
                 <span style="font-weight: bold; color: #555; margin-right: 5px;">+91</span>
@@ -227,13 +226,13 @@
         </div>
 
         <!-- Step 4: OTP Input -->
-        <div id="otp-ui" style="display: none; justify-content: center; gap: 10px; flex-wrap: wrap;">
+        <div id="otp-ui" style="display: none; justify-content: flex-end; gap: 10px; flex-wrap: wrap;">
             <input type="text" id="otp-code" placeholder="Enter 6-digit OTP" style="padding: 10px; border: 1px solid #ccc; font-family: Arial; width: 150px; text-align: center;">
             <button id="verify-code-btn" class="auth-btn" style="background: #8A2924; color: white;">VERIFY</button>
         </div>
 
         <!-- Logged In State -->
-        <div id="user-profile" style="display: none; align-items: center; gap: 15px; font-weight: bold; letter-spacing: 1px; color: #1A1A1A;">
+        <div id="user-profile" style="display: none; align-items: center; justify-content: flex-end; gap: 15px; font-weight: bold; letter-spacing: 1px; color: #1A1A1A;">
             WELCOME, <span id="user-name" style="color: #8A2924;"></span>
             <button id="logout-btn" style="background: none; border: none; text-decoration: underline; cursor: pointer; font-size: 0.85rem; color: #555;">Logout</button>
         </div>
@@ -352,9 +351,11 @@
             </div>
         </div>
 
-        <!-- PRODUCT 2: ACHAR -->
+        <!-- PRODUCT 2: ACHAR (UPDATED WITH IMAGE) -->
         <div class="magazine-row reverse">
-            <div class="magazine-img-placeholder">[ South Indian & Global Pickles Photo ]</div>
+            <div class="magazine-img-placeholder">
+                <img src="kimchi2.jpg" alt="Overhead view of small batch Grounded Achar fermenting in glass jars" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+            </div>
             <div class="magazine-text">
                 <h2>ĀCHAR</h2>
                 <span class="accent">HERITAGE & GLOBAL PICKLES</span>
@@ -398,9 +399,11 @@
             </div>
         </div>
 
-        <!-- PRODUCT 3: SOMA -->
+        <!-- PRODUCT 3: SOMA (UPDATED WITH IMAGE) -->
         <div class="magazine-row">
-            <div class="magazine-img-placeholder">[ Kombucha Brewing Photo ]</div>
+            <div class="magazine-img-placeholder">
+                <img src="kombucha6.jpg" alt="Glass bottles of Grounded Soma Kombucha brewing in bright natural light" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+            </div>
             <div class="magazine-text">
                 <h2>SOMA</h2>
                 <span class="accent">LIVING PROBIOTIC TEA</span>
