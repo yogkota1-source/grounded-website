@@ -61,6 +61,7 @@
         .nav-item.locked {
             opacity: 0.4;
             cursor: not-allowed;
+            position: relative;
         }
         
         .nav-item.locked::after {
@@ -165,9 +166,29 @@
 </head>
 <body>
 
-    <div class="auth-container">
-        <button id="google-signin-btn">SIGN IN</button>
-        <div id="user-profile">WELCOME, <span id="user-name"></span></div>
+    <!-- 1. UPDATED FIREBASE LOGIN BAR (PHONE/SMS) -->
+    <div class="auth-container" style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; padding: 15px;">
+        
+        <!-- Phone Number Input -->
+        <div id="phone-ui" style="display: flex; gap: 10px;">
+            <input type="tel" id="phone-number" placeholder="+91 9999999999" style="padding: 10px; border: 1px solid #ccc; font-family: Arial;">
+            <button id="send-code-btn" style="background: #1A1A1A; color: white; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold;">SEND OTP</button>
+        </div>
+
+        <!-- OTP Input (Hidden until SMS is sent) -->
+        <div id="otp-ui" style="display: none; gap: 10px;">
+            <input type="text" id="otp-code" placeholder="Enter 6-digit OTP" style="padding: 10px; border: 1px solid #ccc; font-family: Arial;">
+            <button id="verify-code-btn" style="background: #8A2924; color: white; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold;">VERIFY</button>
+        </div>
+
+        <!-- Invisible reCAPTCHA container required by Firebase -->
+        <div id="recaptcha-container"></div>
+
+        <!-- Logged In State -->
+        <div id="user-profile" style="display: none; align-items: center; gap: 15px; font-weight: bold; letter-spacing: 1px;">
+            WELCOME, <span id="user-name"></span>
+            <button id="logout-btn" style="background: none; border: none; text-decoration: underline; cursor: pointer; font-size: 0.85rem;">Logout</button>
+        </div>
     </div>
 
     <div class="header-section">
@@ -395,7 +416,7 @@
         </div>
     </div>
 
-    <!-- AI CHAT WINDOW (Placed safely at the end, after the Founder's letter) -->
+    <!-- AI CHAT WINDOW -->
     <button class="ai-bubble-btn" onclick="toggleAIChat()">TC</button>
     <div class="ai-chat-window" id="aiChatWindow">
         <div class="ai-chat-header">
@@ -591,10 +612,10 @@
         function handleAIKeyPress(e) { if(e.key === 'Enter') sendAIMessage(); }
     </script>
 
-    <!-- FIREBASE AUTHENTICATION SCRIPT -->
+    <!-- FIREBASE PHONE AUTHENTICATION SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+        import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBKZz6FNizCDMf8LnG7-n9a0H26MU8ZN_I",
@@ -608,49 +629,101 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-        
-        /* THIS IS THE CRITICAL SECURITY INJECTION FOR SHARED DEVICES */
-        provider.setCustomParameters({ prompt: 'select_account' });
-        
         window.firebaseAuth = auth;
 
-        const signInBtn = document.getElementById('google-signin-btn');
+        // 1. Setup invisible reCAPTCHA (proves the user is human before sending SMS)
+        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+            'size': 'invisible'
+        });
+
+        // UI Elements
+        const phoneUi = document.getElementById('phone-ui');
+        const otpUi = document.getElementById('otp-ui');
         const userProfile = document.getElementById('user-profile');
         const userNameSpan = document.getElementById('user-name');
+        
+        const phoneInput = document.getElementById('phone-number');
+        const sendBtn = document.getElementById('send-code-btn');
+        const otpInput = document.getElementById('otp-code');
+        const verifyBtn = document.getElementById('verify-code-btn');
+        const logoutBtn = document.getElementById('logout-btn');
 
-        if(signInBtn) {
-            signInBtn.addEventListener('click', () => {
-                signInWithPopup(auth, provider)
-                    .then((result) => console.log("Logged in: ", result.user.displayName))
-                    .catch((error) => console.error("Login failed: ", error));
+        // 2. Send the OTP
+        sendBtn.addEventListener('click', () => {
+            const phoneNumber = phoneInput.value.trim();
+            // Firebase requires the country code (e.g., +91)
+            if(!phoneNumber.startsWith('+')) {
+                alert("Please include the country code, e.g., +91");
+                return;
+            }
+
+            sendBtn.innerText = "SENDING...";
+            
+            signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
+                .then((confirmationResult) => {
+                    // SMS sent successfully
+                    window.confirmationResult = confirmationResult;
+                    phoneUi.style.display = 'none';
+                    otpUi.style.display = 'flex';
+                }).catch((error) => {
+                    console.error("SMS failed", error);
+                    alert("Failed to send OTP. Please check the number and try again.");
+                    sendBtn.innerText = "SEND OTP";
+                });
+        });
+
+        // 3. Verify the OTP
+        verifyBtn.addEventListener('click', () => {
+            const code = otpInput.value.trim();
+            verifyBtn.innerText = "VERIFYING...";
+
+            window.confirmationResult.confirm(code).then((result) => {
+                // User signed in successfully
+                console.log("Phone Auth Success!");
+            }).catch((error) => {
+                console.error("Bad OTP", error);
+                alert("Invalid OTP code. Please try again.");
+                verifyBtn.innerText = "VERIFY";
             });
-        }
+        });
 
+        // 4. Logout
+        logoutBtn.addEventListener('click', () => {
+            signOut(auth);
+        });
+
+        // 5. Watch for login state changes
         onAuthStateChanged(auth, (user) => {
             const chatInput = document.getElementById('aiInput');
-            const sendBtn = document.getElementById('aiSendBtn');
+            const sendChatBtn = document.getElementById('aiSendBtn');
             const micBtn = document.getElementById('aiMicBtn');
 
-            if (user && signInBtn && userProfile) {
-                signInBtn.style.display = 'none';
-                userProfile.style.display = 'block';
-                userNameSpan.textContent = user.displayName.toUpperCase();
-                
+            if (user) {
+                phoneUi.style.display = 'none';
+                otpUi.style.display = 'none';
+                userProfile.style.display = 'flex';
+                // Display their phone number
+                userNameSpan.textContent = user.phoneNumber;
+
                 if(chatInput) {
                     chatInput.disabled = false;
                     chatInput.placeholder = "Ask a question...";
-                    sendBtn.disabled = false;
+                    sendChatBtn.disabled = false;
                     micBtn.disabled = false;
                 }
-            } else if (signInBtn && userProfile) {
-                signInBtn.style.display = 'block';
+            } else {
+                phoneUi.style.display = 'flex';
+                otpUi.style.display = 'none';
                 userProfile.style.display = 'none';
-                
+                phoneInput.value = '';
+                otpInput.value = '';
+                sendBtn.innerText = "SEND OTP";
+                verifyBtn.innerText = "VERIFY";
+
                 if(chatInput) {
                     chatInput.disabled = true;
                     chatInput.placeholder = "Please sign in to chat...";
-                    sendBtn.disabled = true;
+                    sendChatBtn.disabled = true;
                     micBtn.disabled = true;
                 }
             }
