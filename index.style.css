@@ -14,7 +14,7 @@ body {
     font-family: Arial, sans-serif; 
     text-align: center; 
     margin: 0; 
-    padding: 60px 20px; 
+    padding: 20px 20px 60px 20px; /* Reduced top padding to move logo up */
     min-height: 100vh; 
 }
 
@@ -93,12 +93,12 @@ body {
 }
 
 
-/* --- AUTHENTICATION UI STYLES --- */
-.auth-container {
+/* --- FLOATING TOP RIGHT AUTH NAV --- */
+.auth-nav-container {
     position: absolute;
-    top: 30px;
+    top: 20px;
     right: 30px;
-    z-index: 100;
+    z-index: 101;
     animation: fadeIn 1s ease-out 0.5s both;
 }
 
@@ -113,6 +113,65 @@ body {
     transition: opacity 0.2s;
 }
 .auth-btn:hover { opacity: 0.8; }
+
+#user-profile {
+    display: none;
+    font-size: 0.75rem;
+    color: #666;
+    letter-spacing: 2px;
+    font-family: Arial, sans-serif;
+    text-transform: uppercase;
+}
+
+/* --- MODAL (POP-UP) STYLES --- */
+.modal-overlay {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); 
+    z-index: 2000;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    background: #fff; 
+    padding: 40px; 
+    border-radius: 8px;
+    width: 90%; 
+    max-width: 380px; 
+    position: relative;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    animation: fadeUp 0.3s ease-out;
+}
+
+.close-modal {
+    position: absolute; 
+    top: 15px; 
+    right: 20px; 
+    font-size: 28px; 
+    color: #AAA;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.close-modal:hover { color: #1A1A1A; }
+
+.modal-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+}
+.modal-input:focus { outline: none; border-color: #8A2924; }
 
 .input-group {
     display: flex;
@@ -129,31 +188,6 @@ body {
     width: 150px;
 }
 
-#google-signin-btn {
-    background-color: #1A1A1A;
-    color: #FFFFFF;
-    border: 1px solid #1A1A1A;
-    padding: 10px 20px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: Arial, sans-serif;
-    letter-spacing: 2px;
-    transition: all 0.3s ease;
-}
-#google-signin-btn:hover {
-    background-color: #FFFFFF;
-    color: #1A1A1A;
-}
-#user-profile {
-    display: none;
-    font-size: 0.75rem;
-    color: #666;
-    letter-spacing: 2px;
-    font-family: Arial, sans-serif;
-    text-transform: uppercase;
-}
 
 /* --- HEADER & BRAND ACCENTS --- */
 .side-accent { 
@@ -562,7 +596,7 @@ a { text-decoration: none; }
 @media (max-width: 768px) {
     /* General UI Shrinking */
     .side-accent { display: none; } 
-    h1.logo { font-size: 1.8rem; letter-spacing: 6px; }
+    h1.logo { font-size: 1.8rem; letter-spacing: 6px; margin-top: 40px; }
     
     /* 1. Shrink Navigation & Auth */
     .top-nav {
@@ -580,11 +614,8 @@ a { text-decoration: none; }
         font-size: 0.85rem; 
     }
     
-    .auth-container { top: 15px; right: 15px; } /* Old Auth position fix */
-    
-    #auth-options, #phone-ui, #otp-ui, #user-profile {
-        justify-content: center !important; 
-    }
+    /* Reposition the Floating Auth Button for mobile */
+    .auth-nav-container { top: 15px; right: 15px; } 
 
     /* 2. The Pyramid Structure (Magazine View) */
     .magazine-row, .magazine-row.reverse {
