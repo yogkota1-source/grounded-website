@@ -30,22 +30,28 @@
             
             <!-- Default View: Email + Options -->
             <div id="modal-default-view">
-                <!-- Email Login -->
-                <input type="email" id="email-input" class="modal-input" placeholder="Email Address">
-                <input type="password" id="password-input" class="modal-input" placeholder="Password">
-                <button id="email-login-btn" class="auth-btn" style="width: 100%; background: #1A1A1A; color: white; margin-bottom: 15px;">Sign In with Email</button>
-                
+                <div id="email-auth-section">
+                    <h3 id="modal-action-title" style="margin-top: 0; margin-bottom: 15px; font-size: 1rem; color: #333; font-weight: normal;">Sign In with Email</h3>
+                    <input type="email" id="email-input" class="modal-input" placeholder="Email Address">
+                    <input type="password" id="password-input" class="modal-input" placeholder="Password">
+                    <button id="email-action-btn" class="auth-btn" style="width: 100%; background: #1A1A1A; color: white; margin-bottom: 10px;">Sign In</button>
+                    
+                    <!-- The Toggle Link -->
+                    <div id="toggle-auth-mode" style="font-size: 0.8rem; color: #555; text-decoration: underline; cursor: pointer; margin-bottom: 15px;">New here? Create an account</div>
+                </div>
+
                 <div style="margin: 15px 0; color: #888; font-size: 0.8rem; letter-spacing: 1px;">OR CONTINUE WITH</div>
                 
-                <!-- Google & Phone Buttons -->
+                <!-- Google Button (Minimalist White/Black Outline) -->
                 <button id="btn-google" class="auth-btn" style="width: 100%; background: #FFFFFF; color: #1A1A1A; border: 1px solid #1A1A1A; display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 10px;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="#1A1A1A"><path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/></svg>
                     Google
                 </button>
+                <!-- Phone Button (Minimalist White/Black Outline) -->
                 <button id="btn-phone" class="auth-btn" style="width: 100%; background: #FFFFFF; color: #1A1A1A; border: 1px solid #1A1A1A;">Phone Number</button>
             </div>
 
-            <!-- Phone Input View (Hidden by default) -->
+            <!-- Phone Input View -->
             <div id="modal-phone-view" style="display: none;">
                 <p style="margin-bottom: 15px; font-size: 0.9rem;">Enter your 10-digit number</p>
                 <div class="input-group" style="justify-content: center; margin-bottom: 15px;">
@@ -56,7 +62,7 @@
                 <button id="send-code-btn" class="auth-btn" style="width: 100%; background: #1A1A1A; color: white;">SEND OTP</button>
             </div>
 
-            <!-- OTP Input View (Hidden by default) -->
+            <!-- OTP Input View -->
             <div id="modal-otp-view" style="display: none;">
                 <p style="margin-bottom: 15px; font-size: 0.9rem;">We sent a code to your phone.</p>
                 <input type="text" id="otp-code" class="modal-input" placeholder="Enter 6-digit OTP" style="text-align: center; letter-spacing: 2px;">
@@ -378,10 +384,11 @@
         function handleAIKeyPress(e) { if(e.key === 'Enter') sendAIMessage(); }
     </script>
 
-    <!-- FIREBASE AUTHENTICATION SCRIPT -->
+    <!-- FIREBASE AUTHENTICATION SCRIPT (WITH SIGN UP TOGGLE LOGIC) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-        import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+        // Added createUserWithEmailAndPassword here:
+        import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBKZz6FNizCDMf8LnG7-n9a0H26MU8ZN_I",
@@ -413,7 +420,10 @@
         // Buttons & Inputs
         const emailInput = document.getElementById('email-input');
         const passwordInput = document.getElementById('password-input');
-        const btnEmailLogin = document.getElementById('email-login-btn');
+        const emailActionBtn = document.getElementById('email-action-btn');
+        const toggleAuthModeBtn = document.getElementById('toggle-auth-mode');
+        const modalActionTitle = document.getElementById('modal-action-title');
+        
         const btnGoogle = document.getElementById('btn-google');
         const btnPhone = document.getElementById('btn-phone');
         
@@ -422,6 +432,9 @@
         const otpInput = document.getElementById('otp-code');
         const verifyBtn = document.getElementById('verify-code-btn');
         const logoutBtn = document.getElementById('logout-btn');
+
+        // State Tracker
+        let isSignUpMode = false;
 
         // Setup invisible reCAPTCHA for Phone Auth
         window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { 'size': 'invisible' });
@@ -436,26 +449,47 @@
 
         closeModalBtn.addEventListener('click', () => { authModal.style.display = 'none'; });
         
-        // Close modal if user clicks outside the white box
         window.onclick = function(event) {
             if (event.target == authModal) { authModal.style.display = "none"; }
         }
 
-        // EMAIL LOGIC
-        btnEmailLogin.addEventListener('click', () => {
+        // TOGGLE SIGN IN / SIGN UP
+        toggleAuthModeBtn.addEventListener('click', () => {
+            isSignUpMode = !isSignUpMode;
+            if (isSignUpMode) {
+                modalActionTitle.innerText = "Create an Account";
+                emailActionBtn.innerText = "Sign Up";
+                toggleAuthModeBtn.innerText = "Already have an account? Sign In";
+            } else {
+                modalActionTitle.innerText = "Sign In with Email";
+                emailActionBtn.innerText = "Sign In";
+                toggleAuthModeBtn.innerText = "New here? Create an account";
+            }
+        });
+
+        // EMAIL LOGIC (Handles both Sign In & Sign Up)
+        emailActionBtn.addEventListener('click', () => {
             const email = emailInput.value.trim();
             const password = passwordInput.value.trim();
             if(!email || !password) return alert("Please enter both email and password.");
             
-            btnEmailLogin.innerText = "Signing in...";
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    authModal.style.display = 'none';
-                })
-                .catch((error) => {
-                    alert("Login failed: " + error.message);
-                    btnEmailLogin.innerText = "Sign In with Email";
-                });
+            emailActionBtn.innerText = "Processing...";
+            
+            if (isSignUpMode) {
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => { authModal.style.display = 'none'; })
+                    .catch((error) => {
+                        alert("Sign Up failed: " + error.message);
+                        emailActionBtn.innerText = "Sign Up";
+                    });
+            } else {
+                signInWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => { authModal.style.display = 'none'; })
+                    .catch((error) => {
+                        alert("Login failed: " + error.message);
+                        emailActionBtn.innerText = "Sign In";
+                    });
+            }
         });
 
         // GOOGLE LOGIC
@@ -511,7 +545,7 @@
             if (user) {
                 openModalBtn.style.display = 'none';
                 userProfile.style.display = 'flex';
-                authModal.style.display = 'none'; // Ensure modal closes
+                authModal.style.display = 'none';
                 
                 // Prioritize Name -> Email -> Phone for Display
                 userNameSpan.textContent = user.displayName ? user.displayName.toUpperCase() : (user.email ? user.email : user.phoneNumber);
@@ -531,7 +565,7 @@
                 passwordInput.value = '';
                 phoneInput.value = '';
                 otpInput.value = '';
-                btnEmailLogin.innerText = "Sign In with Email";
+                emailActionBtn.innerText = isSignUpMode ? "Sign Up" : "Sign In";
                 sendBtn.innerText = "SEND OTP";
                 verifyBtn.innerText = "VERIFY";
 
