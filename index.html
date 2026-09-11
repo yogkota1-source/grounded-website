@@ -6,194 +6,8 @@
     <title>G R O U N D E D</title>
     <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23FFFFFF" /><text x="50" y="72" font-family="Georgia, serif" font-size="60" font-weight="normal" fill="%231A1A1A" text-anchor="middle">G</text></svg>'>
     
-    <!-- LINK TO YOUR NEW CSS FILE -->
+    <!-- LINK TO YOUR BRAND CSS FILE -->
     <link rel="stylesheet" href="index.style.css">
-
-    <!-- INJECTED STYLES FOR NEW LAYOUT -->
-    <style>
-        /* SWIGGY-STYLE TOP NAVIGATION */
-        .top-nav {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-            padding: 20px 40px;
-            background: #fff;
-            border-bottom: 1px solid #E0E0E0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            flex-wrap: wrap;
-        }
-        
-        .nav-item {
-            text-decoration: none;
-            color: #1A1A1A;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .nav-item h3 {
-            margin: 0 0 4px 0;
-            font-family: Georgia, serif;
-            font-size: 1.1rem;
-            font-weight: normal;
-            letter-spacing: 1px;
-        }
-        
-        .nav-tagline {
-            font-size: 0.7rem;
-            color: #8A2924;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-        
-        .nav-item:hover:not(.locked) {
-            opacity: 0.6;
-        }
-        
-        /* The "Barrier" for In-Development Tabs */
-        .nav-item.locked {
-            opacity: 0.4;
-            cursor: not-allowed;
-            position: relative;
-        }
-        
-        .nav-item.locked::after {
-            content: "IN DEVELOPMENT";
-            position: absolute;
-            bottom: -35px;
-            background: #1A1A1A;
-            color: #fff;
-            padding: 5px 10px;
-            font-size: 0.7rem;
-            letter-spacing: 1px;
-            border-radius: 3px;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s;
-            white-space: nowrap;
-        }
-        
-        .nav-item.locked:hover::after {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* MAGAZINE LAYOUT STYLES */
-        .magazine-section {
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 20px;
-        }
-        
-        .magazine-row {
-            display: flex;
-            align-items: center;
-            gap: 60px;
-            margin-bottom: 80px;
-        }
-        
-        .magazine-row.reverse {
-            flex-direction: row-reverse;
-        }
-        
-        .magazine-img-placeholder {
-            flex: 1;
-            background: #F7F7F7;
-            min-height: 500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #A0A0A0;
-            font-family: Georgia, serif;
-            font-style: italic;
-            border-radius: 4px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-        
-        .magazine-text {
-            flex: 1;
-            line-height: 1.8;
-            color: #333;
-        }
-        
-        .magazine-text h2 {
-            font-family: Georgia, serif;
-            font-size: 2.2rem;
-            margin-bottom: 5px;
-            color: #1A1A1A;
-        }
-        
-        .magazine-text .accent {
-            color: #8A2924;
-            font-weight: bold;
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-            margin-bottom: 25px;
-            display: inline-block;
-        }
-        
-        .magazine-text p {
-            margin-bottom: 20px;
-        }
-
-        /* AUTHENTICATION UI STYLES */
-        .auth-btn {
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            font-family: Arial, sans-serif;
-            letter-spacing: 1px;
-            border-radius: 2px;
-            transition: opacity 0.2s;
-        }
-        .auth-btn:hover { opacity: 0.8; }
-        
-        .input-group {
-            display: flex;
-            align-items: center;
-            border: 1px solid #ccc;
-            background: #fff;
-            padding: 5px 15px;
-        }
-        .input-group input {
-            border: none;
-            outline: none;
-            padding: 8px;
-            font-size: 1rem;
-            width: 150px;
-        }
-
-        /* MOBILE OPTIMIZATION */
-        @media (max-width: 768px) {
-            .top-nav {
-                gap: 15px;
-                padding: 15px;
-            }
-            .nav-tagline {
-                display: none; 
-            }
-            .magazine-row, .magazine-row.reverse {
-                flex-direction: column;
-                gap: 30px;
-                margin-bottom: 60px;
-            }
-            .magazine-img-placeholder {
-                width: 100%;
-                min-height: 350px;
-            }
-            #auth-options, #phone-ui, #otp-ui, #user-profile {
-                justify-content: center !important; 
-            }
-        }
-    </style>
 </head>
 <body>
 
@@ -219,7 +33,6 @@
             <div class="input-group">
                 <span style="font-size: 1.2rem; margin-right: 8px;">🇮🇳</span>
                 <span style="font-weight: bold; color: #555; margin-right: 5px;">+91</span>
-                <!-- UPDATED PLACEHOLDER TO DASHES -->
                 <input type="tel" id="phone-number" placeholder="- - - - - - - - - -" maxlength="10">
             </div>
             <button id="send-code-btn" class="auth-btn" style="background: #1A1A1A; color: white;">SEND OTP</button>
@@ -354,7 +167,6 @@
         <!-- PRODUCT 2: ACHAR -->
         <div class="magazine-row reverse">
             <div class="magazine-img-placeholder">
-                <!-- CAPITAL K APPLIED HERE -->
                 <img src="Kimchi2.PNG" alt="Overhead view of small batch Grounded Achar fermenting in glass jars" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
             </div>
             <div class="magazine-text">
@@ -403,7 +215,6 @@
         <!-- PRODUCT 3: SOMA -->
         <div class="magazine-row">
             <div class="magazine-img-placeholder">
-                <!-- CAPITAL K APPLIED HERE -->
                 <img src="Kombucha6.PNG" alt="Glass bottles of Grounded Soma Kombucha presented in bright natural light" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
             </div>
             <div class="magazine-text">
