@@ -516,7 +516,7 @@
                     phoneView.style.display = 'none';
                     otpView.style.display = 'block';
                 }).catch((error) => {
-                    alert("Failed to send OTP. Check console for details.");
+                   alert("Error: " + error.message); 
                     sendBtn.innerText = "SEND OTP";
                 });
         });
