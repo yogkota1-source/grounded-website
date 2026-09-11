@@ -171,7 +171,8 @@ body {
     font-size: 1rem;
     font-family: Arial, sans-serif;
 }
-.modal-input:focus { outline: none; border-color: #8A2924; }
+/* CHANGED FROM RED TO BLACK FOR MINIMALIST LOOK */
+.modal-input:focus { outline: none; border-color: #1A1A1A; } 
 
 .input-group {
     display: flex;
@@ -304,7 +305,7 @@ p.subtitle {
     margin-bottom: 20px;
 }
 
-/* --- LEGACY STORY COMPONENTS (For specific pages) --- */
+/* --- LEGACY STORY COMPONENTS --- */
 .brand-container { 
     display: flex; 
     flex-direction: column; 
