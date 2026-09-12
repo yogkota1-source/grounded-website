@@ -114,13 +114,101 @@ body {
 }
 .auth-btn:hover { opacity: 0.8; }
 
-#user-profile {
-    display: none;
-    font-size: 0.75rem;
-    color: #666;
-    letter-spacing: 2px;
+/* User Profile Menu & Dropdown */
+.user-profile-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.user-name-trigger {
+    background: #FFFFFF;
+    border: 1px solid #1A1A1A;
+    border-radius: 2px;
+    padding: 8px 14px;
     font-family: Arial, sans-serif;
-    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #1A1A1A;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.user-name-trigger:hover,
+.user-name-trigger.active {
+    background: #1A1A1A;
+    color: #FFFFFF;
+}
+
+.dropdown-chevron {
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.user-name-trigger.active .dropdown-chevron {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Menu - Hidden until clicked */
+.user-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 230px;
+    background: #FFFFFF;
+    border: 1px solid #1A1A1A;
+    border-radius: 4px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    padding: 6px 0;
+    z-index: 1000;
+    text-align: left;
+}
+
+/* Revealed when clicked */
+.user-dropdown.show {
+    display: block;
+    animation: fadeIn 0.15s ease-out;
+}
+
+.dropdown-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: transparent;
+    border: none;
+    font-family: Arial, sans-serif;
+    font-size: 0.85rem;
+    color: #1A1A1A;
+    text-align: left;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.dropdown-item svg {
+    flex-shrink: 0;
+}
+
+.dropdown-item:hover {
+    background-color: #F5F5F5;
+}
+
+.dropdown-item-danger:hover {
+    color: #8A2924;
+    background-color: #FDF4F4;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: #EEEEEE;
+    margin: 4px 0;
 }
 
 /* --- MODAL (POP-UP) STYLES --- */
@@ -700,4 +788,8 @@ a { text-decoration: none; }
     /* Contact Section Mobile */
     .contact-section { margin: 10px auto 30px auto; padding: 15px 15px 30px 15px; }
     .contact-text { font-size: 0.85rem; }
+
+    /* Auth Dropdown Mobile */
+    .user-name-trigger { padding: 6px 10px; font-size: 0.8rem; }
+    .user-dropdown { min-width: 200px; right: 0; }
 }

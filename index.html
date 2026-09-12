@@ -15,10 +15,29 @@
     <div class="auth-nav-container">
         <button id="open-modal-btn" class="auth-btn" style="background: #1A1A1A; color: white;">SIGN IN</button>
         
-        <!-- User Profile (Shows when logged in) -->
-        <div id="user-profile" style="display: none; align-items: center; gap: 15px; font-weight: bold; letter-spacing: 1px; color: #1A1A1A;">
-            WELCOME, <span id="user-name" style="color: #8A2924;"></span>
-            <button id="logout-btn" style="background: none; border: none; text-decoration: underline; cursor: pointer; font-size: 0.85rem; color: #555;">Logout</button>
+        <!-- User Profile & Dropdown (Shows when logged in) -->
+        <div id="user-profile" class="user-profile-menu" style="display: none;">
+            <button id="user-menu-btn" class="user-name-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+                <span id="user-name"></span>
+                <svg class="dropdown-chevron" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                    <path d="M7 10l5 5 5-5z"/>
+                </svg>
+            </button>
+            <div id="user-dropdown-menu" class="user-dropdown">
+                <button id="menu-sign-out" class="dropdown-item dropdown-item-danger" type="button">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                    </svg>
+                    Sign Out
+                </button>
+                <div class="dropdown-divider"></div>
+                <button id="menu-switch-account" class="dropdown-item" type="button">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                    </svg>
+                    Sign in with another account
+                </button>
+            </div>
         </div>
     </div>
 
@@ -419,6 +438,10 @@
         const closeModalBtn = document.getElementById('close-modal-btn');
         const userProfile = document.getElementById('user-profile');
         const userNameSpan = document.getElementById('user-name');
+        const userMenuBtn = document.getElementById('user-menu-btn');
+        const userDropdownMenu = document.getElementById('user-dropdown-menu');
+        const menuSignOut = document.getElementById('menu-sign-out');
+        const menuSwitchAccount = document.getElementById('menu-switch-account');
         
         // Modal Views
         const defaultView = document.getElementById('modal-default-view');
@@ -439,7 +462,6 @@
         const sendBtn = document.getElementById('send-code-btn');
         const otpInput = document.getElementById('otp-code');
         const verifyBtn = document.getElementById('verify-code-btn');
-        const logoutBtn = document.getElementById('logout-btn');
 
         // State Tracker
         let isSignUpMode = false;
@@ -541,8 +563,70 @@
             });
         });
 
-        // LOGOUT
-        logoutBtn.addEventListener('click', () => { signOut(auth); });
+        // DROPDOWN MENU LOGIC
+        function closeDropdown() {
+            if (userDropdownMenu) {
+                userDropdownMenu.classList.remove('show');
+            }
+            if (userMenuBtn) {
+                userMenuBtn.classList.remove('active');
+                userMenuBtn.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        function toggleDropdown(e) {
+            e.stopPropagation();
+            const isOpen = userDropdownMenu.classList.contains('show');
+            if (isOpen) {
+                closeDropdown();
+            } else {
+                userDropdownMenu.classList.add('show');
+                userMenuBtn.classList.add('active');
+                userMenuBtn.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        if (userMenuBtn) {
+            userMenuBtn.addEventListener('click', toggleDropdown);
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (userProfile && !userProfile.contains(e.target)) {
+                closeDropdown();
+            }
+        });
+
+        // Close dropdown on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeDropdown();
+            }
+        });
+
+        // SIGN OUT OPTION
+        if (menuSignOut) {
+            menuSignOut.addEventListener('click', () => {
+                closeDropdown();
+                signOut(auth).catch((error) => console.error("Sign Out failed: ", error));
+            });
+        }
+
+        // SIGN IN WITH ANOTHER ACCOUNT OPTION
+        if (menuSwitchAccount) {
+            menuSwitchAccount.addEventListener('click', () => {
+                closeDropdown();
+                googleProvider.setCustomParameters({ prompt: 'select_account' });
+                signOut(auth).then(() => {
+                    authModal.style.display = 'flex';
+                    defaultView.style.display = 'block';
+                    phoneView.style.display = 'none';
+                    otpView.style.display = 'none';
+                }).catch((error) => {
+                    console.error("Sign out before switch failed: ", error);
+                });
+            });
+        }
 
         // WATCH FOR LOGIN STATE
         onAuthStateChanged(auth, (user) => {
@@ -551,12 +635,14 @@
             const micBtn = document.getElementById('aiMicBtn');
 
             if (user) {
+                // Hide main 'SIGN IN' button and show user profile
                 openModalBtn.style.display = 'none';
-                userProfile.style.display = 'flex';
+                userProfile.style.display = 'inline-block';
                 authModal.style.display = 'none';
                 
-                // Prioritize Name -> Email -> Phone for Display
-                userNameSpan.textContent = user.displayName ? user.displayName.toUpperCase() : (user.email ? user.email : user.phoneNumber);
+                // Display Google display name
+                const displayName = user.displayName || (user.email ? user.email.split('@')[0] : (user.phoneNumber || "User"));
+                userNameSpan.textContent = displayName;
 
                 if(chatInput) {
                     chatInput.disabled = false;
@@ -567,6 +653,7 @@
             } else {
                 openModalBtn.style.display = 'block';
                 userProfile.style.display = 'none';
+                closeDropdown();
                 
                 // Reset fields
                 emailInput.value = '';
