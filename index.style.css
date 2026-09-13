@@ -153,6 +153,15 @@ body {
     transform: rotate(180deg);
 }
 
+#user-name {
+    display: inline-block;
+    max-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
 /* Dropdown Menu - Hidden until clicked */
 .user-dropdown {
     display: none;
@@ -792,4 +801,5 @@ a { text-decoration: none; }
     /* Auth Dropdown Mobile */
     .user-name-trigger { padding: 6px 10px; font-size: 0.8rem; }
     .user-dropdown { min-width: 200px; right: 0; }
+    #user-name { max-width: 85px; }
 }
