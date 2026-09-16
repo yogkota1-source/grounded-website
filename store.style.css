@@ -3,6 +3,11 @@
     100% { opacity: 1; transform: translateY(0); } 
 }
 
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
 body { 
     background-color: #F4EFE6; 
     color: #2C2C2C; 
@@ -51,7 +56,7 @@ p.subtitle { font-family: Arial, sans-serif; letter-spacing: 2px; color: #555; m
 .dropdown-content a.active-category { font-weight: bold; background-color: #F8F5F0; }
 .dropdown-content a:hover:not(.coming-soon) { background-color: #EFEBE4; }
 
-.section-title { font-size: 2rem; margin: 50px 0 20px 0; color: #8A3A1F; border-bottom: 1px solid #D4CAB5; display: inline-block; padding-bottom: 10px; }
+.section-title { font-size: 2rem; margin: 50px 0 20px 0; color: #8A3A1F; border-bottom: 1px solid #D4CAB5; display: inline-block; padding-bottom: 10px; scroll-margin-top: 80px; }
 
 .product-grid { 
     display: flex; 
@@ -144,10 +149,13 @@ p.subtitle { font-family: Arial, sans-serif; letter-spacing: 2px; color: #555; m
     font-weight: bold; 
     cursor: pointer; 
     border: none; 
-    display: flex; 
+    display: inline-flex; 
     align-items: center; 
+    justify-content: center;
     gap: 8px; 
     transition: background 0.3s; 
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 .cart-trigger:hover { background-color: #333; }
 
@@ -416,6 +424,8 @@ p.subtitle { font-family: Arial, sans-serif; letter-spacing: 2px; color: #555; m
 .cart-trigger.compact-cart { 
     padding: 10px 15px; 
     font-size: 0.85rem; 
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 /* --- AUTH & DROPDOWN STYLES --- */
@@ -581,7 +591,10 @@ p.subtitle { font-family: Arial, sans-serif; letter-spacing: 2px; color: #555; m
     /* Compact Top Nav mobile fixes */
     .logo-text { display: none; } 
     .fun-text { margin: 0; font-weight: bold; }
-    .user-name-trigger { padding: 6px 10px; font-size: 0.8rem; }
-    .user-dropdown { min-width: 200px; right: 0; }
-    #user-name { max-width: 80px; }
+    .cart-trigger.compact-cart { padding: 8px 10px; font-size: 0.8rem; white-space: nowrap; flex-shrink: 0; }
+    .nav-actions { gap: 6px; flex-shrink: 0; }
+    .compact .dropdown-btn { padding: 8px 10px; font-size: 0.8rem; }
+    .user-name-trigger { padding: 6px 8px; font-size: 0.8rem; }
+    .user-dropdown { min-width: 190px; right: 0; }
+    #user-name { max-width: 75px; }
 }

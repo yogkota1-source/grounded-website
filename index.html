@@ -158,7 +158,7 @@
                 <p>That was until I tasted a truly authentic, pure version and realized I had been lied to. I thought to myself: <em>If real peanut butter only requires a couple of pure ingredients, why can't I just make it myself?</em> That single thought sparked an absolute obsession. I started taking over the kitchen, roasting my own peanuts, grinding my own batches, and fine-tuning the texture. When you strip away the junk, it becomes a pure, rich elixir. I completely fell in love with it, and that original kitchen recipe is exactly what I am sharing with you today.</p>
                 <p>Simply Seeded relies on the quiet power of just three pure elements: deeply roasted peanuts, a pinch of Himalayan pink salt, and your choice of a clean, natural sweetener (monk fruit or date powder). Because I refuse to compromise on freshness, I rejected the traditional warehouse model to run strictly on micro-batches. The truth is, your jar doesn’t actually exist until you ask for it. It is roasted, ground, and packed only <em>after</em> your order drops into my system. It takes a little more time, but the reward is opening a jar at its absolute peak.</p>
                 <p><em>Thank you for choosing Simply Seeded.</em></p>
-                <a href="store.html"><button class="btn" style="margin-top: 15px;">Enter Store</button></a>
+                <a href="store.html" class="btn store-btn" style="margin-top: 15px;">Enter Store</a>
             </div>
         </div>
 
@@ -502,24 +502,124 @@
             }
         });
 
-        // EMAIL LOGIC (Handles both Sign In & Sign Up)
+        // SESSION CONFIG
+        const SESSION_KEY = 'grounded_user';
+
+        function applyAuthState(user) {
+            const chatInput = document.getElementById('aiInput');
+            const sendChatBtn = document.getElementById('aiSendBtn');
+            const micBtn = document.getElementById('aiMicBtn');
+
+            if (user) {
+                // Hide main 'SIGN IN' button and show user profile
+                if (openModalBtn) openModalBtn.style.display = 'none';
+                if (userProfile) userProfile.style.display = 'inline-block';
+                if (authModal) authModal.style.display = 'none';
+                
+                const displayName = user.displayName || (user.email ? user.email.split('@')[0] : (user.phoneNumber || "User"));
+                if (userNameSpan) userNameSpan.textContent = displayName;
+
+                if (chatInput) {
+                    chatInput.disabled = false;
+                    chatInput.placeholder = "Ask a question...";
+                    if (sendChatBtn) sendChatBtn.disabled = false;
+                    if (micBtn) micBtn.disabled = false;
+                }
+            } else {
+                if (openModalBtn) openModalBtn.style.display = 'block';
+                if (userProfile) userProfile.style.display = 'none';
+                closeDropdown();
+                
+                if (emailInput) emailInput.value = '';
+                if (passwordInput) passwordInput.value = '';
+                if (phoneInput) phoneInput.value = '';
+                if (otpInput) otpInput.value = '';
+                if (emailActionBtn) emailActionBtn.innerText = isSignUpMode ? "Sign Up" : "Sign In";
+                if (sendBtn) sendBtn.innerText = "SEND OTP";
+                if (verifyBtn) verifyBtn.innerText = "VERIFY";
+
+                if (chatInput) {
+                    chatInput.disabled = true;
+                    chatInput.placeholder = "Please sign in to chat...";
+                    if (sendChatBtn) sendChatBtn.disabled = true;
+                    if (micBtn) micBtn.disabled = true;
+                }
+            }
+        }
+
+        // Instant session check from shared localStorage
+        try {
+            const savedSession = localStorage.getItem(SESSION_KEY);
+            if (savedSession) {
+                applyAuthState(JSON.parse(savedSession));
+            } else {
+                applyAuthState(null);
+            }
+        } catch (e) {
+            applyAuthState(null);
+        }
+
+        // Open modal if directed with ?auth=true or #signin
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('auth') === 'true' || window.location.hash === '#signin' || window.location.hash === '#auth') {
+            if (!localStorage.getItem(SESSION_KEY)) {
+                authModal.style.display = 'flex';
+                defaultView.style.display = 'block';
+                phoneView.style.display = 'none';
+                otpView.style.display = 'none';
+            }
+        }
+
+        // EMAIL LOGIC (Handles both Sign In & Sign Up with Validation)
         emailActionBtn.addEventListener('click', () => {
             const email = emailInput.value.trim();
             const password = passwordInput.value.trim();
-            if(!email || !password) return alert("Please enter both email and password.");
+            
+            if (!email || !password) {
+                return alert("Please enter both email and password.");
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                return alert("Please enter a valid email address (e.g., yourname@domain.com).");
+            }
+
+            if (password.length < 6) {
+                return alert("Password must be at least 6 characters long.");
+            }
             
             emailActionBtn.innerText = "Processing...";
             
             if (isSignUpMode) {
                 createUserWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => { authModal.style.display = 'none'; })
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        const userData = {
+                            uid: user.uid,
+                            displayName: user.displayName || email.split('@')[0],
+                            email: user.email
+                        };
+                        localStorage.setItem(SESSION_KEY, JSON.stringify(userData));
+                        applyAuthState(userData);
+                        authModal.style.display = 'none';
+                    })
                     .catch((error) => {
                         alert("Sign Up failed: " + error.message);
                         emailActionBtn.innerText = "Sign Up";
                     });
             } else {
                 signInWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => { authModal.style.display = 'none'; })
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        const userData = {
+                            uid: user.uid,
+                            displayName: user.displayName || email.split('@')[0],
+                            email: user.email
+                        };
+                        localStorage.setItem(SESSION_KEY, JSON.stringify(userData));
+                        applyAuthState(userData);
+                        authModal.style.display = 'none';
+                    })
                     .catch((error) => {
                         alert("Login failed: " + error.message);
                         emailActionBtn.innerText = "Sign In";
@@ -529,7 +629,19 @@
 
         // GOOGLE LOGIC
         btnGoogle.addEventListener('click', () => {
-            signInWithPopup(auth, googleProvider).catch((error) => console.error("Google Login failed: ", error));
+            signInWithPopup(auth, googleProvider)
+                .then((result) => {
+                    const user = result.user;
+                    const userData = {
+                        uid: user.uid,
+                        displayName: user.displayName || user.email.split('@')[0],
+                        email: user.email
+                    };
+                    localStorage.setItem(SESSION_KEY, JSON.stringify(userData));
+                    applyAuthState(userData);
+                    authModal.style.display = 'none';
+                })
+                .catch((error) => console.error("Google Login failed: ", error));
         });
 
         // PHONE NAVIGATION LOGIC
@@ -540,7 +652,10 @@
 
         sendBtn.addEventListener('click', () => {
             const rawNumber = phoneInput.value.trim();
-            if(rawNumber.length !== 10) return alert("Please enter a valid 10-digit mobile number.");
+            const phoneRegex = /^[0-9]{10}$/;
+            if (!phoneRegex.test(rawNumber)) {
+                return alert("Please enter a valid 10-digit Indian mobile number.");
+            }
 
             const fullPhoneNumber = "+91" + rawNumber;
             sendBtn.innerText = "SENDING...";
@@ -551,16 +666,27 @@
                     phoneView.style.display = 'none';
                     otpView.style.display = 'block';
                 }).catch((error) => {
-                   alert("Error: " + error.message); 
+                    alert("Error: " + error.message); 
                     sendBtn.innerText = "SEND OTP";
                 });
         });
 
         verifyBtn.addEventListener('click', () => {
             const code = otpInput.value.trim();
+            if (!/^\d{6}$/.test(code)) {
+                return alert("Please enter a valid 6-digit OTP code.");
+            }
             verifyBtn.innerText = "VERIFYING...";
 
             window.confirmationResult.confirm(code).then((result) => {
+                const user = result.user;
+                const userData = {
+                    uid: user.uid,
+                    displayName: user.displayName || user.phoneNumber || "User",
+                    phoneNumber: user.phoneNumber
+                };
+                localStorage.setItem(SESSION_KEY, JSON.stringify(userData));
+                applyAuthState(userData);
                 authModal.style.display = 'none';
             }).catch((error) => {
                 alert("Invalid OTP code.");
@@ -609,10 +735,12 @@
             }
         });
 
-        // SIGN OUT OPTION
+        // GLOBAL SIGN OUT OPTION
         if (menuSignOut) {
             menuSignOut.addEventListener('click', () => {
                 closeDropdown();
+                localStorage.removeItem(SESSION_KEY);
+                applyAuthState(null);
                 signOut(auth).catch((error) => console.error("Sign Out failed: ", error));
             });
         }
@@ -621,6 +749,8 @@
         if (menuSwitchAccount) {
             menuSwitchAccount.addEventListener('click', () => {
                 closeDropdown();
+                localStorage.removeItem(SESSION_KEY);
+                applyAuthState(null);
                 googleProvider.setCustomParameters({ prompt: 'select_account' });
                 signOut(auth).then(() => {
                     authModal.style.display = 'flex';
@@ -633,47 +763,33 @@
             });
         }
 
-        // WATCH FOR LOGIN STATE
+        // WATCH FOR FIREBASE LOGIN STATE
         onAuthStateChanged(auth, (user) => {
-            const chatInput = document.getElementById('aiInput');
-            const sendChatBtn = document.getElementById('aiSendBtn');
-            const micBtn = document.getElementById('aiMicBtn');
-
             if (user) {
-                // Hide main 'SIGN IN' button and show user profile
-                openModalBtn.style.display = 'none';
-                userProfile.style.display = 'inline-block';
-                authModal.style.display = 'none';
-                
-                // Display Google display name
                 const displayName = user.displayName || (user.email ? user.email.split('@')[0] : (user.phoneNumber || "User"));
-                userNameSpan.textContent = displayName;
-
-                if(chatInput) {
-                    chatInput.disabled = false;
-                    chatInput.placeholder = "Ask a question...";
-                    sendChatBtn.disabled = false;
-                    micBtn.disabled = false;
-                }
+                const userData = {
+                    uid: user.uid,
+                    displayName: displayName,
+                    email: user.email,
+                    phoneNumber: user.phoneNumber
+                };
+                localStorage.setItem(SESSION_KEY, JSON.stringify(userData));
+                applyAuthState(userData);
             } else {
-                openModalBtn.style.display = 'block';
-                userProfile.style.display = 'none';
-                closeDropdown();
-                
-                // Reset fields
-                emailInput.value = '';
-                passwordInput.value = '';
-                phoneInput.value = '';
-                otpInput.value = '';
-                emailActionBtn.innerText = isSignUpMode ? "Sign Up" : "Sign In";
-                sendBtn.innerText = "SEND OTP";
-                verifyBtn.innerText = "VERIFY";
+                if (!localStorage.getItem(SESSION_KEY)) {
+                    applyAuthState(null);
+                }
+            }
+        });
 
-                if(chatInput) {
-                    chatInput.disabled = true;
-                    chatInput.placeholder = "Please sign in to chat...";
-                    sendChatBtn.disabled = true;
-                    micBtn.disabled = true;
+        // Cross-tab synchronization via Storage Event
+        window.addEventListener('storage', (e) => {
+            if (e.key === SESSION_KEY) {
+                try {
+                    const sessionData = e.newValue ? JSON.parse(e.newValue) : null;
+                    applyAuthState(sessionData);
+                } catch(err) {
+                    applyAuthState(null);
                 }
             }
         });
