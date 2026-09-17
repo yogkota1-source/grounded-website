@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simply Seeded - Store</title>
+    <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23D97957" /><text x="50" y="68" font-family="Georgia, serif" font-size="50" font-weight="bold" fill="%231A1A1A" text-anchor="middle">Ss</text></svg>'>
+    
+    <!-- GOOGLE FONTS: PLAYFAIR DISPLAY -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+    <!-- LINK TO YOUR NEW CSS FILE -->
+    <link rel="stylesheet" href="store.style.css">
+</head>
+<body>
+    <div style="background-color: #A64B2A; color: white; text-align: center; padding: 12px; font-family: Arial, sans-serif; font-size: 0.85rem; letter-spacing: 2px; font-weight: bold;">🎉 ₹50 CASHBACK ON YOUR FIRST ORDER!</div>
+
+    <div class="content-wrapper">
+        <div class="top-nav fade-section">
+            <a href="index.html" class="back-link"><span class="fun-text">← BACK</span> <span class="logo-text">G R O U N D E D</span></a>
+            
+            <div class="nav-actions">
+                <button class="cart-trigger compact-cart" onclick="openCartModal()">🛒 (<span id="cartCount">0</span>)</button>
+                <div class="category-dropdown compact" id="categoryDropdown">
+                    <button class="dropdown-btn" type="button" onclick="toggleCategoryDropdown(event)">Category <span>▼</span></button>
+                    <div class="dropdown-content">
+                        <a href="#peanut-butter" class="active-category" onclick="closeCategoryDropdown()">Peanut Butter</a>
+                        <a href="javascript:void(0)" class="coming-soon" title="Currently in development">Almond Butter (Soon)</a>
+                        <a href="javascript:void(0)" class="coming-soon" title="Currently in development">Pistachio Butter (Soon)</a>
+                        <a href="javascript:void(0)" class="coming-soon" title="Currently in development">Walnut Butter (Soon)</a>
+                        <a href="javascript:void(0)" class="coming-soon" title="Currently in development">Hazelnut Butter (Soon)</a>
+                    </div>
+                </div>
+
+                <!-- User Profile & Dropdown (Shows when logged in) -->
+                <div id="user-profile" class="user-profile-menu" style="display: none;">
+                    <button id="user-menu-btn" class="user-name-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+                        <span id="user-name"></span>
+                        <svg class="dropdown-chevron" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                            <path d="M7 10l5 5 5-5z"/>
+                        </svg>
+                    </button>
+                    <div id="user-dropdown-menu" class="user-dropdown">
+                        <button id="menu-sign-out" class="dropdown-item dropdown-item-danger" type="button">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                            </svg>
+                            Sign Out
+                        </button>
+                        <div class="dropdown-divider"></div>
+                        <button id="menu-switch-account" class="dropdown-item" type="button">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                            </svg>
+                            Sign in with another account
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fade-section">
+            <h1>Simply Seeded</h1>
+            <p class="subtitle">SELECT YOUR CRAFTED JAR</p>
+        </div>
+
+        <h2 id="peanut-butter" class="section-title fade-section delay-1">Sweetened Peanut Butter</h2>
+        <div class="product-grid fade-section delay-1">
+            <div class="product-card">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder">[ 250g Front ]</div>
+                        <div class="slide-placeholder">[ 250g Back ]</div>
+                        <div class="slide-placeholder">[ Nutrition ]</div>
+                    </div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>250g Sweetened</h2>
+                <p class="ingredients">Roasted Peanuts • Date Powder / Monk Fruit • Salt</p>
+                <p class="price">From ₹279</p>
+                <button class="order-btn" onclick="openOptionsModal('250g Sweetened', 'sweet', 279, 404)">Customize & Add</button>
+            </div>
+            
+            <div class="product-card">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder">[ 500g Front ]</div>
+                        <div class="slide-placeholder">[ 500g Back ]</div>
+                        <div class="slide-placeholder">[ Nutrition ]</div>
+                    </div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>500g Sweetened</h2>
+                <p class="ingredients">Roasted Peanuts • Date Powder / Monk Fruit • Salt</p>
+                <p class="price">From ₹499</p>
+                <button class="order-btn" onclick="openOptionsModal('500g Sweetened', 'sweet', 499, 749)">Customize & Add</button>
+            </div>
+
+            <div class="product-card">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder">[ 1kg Front ]</div>
+                        <div class="slide-placeholder">[ 1kg Back ]</div>
+                        <div class="slide-placeholder">[ Nutrition ]</div>
+                    </div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>1kg Sweetened</h2>
+                <p class="ingredients">Roasted Peanuts • Date Powder / Monk Fruit • Salt</p>
+                <p class="price">From ₹899</p>
+                <button class="order-btn" onclick="openOptionsModal('1kg Sweetened', 'sweet', 899, 1399)">Customize & Add</button>
+            </div>
+        </div>
+
+        <h2 class="section-title fade-section delay-2">Unsweetened Peanut Butter</h2>
+        <div class="product-grid fade-section delay-2">
+            <div class="product-card">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder">[ 250g Front ]</div>
+                        <div class="slide-placeholder">[ 250g Back ]</div>
+                        <div class="slide-placeholder">[ Nutrition ]</div>
+                    </div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>250g Unsweetened</h2>
+                <p class="ingredients">Roasted Peanuts • Salt</p>
+                <p class="price">₹259</p>
+                <button class="order-btn" onclick="openOptionsModal('250g Unsweetened', 'unsweet', 259, 259)">Customize & Add</button>
+            </div>
+
+            <div class="product-card">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder">[ 500g Front ]</div>
+                        <div class="slide-placeholder">[ 500g Back ]</div>
+                        <div class="slide-placeholder">[ Nutrition ]</div>
+                    </div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>500g Unsweetened</h2>
+                <p class="ingredients">Roasted Peanuts • Salt</p>
+                <p class="price">₹459</p>
+                <button class="order-btn" onclick="openOptionsModal('500g Unsweetened', 'unsweet', 459, 459)">Customize & Add</button>
+            </div>
+
+            <div class="product-card">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder">[ 1kg Front ]</div>
+                        <div class="slide-placeholder">[ 1kg Back ]</div>
+                        <div class="slide-placeholder">[ Nutrition ]</div>
+                    </div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>1kg Unsweetened</h2>
+                <p class="ingredients">Roasted Peanuts • Salt</p>
+                <p class="price">₹819</p>
+                <button class="order-btn" onclick="openOptionsModal('1kg Unsweetened', 'unsweet', 819, 819)">Customize & Add</button>
+            </div>
+        </div>
+
+        <h2 class="section-title fade-section delay-3">Specialty Editions</h2>
+        <div class="product-grid fade-section delay-3">
+            <div class="product-card" style="opacity: 0.9;">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ 250g Cocoa ]</div>
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Back Label ]</div>
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Nutrition ]</div>
+                    </div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>250g Cocoa</h2>
+                <p class="ingredients">Roasted Peanuts • Dark Cocoa • Date Powder • Salt</p>
+                <p class="coming-soon-text">IN DEVELOPMENT</p>
+                <button class="order-btn btn-disabled" disabled>Coming Soon</button>
+            </div>
+
+            <div class="product-card" style="opacity: 0.9;">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ 500g Cocoa ]</div>
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Back Label ]</div>
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Nutrition ]</div>
+                    </div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>500g Cocoa</h2>
+                <p class="ingredients">Roasted Peanuts • Dark Cocoa • Date Powder • Salt</p>
+                <p class="coming-soon-text">IN DEVELOPMENT</p>
+                <button class="order-btn btn-disabled" disabled>Coming Soon</button>
+            </div>
+
+            <div class="product-card" style="opacity: 0.9;">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
+                    <div class="carousel-track" data-slide="0">
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ 1kg Cocoa ]</div>
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Back Label ]</div>
+                        <div class="slide-placeholder" style="background-color: #4A3B32; color: #EAEAEA;">[ Nutrition ]</div>
+                    </div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel(this, 1)">❯</button>
+                </div>
+                <h2>1kg Cocoa</h2>
+                <p class="ingredients">Roasted Peanuts • Dark Cocoa • Date Powder • Salt</p>
+                <p class="coming-soon-text">IN DEVELOPMENT</p>
+                <button class="order-btn btn-disabled" disabled>Coming Soon</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- OPTIONS MODAL -->
+    <div class="modal-overlay" id="optionsModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('optionsModal')">×</span>
+            <h3>Craft Your Jar</h3>
+            <div class="modal-size-label" id="modalSizeText"></div>
+            
+            <div class="select-group" id="textureGroup">
+                <label>1. Choose Texture</label>
+                <div class="pill-grid">
+                    <input type="radio" name="textureOption" id="texSmooth" value="Smooth" class="pill-input" checked onchange="updateAddButtonPrice()">
+                    <label for="texSmooth" class="pill-label">
+                        <div class="pill-title">Smooth</div>
+                        <div class="pill-sub">Creamy & Rich</div>
+                    </label>
+                    
+                    <input type="radio" name="textureOption" id="texCrunchy" value="Crunchy" class="pill-input" onchange="updateAddButtonPrice()">
+                    <label for="texCrunchy" class="pill-label">
+                        <div class="pill-title">Crunchy</div>
+                        <div class="pill-sub">Loaded with pieces</div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="select-group" id="sweetenerGroup">
+                <label>2. Choose Sweetener</label>
+                <div class="pill-grid">
+                    <input type="radio" name="sweetenerOption" id="sweetDate" value="date" class="pill-input" checked onchange="updateAddButtonPrice()">
+                    <label for="sweetDate" class="pill-label">
+                        <div class="pill-title">Date Powder</div>
+                        <div class="pill-sub">Our Standard</div>
+                    </label>
+                    
+                    <input type="radio" name="sweetenerOption" id="sweetMonk" value="monk" class="pill-input" onchange="updateAddButtonPrice()">
+                    <label for="sweetMonk" class="pill-label">
+                        <div class="pill-title">Monk Fruit</div>
+                        <div class="pill-sub">Keto Friendly</div>
+                    </label>
+                </div>
+            </div>
+
+            <button class="pay-btn" id="addToCartBtn" onclick="processOptionsAndAdd()">Add to Cart</button>
+        </div>
+    </div>
+
+    <!-- CART MODAL -->
+    <div class="modal-overlay" id="cartModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('cartModal')">×</span>
+            <h3>Your Cart</h3>
+            <div class="progress-container">
+                <div class="progress-bar" id="shippingBar"></div>
+            </div>
+            <div class="progress-text" id="shippingText">Add ₹1399 more for FREE Shipping!</div>
+            <div id="cartItemsList"></div>
+            <div class="cart-total-row">
+                <span>Subtotal:</span>
+                <span id="cartTotalDisplay">₹0</span>
+            </div>
+            <button class="pay-btn" id="checkoutBtn" onclick="checkoutWhatsApp()" disabled>Sign in to Checkout</button>
+        </div>
+    </div>
+
+    <!-- AI CHAT WINDOW -->
+    <button class="ai-bubble-btn" onclick="toggleAIChat()">TR</button>
+    <div class="ai-chat-window" id="aiChatWindow">
+        <div class="ai-chat-header">
+            <div>
+                <div class="ai-name">The Roaster</div>
+                <div class="ai-subtitle">POWERED BY GEMINI</div>
+            </div>
+            <div class="ai-close" onclick="toggleAIChat()">×</div>
+        </div>
+        <div class="ai-chat-body" id="aiChatBody">
+            <div class="ai-msg-bot">
+                <div class="ai-msg-content">Hi! I'm The Roaster. Ask me anything about our small-batch peanut butter, Date Powder vs. Monk Fruit, or how to order!</div>
+                <button class="ai-speaker-btn" onclick="speakText(this.previousElementSibling.innerText)" title="Read aloud">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="ai-chat-input-area">
+            <div class="ai-input-row">
+                <div class="ai-input-wrapper">
+                    <input type="text" class="ai-input" id="aiInput" placeholder="Please sign in to chat..." maxlength="300" disabled oninput="updateCharCount()" onkeypress="handleAIKeyPress(event)">
+                    <button class="ai-mic-btn" id="aiMicBtn" onclick="toggleSpeechRecognition()" title="Click to speak" disabled>
+                        <div class="mic-icon" id="micIconSvg">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                            </svg>
+                        </div>
+                        <div class="voice-visualizer" id="voiceVisualizer">
+                            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                        </div>
+                    </button>
+                </div>
+                <button class="ai-send" id="aiSendBtn" onclick="sendAIMessage()" disabled>SEND</button>
+            </div>
+            <div class="ai-char-counter" id="aiCharCounter">0/300</div>
+        </div>
+    </div>
+
+    <!-- LOGIC SCRIPT -->
+    <script>
+        function moveCarousel(button, direction) { 
+            const track = button.parentElement.querySelector('.carousel-track'); 
+            const slides = track.children;
+            const totalSlides = slides.length || 1;
+            let currentSlide = parseInt(track.getAttribute('data-slide')) || 0; 
+            currentSlide = (currentSlide + direction + totalSlides) % totalSlides; 
+            track.setAttribute('data-slide', currentSlide); 
+            track.style.transform = `translateX(-${currentSlide * 100}%)`; 
+        }
+        
+        // Category Dropdown Toggle
+        function toggleCategoryDropdown(e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            const dd = document.getElementById('categoryDropdown');
+            if (dd) dd.classList.toggle('open');
+        }
+
+        function closeCategoryDropdown() {
+            const dd = document.getElementById('categoryDropdown');
+            if (dd) dd.classList.remove('open');
+        }
+
+        document.addEventListener('click', function(e) {
+            const dd = document.getElementById('categoryDropdown');
+            if (dd && !dd.contains(e.target)) {
+                dd.classList.remove('open');
+            }
+        });
+
+        // Cart persistence with crash prevention (try-catch)
+        let cart = [];
+        try {
+            cart = JSON.parse(localStorage.getItem('groundedCart')) || [];
+            if (!Array.isArray(cart)) cart = [];
+        } catch (e) {
+            cart = [];
+        }
+
+        const FREE_SHIPPING_THRESHOLD = 1399; 
+        const whatsappNumber = "919246185187"; 
+        
+        let pendingName = ''; 
+        let pendingType = '';
+        let pendingDatePrice = 0; 
+        let pendingMonkPrice = 0;
+
+        function saveCart() {
+            try {
+                localStorage.setItem('groundedCart', JSON.stringify(cart));
+            } catch (e) {
+                console.error("Failed to save cart to localStorage:", e);
+            }
+            updateCartIcon();
+        }
+
+        // Listen for cart changes in other tabs
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'groundedCart') {
+                try {
+                    cart = JSON.parse(e.newValue) || [];
+                    if (!Array.isArray(cart)) cart = [];
+                } catch (err) {
+                    cart = [];
+                }
+                updateCartIcon();
+                const cartModal = document.getElementById('cartModal');
+                if (cartModal && cartModal.style.display === 'flex') {
+                    openCartModal();
+                }
+            }
+        });
+
+        updateCartIcon();
+
+        function openOptionsModal(name, type, price1, price2) { 
+            pendingName = name; 
+            pendingType = type; 
+            pendingDatePrice = price1; 
+            pendingMonkPrice = price2; 
+            
+            document.getElementById("modalSizeText").innerText = name; 
+            document.getElementById("texSmooth").checked = true;
+            document.getElementById("sweetDate").checked = true;
+            
+            if (type === 'unsweet') {
+                document.getElementById("sweetenerGroup").style.display = "none";
+            } else {
+                document.getElementById("sweetenerGroup").style.display = "block";
+            }
+            
+            updateAddButtonPrice(); 
+            document.getElementById("optionsModal").style.display = "flex"; 
+        }
+
+        function updateAddButtonPrice() { 
+            let finalPrice;
+            if (pendingType === 'unsweet') {
+                finalPrice = pendingDatePrice;
+            } else {
+                let choice = document.querySelector('input[name="sweetenerOption"]:checked').value; 
+                finalPrice = (choice === "date") ? pendingDatePrice : pendingMonkPrice; 
+            }
+            document.getElementById("addToCartBtn").innerText = `Add to Cart (₹${finalPrice})`; 
+        }
+
+        function processOptionsAndAdd() { 
+            let textureRadio = document.querySelector('input[name="textureOption"]:checked');
+            let texture = textureRadio ? textureRadio.value : "Smooth";
+            let finalPrice;
+            let variantText = texture; 
+            
+            if (pendingType === 'sweet') {
+                let choiceRadio = document.querySelector('input[name="sweetenerOption"]:checked'); 
+                let choice = choiceRadio ? choiceRadio.value : "date";
+                let sweetenerText = (choice === "date") ? "Date Powder" : "Monk Fruit"; 
+                variantText = `${texture} | ${sweetenerText}`;
+                finalPrice = (choice === "date") ? pendingDatePrice : pendingMonkPrice; 
+            } else {
+                variantText = `${texture} | Unsweetened`;
+                finalPrice = pendingDatePrice;
+            }
+            
+            cart.push({ name: pendingName, variant: variantText, price: finalPrice }); 
+            saveCart(); 
+            closeModal('optionsModal'); 
+            openCartModal(); 
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1); 
+            saveCart(); 
+            openCartModal(); 
+        }
+
+        function updateCartIcon() { 
+            const countEl = document.getElementById("cartCount");
+            if (countEl) countEl.innerText = cart.length; 
+        }
+        
+        function openCartModal() { 
+            let listHTML = ''; 
+            let total = 0; 
+            
+            if (cart.length === 0) { 
+                listHTML = '<div style="color: #A0A0A0; text-align: center; margin-top: 80px; font-family: Georgia, serif;"><div style="font-size: 3rem; margin-bottom: 15px; opacity: 0.3;">🥜</div><p style="font-style: italic; font-size: 1.1rem; margin: 0;">Your pantry is waiting.</p></div>'; 
+                document.getElementById("checkoutBtn").style.display = "none"; 
+            } else { 
+                document.getElementById("checkoutBtn").style.display = "block"; 
+                cart.forEach((item, index) => { 
+                    total += item.price; 
+                    listHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${item.name}</div>
+                            <div class="cart-item-variant">${item.variant}</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div class="cart-item-price">₹${item.price}</div>
+                            <button onclick="removeFromCart(${index})" style="background: none; border: none; color: #D9534F; font-size: 1.5rem; font-weight: bold; cursor: pointer; padding: 0; line-height: 1;" title="Remove Item">&times;</button>
+                        </div>
+                    </div>`; 
+                }); 
+            } 
+            
+            document.getElementById("cartItemsList").innerHTML = listHTML; 
+            document.getElementById("cartTotalDisplay").innerText = `₹${total}`; 
+            updateProgressBar(total); 
+            document.getElementById("cartModal").style.display = "flex"; 
+        }
+
+        function updateProgressBar(total) { 
+            let bar = document.getElementById("shippingBar"); 
+            let text = document.getElementById("shippingText"); 
+            if (!bar || !text) return;
+            
+            if (total >= FREE_SHIPPING_THRESHOLD) { 
+                bar.style.width = "100%"; 
+                bar.classList.add("unlocked-bar"); 
+                text.classList.add("unlocked-text"); 
+                text.innerText = "🎉 You unlocked FREE Shipping!"; 
+            } else { 
+                let percentage = (total / FREE_SHIPPING_THRESHOLD) * 100; 
+                let away = FREE_SHIPPING_THRESHOLD - total; 
+                bar.style.width = percentage + "%"; 
+                bar.classList.remove("unlocked-bar"); 
+                text.classList.remove("unlocked-text"); 
+                text.innerText = `Add ₹${away} more for FREE Shipping!`; 
+            } 
+        }
+
+        function closeModal(modalId) { 
+            const el = document.getElementById(modalId);
+            if (el) el.style.display = "none"; 
+        }
+        
+        function checkoutWhatsApp() { 
+            if (!cart || cart.length === 0) {
+                alert("Your cart is empty! Please add a jar to checkout.");
+                return;
+            }
+
+            let total = 0; 
+            let orderDetails = ""; 
+            
+            cart.forEach((item) => { 
+                total += item.price; 
+                orderDetails += `- ${item.name} (${item.variant}): ₹${item.price}\n`; 
+            }); 
+            
+            let message = `Hi Simply Seeded! 🥜 I would like to place an order:\n\n${orderDetails}\nTotal: ₹${total}\n\nPlease share your QR code so I can pay!`; 
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank'); 
+
+            // Clear cart from localStorage after checkout
+            cart = [];
+            saveCart();
+            closeModal('cartModal');
+        }
+
+        // --- AI LOGIC (Unchanged) ---
+        function toggleAIChat() {
+            const chat = document.getElementById('aiChatWindow');
+            if (chat.style.display === 'flex') {
+                chat.style.display = 'none';
+                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            } else {
+                chat.style.display = 'flex';
+            }
+        }
+        
+        function updateCharCount() {
+            const input = document.getElementById('aiInput');
+            const counter = document.getElementById('aiCharCounter');
+            counter.innerText = `${input.value.length}/300`;
+        }
+
+        function speakText(text) {
+            if (!('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel(); 
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-IN'; 
+            utterance.rate = 1.0; 
+            utterance.pitch = 1.0;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = null;
+        let isRecording = false;
+
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-IN'; 
+
+            recognition.onstart = function() {
+                isRecording = true;
+                document.getElementById('micIconSvg').style.display = 'none';
+                document.getElementById('voiceVisualizer').style.display = 'flex';
+                document.getElementById('aiInput').placeholder = "Listening...";
+                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            };
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                const inputField = document.getElementById('aiInput');
+                inputField.value = inputField.value ? inputField.value + " " + transcript : transcript;
+                updateCharCount();
+            };
+
+            recognition.onerror = function(event) {
+                console.error("Speech recognition error", event.error);
+                stopRecordingUI();
+            };
+
+            recognition.onend = function() {
+                stopRecordingUI();
+            };
+        }
+
+        function toggleSpeechRecognition() {
+            if (!recognition) {
+                alert("Sorry, your browser doesn't support voice dictation. Try using Chrome or Safari!");
+                return;
+            }
+            if (isRecording) {
+                recognition.stop();
+            } else {
+                recognition.start();
+            }
+        }
+
+        function stopRecordingUI() {
+            isRecording = false;
+            document.getElementById('micIconSvg').style.display = 'block';
+            document.getElementById('voiceVisualizer').style.display = 'none';
+            document.getElementById('aiInput').placeholder = "Ask a question...";
+        }
+
+        async function sendAIMessage() {
+            const input = document.getElementById('aiInput');
+            const sendBtn = document.getElementById('aiSendBtn');
+            const micBtn = document.getElementById('aiMicBtn');
+            const msg = input.value.trim();
+            
+            if (isRecording && recognition) recognition.stop();
+            if(!msg) return;
+            
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+
+            const body = document.getElementById('aiChatBody');
+            
+            body.innerHTML += `<div class="ai-msg-user">${escapeHTML(msg)}</div>`;
+            input.value = ''; 
+            updateCharCount();
+            body.scrollTop = body.scrollHeight;
+
+            input.disabled = true;
+            sendBtn.disabled = true;
+            micBtn.disabled = true;
+
+            const loadingId = 'loading-' + Date.now();
+            
+            body.innerHTML += `
+                <div class="ai-msg-bot" id="${loadingId}">
+                    <div class="ai-msg-content">Thinking...</div>
+                </div>`;
+            body.scrollTop = body.scrollHeight;
+
+            try {
+                let userToken = "";
+                if (window.firebaseAuth && window.firebaseAuth.currentUser) {
+                    userToken = await window.firebaseAuth.currentUser.getIdToken(true);
+                }
+
+                const response = await fetch("https://grounded-api.theteamgrounded.workers.dev/", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        message: msg, 
+                        persona: "roaster", 
+                        pageContext: document.title,
+                        token: userToken
+                    })
+                });
+                
+                const data = await response.json();
+                const botMsgDiv = document.getElementById(loadingId);
+                
+                botMsgDiv.innerHTML = `
+                    <div class="ai-msg-content"></div>
+                    <button class="ai-speaker-btn" onclick="speakText(this.previousElementSibling.innerText)" title="Read aloud">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    </button>
+                `;
+                botMsgDiv.querySelector('.ai-msg-content').innerText = data.reply;
+                
+            } catch (error) {
+                console.error("API Error:", error);
+                document.getElementById(loadingId).innerHTML = `<div class="ai-msg-content">Oops! My secure backend had a hiccup connecting to the brain.</div>`;
+            } finally {
+                input.disabled = false;
+                sendBtn.disabled = false;
+                micBtn.disabled = false;
+                input.focus();
+                body.scrollTop = body.scrollHeight;
+            }
+        }
+
+        function escapeHTML(str) { return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)); }
+        function handleAIKeyPress(e) { if(e.key === 'Enter') sendAIMessage(); }
+    </script>
+
+    <!-- FIREBASE AUTHENTICATION SCRIPT (SHARED SESSION) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBKZz6FNizCDMf8LnG7-n9a0H26MU8ZN_I",
+            authDomain: "grounded-store.firebaseapp.com",
+            projectId: "grounded-store",
+            storageBucket: "grounded-store.firebasestorage.app",
+            messagingSenderId: "110467572354",
+            appId: "1:110467572354:web:86747ada335b7289e38a9b",
+            measurementId: "G-HB8L303TNC"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        window.firebaseAuth = auth;
+
+        const SESSION_KEY = 'grounded_user';
+        const userProfile = document.getElementById('user-profile');
+        const userMenuBtn = document.getElementById('user-menu-btn');
+        const userDropdownMenu = document.getElementById('user-dropdown-menu');
+        const userNameSpan = document.getElementById('user-name');
+        const menuSignOut = document.getElementById('menu-sign-out');
+        const menuSwitchAccount = document.getElementById('menu-switch-account');
+        const chatInput = document.getElementById('aiInput');
+        const sendBtn = document.getElementById('aiSendBtn');
+        const micBtn = document.getElementById('aiMicBtn');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+
+        // Dropdown toggle & close
+        function closeDropdown() {
+            if (userDropdownMenu) userDropdownMenu.classList.remove('show');
+            if (userMenuBtn) {
+                userMenuBtn.classList.remove('active');
+                userMenuBtn.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        function toggleDropdown(e) {
+            e.stopPropagation();
+            if (!userDropdownMenu) return;
+            const isOpen = userDropdownMenu.classList.contains('show');
+            if (isOpen) {
+                closeDropdown();
+            } else {
+                userDropdownMenu.classList.add('show');
+                if (userMenuBtn) {
+                    userMenuBtn.classList.add('active');
+                    userMenuBtn.setAttribute('aria-expanded', 'true');
+                }
+            }
+        }
+
+        if (userMenuBtn) userMenuBtn.addEventListener('click', toggleDropdown);
+
+        document.addEventListener('click', (e) => {
+            if (userProfile && !userProfile.contains(e.target)) {
+                closeDropdown();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeDropdown();
+        });
+
+        // Global Sign Out
+        if (menuSignOut) {
+            menuSignOut.addEventListener('click', () => {
+                closeDropdown();
+                localStorage.removeItem(SESSION_KEY);
+                applyAuthState(null);
+                signOut(auth).catch((err) => console.error("Sign Out failed:", err));
+            });
+        }
+
+        // Switch Account (redirects to home to select account)
+        if (menuSwitchAccount) {
+            menuSwitchAccount.addEventListener('click', () => {
+                closeDropdown();
+                localStorage.removeItem(SESSION_KEY);
+                applyAuthState(null);
+                signOut(auth).then(() => {
+                    window.location.href = 'index.html?auth=true';
+                }).catch(() => {
+                    window.location.href = 'index.html?auth=true';
+                });
+            });
+        }
+
+        function applyAuthState(user) {
+            if (user) {
+                const displayName = user.displayName || (user.email ? user.email.split('@')[0] : (user.phoneNumber || "User"));
+                if (userProfile) userProfile.style.display = 'inline-block';
+                if (userNameSpan) userNameSpan.textContent = displayName;
+                
+                if (chatInput) {
+                    chatInput.disabled = false;
+                    chatInput.placeholder = "Ask The Roaster a question...";
+                    if (sendBtn) sendBtn.disabled = false;
+                    if (micBtn) micBtn.disabled = false;
+                }
+                if (checkoutBtn) {
+                    checkoutBtn.disabled = false;
+                    checkoutBtn.innerText = "Checkout via WhatsApp";
+                    checkoutBtn.onclick = checkoutWhatsApp;
+                }
+            } else {
+                if (userProfile) userProfile.style.display = 'none';
+                closeDropdown();
+
+                if (chatInput) {
+                    chatInput.disabled = true;
+                    chatInput.placeholder = "Please sign in to chat...";
+                    if (sendBtn) sendBtn.disabled = true;
+                    if (micBtn) micBtn.disabled = true;
+                }
+                if (checkoutBtn) {
+                    checkoutBtn.disabled = false;
+                    checkoutBtn.innerText = "Sign In on Home to Checkout";
+                    checkoutBtn.onclick = () => {
+                        window.location.href = 'index.html?auth=true';
+                    };
+                }
+            }
+        }
+
+        // Immediately apply shared session from localStorage
+        try {
+            const savedSession = localStorage.getItem(SESSION_KEY);
+            if (savedSession) {
+                applyAuthState(JSON.parse(savedSession));
+            } else {
+                applyAuthState(null);
+            }
+        } catch(e) {
+            applyAuthState(null);
+        }
+
+        // Sync with Firebase auth state
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const displayName = user.displayName || (user.email ? user.email.split('@')[0] : (user.phoneNumber || "User"));
+                const userData = {
+                    uid: user.uid,
+                    displayName: displayName,
+                    email: user.email,
+                    phoneNumber: user.phoneNumber
+                };
+                localStorage.setItem(SESSION_KEY, JSON.stringify(userData));
+                applyAuthState(userData);
+            } else {
+                if (!localStorage.getItem(SESSION_KEY)) {
+                    applyAuthState(null);
+                }
+            }
+        });
+
+        // Cross-tab / cross-page synchronization via Storage Event
+        window.addEventListener('storage', (e) => {
+            if (e.key === SESSION_KEY) {
+                try {
+                    const sessionData = e.newValue ? JSON.parse(e.newValue) : null;
+                    applyAuthState(sessionData);
+                } catch(err) {
+                    applyAuthState(null);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
