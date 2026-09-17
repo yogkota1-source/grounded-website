@@ -839,3 +839,73 @@ a { text-decoration: none; }
     .user-dropdown { min-width: 200px; right: 0; }
     #user-name { max-width: 85px; }
 }
+
+/* =========================================
+   USER PROFILE & DROPDOWN MENU
+   ========================================= */
+.user-profile-menu {
+    position: relative;
+}
+
+.user-name-trigger {
+    background: transparent;
+    color: #1A1A1A;
+    border: none;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+}
+
+.user-name-trigger.active .dropdown-chevron {
+    transform: rotate(180deg);
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 10px;
+    background: white;
+    min-width: 220px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 4px;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.user-dropdown.show {
+    display: block;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 15px;
+    background: none;
+    border: none;
+    text-align: left;
+    font-family: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: #333;
+}
+
+.dropdown-item:hover {
+    background: #f0f0f0;
+}
+
+.dropdown-item-danger {
+    color: #d93025;
+}
+
+.dropdown-item-danger:hover {
+    background: #fce8e6;
+}
