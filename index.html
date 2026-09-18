@@ -21,11 +21,18 @@
         <button id="open-modal-btn" class="auth-btn" style="background: #1A1A1A; color: white;">SIGN IN</button>
         
         <!-- User Profile & Dropdown (Shows when logged in) -->
-        <div id="user-dropdown-menu" class="user-dropdown">
+        <div id="user-profile" class="user-profile-menu" style="display: none;">
+            <button id="user-menu-btn" class="user-name-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+                <span id="user-name"></span>
+                <svg class="dropdown-chevron" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                    <path d="M7 10l5 5 5-5z"/>
+                </svg>
+            </button>
+            <div id="user-dropdown-menu" class="user-dropdown">
                 <!-- NEW: Support Email Display -->
-                <div style="padding: 12px 15px; font-size: 0.75rem; color: #666; letter-spacing: 0.5px; background: #f9f9f9;">
+                <div class="dropdown-support-item">
                     SUPPORT<br>
-                    <a href="mailto:theteamgrounded@gmail.com" style="color: #1A1A1A; text-decoration: none; font-weight: bold;">theteamgrounded@gmail.com</a>
+                    <a href="mailto:theteamgrounded@gmail.com">theteamgrounded@gmail.com</a>
                 </div>
                 <div class="dropdown-divider" style="margin: 0;"></div>
                 
@@ -43,6 +50,8 @@
                     Sign Out
                 </button>
             </div>
+        </div>
+    </div>
 
     <!-- THE NEW AUTHENTICATION MODAL (POP-UP) -->
     <div id="auth-modal" class="modal-overlay" style="display: none;">
