@@ -920,7 +920,13 @@ a { text-decoration: none; }
    ========================================================================== */
 
 /* Dropdown Container */
-.auth-nav-container,
+.auth-nav-container {
+    position: absolute !important;
+    top: 20px;
+    right: 30px;
+    display: inline-block;
+}
+
 .user-profile-menu {
     position: relative;
     display: inline-block;
