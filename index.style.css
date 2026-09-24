@@ -198,27 +198,6 @@ body {
     vertical-align: middle;
 }
 
-/* Dropdown Menu - Hidden until clicked */
-.user-dropdown {
-    display: none;
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    min-width: 230px;
-    background: #FFFFFF;
-    border: 1px solid #1A1A1A;
-    border-radius: 4px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    padding: 6px 0;
-    z-index: 1000;
-    text-align: left;
-}
-
-/* Revealed when clicked */
-.user-dropdown.show {
-    display: block;
-    animation: fadeIn 0.15s ease-out;
-}
 
 .dropdown-item {
     width: 100%;
@@ -620,7 +599,31 @@ a { text-decoration: none; }
 }
 .ai-msg-content { flex-grow: 1; }
 
-.ai-speaker-btn { 
+/* AI Typing Indicator - Pulsing Dots */
+.ai-typing-indicator {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 2px;
+}
+.ai-typing-indicator span {
+    width: 6px;
+    height: 6px;
+    background-color: #8A2924;
+    border-radius: 50%;
+    display: inline-block;
+    animation: aiDotPulse 1.4s infinite ease-in-out both;
+}
+.ai-typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+.ai-typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+.ai-typing-indicator span:nth-child(3) { animation-delay: 0s; }
+
+@keyframes aiDotPulse {
+    0%, 80%, 100% { transform: scale(0.3); opacity: 0.3; }
+    40% { transform: scale(1); opacity: 1; }
+}
+
+.ai-speaker-btn {
     background: none; 
     border: none; 
     color: #A64B2A; 
@@ -865,110 +868,29 @@ a { text-decoration: none; }
     transform: rotate(180deg);
 }
 
-.user-dropdown {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 100%;
-    margin-top: 10px;
-    background: white;
-    min-width: 220px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    border-radius: 4px;
-    z-index: 1000;
-    overflow: hidden;
-}
-
-.user-dropdown.show {
-    display: block;
-}
-
-.dropdown-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 12px 15px;
-    background: none;
-    border: none;
-    text-align: left;
-    font-family: inherit;
-    font-size: 0.85rem;
-    cursor: pointer;
-    color: #333;
-}
-
-.dropdown-item:hover {
-    background: #f0f0f0;
-}
-
-.dropdown-item-danger {
-    color: #d93025;
-}
-
-.dropdown-item-danger:hover {
-    background: #fce8e6;
-}
-
-/* ==========================================================================
-   TASK 1: MODERN FLOATING USER PROFILE DROPDOWN MENU
-   - Positioned relative to container, absolute top-right alignment
-   - High z-index (1000) to float cleanly over all navbar/page content
-   - Smooth visibility transitions (opacity + translateY) without display: none
-   - Clean box-shadow, crisp white background, and subtle border-radius
-   - Interactive hover states with cursor pointer for all internal items
-   ========================================================================== */
-
-/* Dropdown Container */
-.auth-nav-container {
-    position: absolute !important;
-    top: 20px;
-    right: 30px;
-    display: inline-block;
-}
-
-.user-profile-menu {
-    position: relative;
-    display: inline-block;
-}
-
 /* Floating Dropdown Window */
 .user-dropdown,
 #user-dropdown-menu {
-    display: block !important; /* Overrides display:none to enable smooth CSS transitions */
+    display: none;
     position: absolute;
     top: calc(100% + 8px);
     right: 0;
     left: auto;
-    min-width: 230px;
+    min-width: 250px;
     background: #FFFFFF;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 8px 24px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 8px 24px rgba(0, 0, 0, 0.08);
     z-index: 1000;
     text-align: left;
     overflow: hidden;
     box-sizing: border-box;
-
-    /* Transition & Visibility Engine */
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    pointer-events: none;
-    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                visibility 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Active State: Triggered on Click (.show) or Container Hover */
-.user-dropdown.show,
-.user-dropdown.active,
-.user-profile-menu:hover .user-dropdown,
-.auth-nav-container:hover .user-dropdown {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    pointer-events: auto;
+/* Active State: Triggered STRICTLY via JavaScript Click (.show) */
+.user-dropdown.show {
+    display: block !important;
+    animation: fadeIn 0.15s ease-out;
 }
 
 /* Internal Items Styling & Interactivity */

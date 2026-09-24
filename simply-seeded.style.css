@@ -81,9 +81,20 @@ p.subtitle { font-family: Arial, sans-serif; letter-spacing: 2px; color: #555; m
 .product-card:hover { transform: translateY(-8px); box-shadow: 0px 20px 40px rgba(0,0,0,0.08); }
 
 .carousel-wrapper { position: relative; width: 100%; height: 320px; border-radius: 6px; margin-bottom: 20px; overflow: hidden; }
-.carousel-track { display: flex; width: 100%; height: 100%; transition: transform 0.4s ease-in-out; }
+.carousel-track { 
+    display: flex; 
+    width: 100%; 
+    height: 100%; 
+    transition: transform 0.4s ease-in-out; 
+    will-change: transform;
+}
 .slide-placeholder { 
     flex: 0 0 100%; 
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: 100%;
+    box-sizing: border-box;
     background-color: #EAEAEA; 
     display: flex; 
     align-items: center; 
@@ -91,9 +102,7 @@ p.subtitle { font-family: Arial, sans-serif; letter-spacing: 2px; color: #555; m
     color: #999; 
     font-family: Arial, sans-serif; 
     font-size: 0.9rem; 
-    transition: transform 0.5s ease; 
 }
-.product-card:hover .slide-placeholder { transform: scale(1.03); }
 
 .carousel-btn { 
     position: absolute; 
@@ -296,6 +305,30 @@ p.subtitle { font-family: Arial, sans-serif; letter-spacing: 2px; color: #555; m
     align-items: flex-start;
 }
 .ai-msg-content { flex-grow: 1; }
+
+/* AI Typing Indicator - Pulsing Dots */
+.ai-typing-indicator {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 2px;
+}
+.ai-typing-indicator span {
+    width: 6px;
+    height: 6px;
+    background-color: #8A2924;
+    border-radius: 50%;
+    display: inline-block;
+    animation: aiDotPulse 1.4s infinite ease-in-out both;
+}
+.ai-typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+.ai-typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+.ai-typing-indicator span:nth-child(3) { animation-delay: 0s; }
+
+@keyframes aiDotPulse {
+    0%, 80%, 100% { transform: scale(0.3); opacity: 0.3; }
+    40% { transform: scale(1); opacity: 1; }
+}
 
 .ai-speaker-btn { 
     background: none; 
@@ -536,18 +569,43 @@ p.subtitle { font-family: Arial, sans-serif; letter-spacing: 2px; color: #555; m
     position: absolute;
     top: calc(100% + 8px);
     right: 0;
-    min-width: 230px;
+    min-width: 250px;
     background: #FFFFFF;
     border: 1px solid #1A1A1A;
-    border-radius: 4px;
+    border-radius: 6px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     padding: 6px 0;
     z-index: 1000;
     text-align: left;
+    overflow: hidden;
 }
 
 .user-dropdown.show {
-    display: block;
+    display: block !important;
+    animation: fadeIn 0.15s ease-out;
+}
+
+/* Support Email Item */
+.user-dropdown .dropdown-support-item {
+    padding: 12px 15px;
+    font-size: 0.75rem;
+    color: #666;
+    letter-spacing: 0.5px;
+    background: #F9F9F9;
+    border-bottom: 1px solid #EEEEEE;
+    line-height: 1.5;
+    font-family: Arial, sans-serif;
+}
+
+.user-dropdown .dropdown-support-item a {
+    color: #1A1A1A;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.user-dropdown .dropdown-support-item a:hover {
+    color: #8A2924;
+    text-decoration: underline;
 }
 
 .dropdown-item {
@@ -582,12 +640,24 @@ p.subtitle { font-family: Arial, sans-serif; letter-spacing: 2px; color: #555; m
     margin: 4px 0;
 }
 
+/* Auth Modal Content Customization */
+#auth-modal {
+    z-index: 2000;
+}
+
+#auth-modal .modal-content {
+    max-width: 380px;
+    text-align: center;
+    padding: 40px;
+    border-radius: 8px;
+}
+
 @media (max-width: 768px) { 
     h1 { font-size: 2.2rem; } 
     .section-title { font-size: 1.5rem; } 
     .product-card { width: 100%; max-width: 350px; } 
     .ai-chat-window { width: calc(100% - 40px); right: 20px; bottom: 90px; } 
-    .ai-bubble-btn { right: 20px; bottom: 20px; } 
+    .ai-bubble-btn { right: 20px; bottom: 20px; width: 50px; height: 50px; font-size: 1.2rem; } 
     /* Compact Top Nav mobile fixes */
     .logo-text { display: none; } 
     .fun-text { margin: 0; font-weight: bold; }

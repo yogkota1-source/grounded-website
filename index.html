@@ -29,10 +29,9 @@
                 </svg>
             </button>
             <div id="user-dropdown-menu" class="user-dropdown">
-                <!-- NEW: Support Email Display -->
+                <!-- Support Email Display -->
                 <div class="dropdown-support-item">
-                    SUPPORT<br>
-                    <a href="mailto:theteamgrounded@gmail.com">theteamgrounded@gmail.com</a>
+                    For any queries or feedback please contact us: <a href="mailto:theteamgrounded@gmail.com">theteamgrounded@gmail.com</a>
                 </div>
                 <div class="dropdown-divider" style="margin: 0;"></div>
                 
@@ -375,7 +374,9 @@
             
             body.innerHTML += `
                 <div class="ai-msg-bot" id="${loadingId}">
-                    <div class="ai-msg-content">Thinking...</div>
+                    <div class="ai-msg-content ai-typing-indicator">
+                        <span></span><span></span><span></span>
+                    </div>
                 </div>`;
             body.scrollTop = body.scrollHeight;
 
@@ -806,9 +807,9 @@
         #back-to-top-btn {
             display: none; 
             position: fixed; 
-            bottom: 90px; /* Sits directly above the TC chat bubble on laptops */
-            right: 20px; 
-            z-index: 99; 
+            bottom: 100px; /* Sits directly above the TC chat bubble */
+            right: 25px; 
+            z-index: 999; 
             background: #1A1A1A; 
             color: white; 
             border: none; 
@@ -819,20 +820,27 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
             align-items: center; 
             justify-content: center;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        #back-to-top-btn:hover {
+            transform: translateY(-3px);
+            background: #333;
         }
         
-        /* Mobile Phone Adjustments */
+        /* Mobile Phone Adjustments: Clear 15px vertical clearance to avoid collision with AI bubble */
         @media (max-width: 768px) {
             #back-to-top-btn {
-                bottom: 80px; 
-                right: 15px;
-                width: 40px;
-                height: 40px;
+                bottom: 85px; 
+                right: 22px;
+                width: 42px;
+                height: 42px;
+                z-index: 999;
             }
         }
     </style>
     
-    <button id="back-to-top-btn" title="Back to Top">
+    <button id="back-to-top-btn" title="Back to Top" type="button">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="margin-top: 2px;">
             <path d="M12 4l-8 8h6v8h4v-8h6z"/>
         </svg>
@@ -841,9 +849,9 @@
     <script>
         const backToTopBtn = document.getElementById("back-to-top-btn");
         window.addEventListener('scroll', () => {
-            // 900 pixels is roughly right after the "lied to" paragraph.
-            // If it shows up too early, change 900 to 1000. If too late, change to 800.
-            if (window.scrollY > 900) { 
+            // Dynamic threshold: appears after user scrolls past 60% of viewport height (or 300px)
+            const dynamicThreshold = Math.max(300, window.innerHeight * 0.6);
+            if (window.scrollY > dynamicThreshold) { 
                 backToTopBtn.style.display = "flex";
             } else {
                 backToTopBtn.style.display = "none";
