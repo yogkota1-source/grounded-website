@@ -667,7 +667,7 @@
             closeModal('cartModal');
         }
 
-        // --- AI LOGIC (Unchanged) ---
+        // --- AI LOGIC (Unchanged except Security Bouncer) ---
         function toggleAIChat() {
             const chat = document.getElementById('aiChatWindow');
             if (chat.style.display === 'flex') {
@@ -756,6 +756,17 @@
             
             if (isRecording && recognition) recognition.stop();
             if(!msg) return;
+
+            // --- THE NEW BOUNCER (SECURITY CHECK) ---
+            if (!window.firebaseAuth || !window.firebaseAuth.currentUser) {
+                // Not logged in? Open the login modal and stop the function.
+                document.getElementById('auth-modal').style.display = 'flex';
+                document.getElementById('modal-default-view').style.display = 'block';
+                document.getElementById('modal-phone-view').style.display = 'none';
+                document.getElementById('modal-otp-view').style.display = 'none';
+                return;
+            }
+            // ----------------------------------------
             
             if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
@@ -781,10 +792,8 @@
             body.scrollTop = body.scrollHeight;
 
             try {
-                let userToken = "";
-                if (window.firebaseAuth && window.firebaseAuth.currentUser) {
-                    userToken = await window.firebaseAuth.currentUser.getIdToken(true);
-                }
+                // Grab the ultra-fresh VIP token (we already know they are logged in)
+                const userToken = await window.firebaseAuth.currentUser.getIdToken(true);
 
                 const response = await fetch("https://grounded-api.theteamgrounded.workers.dev/", {
                     method: 'POST',
@@ -800,6 +809,11 @@
                 const data = await response.json();
                 const botMsgDiv = document.getElementById(loadingId);
                 
+                // If Cloudflare still rejects it (e.g. token expired mid-request)
+                if (!response.ok) {
+                    throw new Error(data.error || "Backend rejected request");
+                }
+                
                 botMsgDiv.innerHTML = `
                     <div class="ai-msg-content"></div>
                     <button class="ai-speaker-btn" onclick="speakText(this.previousElementSibling.innerText)" title="Read aloud">
@@ -810,7 +824,7 @@
                 
             } catch (error) {
                 console.error("API Error:", error);
-                document.getElementById(loadingId).innerHTML = `<div class="ai-msg-content">Oops! My secure backend had a hiccup connecting to the brain.</div>`;
+                document.getElementById(loadingId).innerHTML = `<div class="ai-msg-content">Your session expired. Please sign out and sign back in to continue!</div>`;
             } finally {
                 input.disabled = false;
                 sendBtn.disabled = false;
