@@ -135,47 +135,82 @@
 
     <!-- TOGGLE EXPAND/COLLAPSE STYLES -->
     <style>
-        .story-summary { margin-bottom: 0; }
+        /* Summary hides when story expands */
+        .story-summary {
+            margin-bottom: 8px;
+            transition: opacity 0.25s ease, max-height 0.3s ease;
+            max-height: 200px;
+            overflow: hidden;
+            opacity: 1;
+        }
+        .story-summary.hidden {
+            max-height: 0;
+            opacity: 0;
+            margin: 0;
+            pointer-events: none;
+        }
+
+        /* Premium-fun toggle button */
         .story-toggle-btn {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            margin-top: 16px;
-            padding: 8px 18px;
-            background: transparent;
-            color: #1a1a1a;
-            border: 1.5px solid #1a1a1a;
-            border-radius: 3px;
-            font-family: Georgia, serif;
-            font-size: 0.92rem;
-            cursor: pointer;
-            transition: background 0.2s ease, color 0.2s ease;
-            letter-spacing: 0.3px;
-        }
-        .story-toggle-btn:hover {
+            gap: 10px;
+            margin-top: 14px;
+            padding: 10px 22px;
             background: #1a1a1a;
             color: #fff;
+            border: none;
+            border-radius: 2px;
+            font-family: Georgia, serif;
+            font-size: 0.87rem;
+            font-style: italic;
+            letter-spacing: 1.2px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: letter-spacing 0.25s ease, background 0.25s ease;
         }
+        /* Subtle shimmer sweep on hover */
+        .story-toggle-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -75%;
+            width: 50%; height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.18), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.45s ease;
+        }
+        .story-toggle-btn:hover::before { left: 130%; }
+        .story-toggle-btn:hover { background: #333; letter-spacing: 1.8px; }
+
+        /* Arrow that lives inside the button */
         .story-toggle-btn .toggle-arrow {
             display: inline-block;
-            transition: transform 0.3s ease;
+            font-style: normal;
+            font-size: 1.05rem;
+            transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: transform;
+            line-height: 1;
         }
+        /* When button has .open, arrow rotates DOWN (→ becomes ↓) */
         .story-toggle-btn.open .toggle-arrow {
             transform: rotate(90deg);
         }
+
+        /* Full-text drawer */
         .story-full-text {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.3s ease;
             opacity: 0;
             margin-top: 0;
+            transition: max-height 0.55s ease, opacity 0.4s ease, margin-top 0.3s ease;
         }
         .story-full-text.expanded {
-            max-height: 3000px;
+            max-height: 3500px;
             opacity: 1;
-            margin-top: 20px;
+            margin-top: 22px;
         }
-        .story-full-text p { margin-bottom: 18px; line-height: 1.85; color: #444; }
+        .story-full-text p  { margin-bottom: 18px; line-height: 1.85; color: #444; }
         .story-full-text h3 {
             font-family: Georgia, serif;
             font-weight: normal;
@@ -183,12 +218,30 @@
             margin: 24px 0 8px;
             color: #1a1a1a;
         }
+
+        /* "In Development" disabled button */
+        .btn-in-dev {
+            display: inline-block;
+            margin-top: 14px;
+            padding: 10px 22px;
+            background: transparent;
+            color: #999;
+            border: 1.5px dashed #ccc;
+            border-radius: 2px;
+            font-family: Georgia, serif;
+            font-size: 0.82rem;
+            font-style: italic;
+            letter-spacing: 1px;
+            cursor: not-allowed;
+            user-select: none;
+        }
+
+        /* Button row for sections that have 2 buttons side by side */
         .story-btn-row {
             display: flex;
             align-items: center;
             flex-wrap: wrap;
             gap: 12px;
-            margin-top: 16px;
         }
     </style>
 
@@ -200,16 +253,16 @@
             <h2 style="font-family: Georgia, serif; font-size: 2.5rem; margin-bottom: 30px; text-align: center; color: #1a1a1a;">The Grounded Journey</h2>
             <div style="margin-top: 25px; text-align: left;">
 
-                <!-- Summary -->
-                <p class="story-summary" style="line-height: 1.8; color: #444; font-size: 1.05rem;">Real food speaks for itself when you strip away the junk. We rejected the dense paragraphs of stabilizers and warehouse delays to craft fresh, uncompromised staples that don't require a chemistry degree to understand.</p>
+                <!-- Visible summary -->
+                <p class="story-summary" style="line-height: 1.8; color: #444; font-size: 1.05rem;" id="sum-1">Real food speaks for itself when you strip away the junk. We rejected the dense paragraphs of stabilizers and warehouse delays to craft fresh, uncompromised staples that don't require a chemistry degree to understand.</p>
 
-                <!-- Toggle Button -->
-                <button class="story-toggle-btn" onclick="toggleStory(this)" aria-expanded="false">
-                    Long story short here <span class="toggle-arrow">→</span>
+                <!-- Toggle button — sits directly above the hidden text -->
+                <button class="story-toggle-btn" onclick="toggleStory(this,'sum-1','ft-1')" aria-expanded="false">
+                    <em>Long story short here</em> <span class="toggle-arrow">→</span>
                 </button>
 
-                <!-- Hidden Full Text -->
-                <div class="story-full-text">
+                <!-- Hidden full text -->
+                <div class="story-full-text" id="ft-1">
                     <h3>1. The Art of Subtraction</h3>
                     <p>If you read the label on a standard supermarket jar today, you are usually met with a dense paragraph of stabilizers, palm oil, and refined syrups. I take the exact opposite approach. My <em>Simply Seeded</em> peanut butter relies on the quiet power of just three pure elements: deeply roasted peanuts, a pinch of Himalayan pink salt, and your choice of a clean sweetener—monk fruit or date powder. It is my exercise in letting real food speak for itself.</p>
 
@@ -232,22 +285,22 @@
                 <h2>Simply Seeded</h2>
                 <span class="accent">SMALL-BATCH CRAFTED PEANUT BUTTER</span>
 
-                <!-- Summary -->
-                <p class="story-summary">Pure, rich fuel made from honest elements. We cut out the cloying sweetness, cheap palm oil, and artificial fillers—delivering just pure ingredients roasted and ground strictly to order.</p>
+                <!-- Visible summary -->
+                <p class="story-summary" id="sum-2">Pure, rich fuel made from honest elements. We cut out the cloying sweetness, cheap palm oil, and artificial fillers—delivering just pure ingredients roasted and ground strictly to order.</p>
 
-                <!-- Hidden Full Text -->
-                <div class="story-full-text">
+                <!-- Button row: toggle + Enter Store side by side -->
+                <div class="story-btn-row">
+                    <button class="story-toggle-btn" onclick="toggleStory(this,'sum-2','ft-2')" aria-expanded="false">
+                        <em>Long story short here</em> <span class="toggle-arrow">→</span>
+                    </button>
+                    <a href="simply-seeded.html" class="btn store-btn">Enter Store</a>
+                </div>
+
+                <!-- Hidden full text — comes AFTER the button row -->
+                <div class="story-full-text" id="ft-2">
                     <p>To be honest, I used to hate peanut butter. Growing up on generic supermarket jars, all I tasted was cloying sweetness, cheap palm oil, and stabilizers. It felt more like a chemistry lab experiment than food. That changed the moment I tried a truly pure version and realized we'd all been lied to. If real peanut butter only needs pure ingredients, why couldn't I make it myself? That sparked an obsession. I took over the kitchen—roasting nuts, fine-tuning the grind, and stripping away every single filler until it became pure, rich fuel.</p>
                     <p>Simply Seeded is built on just three elements: deeply roasted peanuts, a pinch of Himalayan pink salt, and your choice of monk fruit or date powder. No warehouses. No dusty shelves. Your jar doesn't even exist until you order it—roasted, ground, and packed fresh so you get it at its absolute peak.</p>
                     <p><em>Thank you for choosing Simply Seeded.</em></p>
-                </div>
-
-                <!-- Toggle + Store Buttons -->
-                <div class="story-btn-row">
-                    <button class="story-toggle-btn" onclick="toggleStory(this)" aria-expanded="false">
-                        Long story short here <span class="toggle-arrow">→</span>
-                    </button>
-                    <a href="simply-seeded.html" class="btn store-btn">Enter Store</a>
                 </div>
             </div>
         </div>
@@ -259,25 +312,25 @@
             </div>
             <div class="magazine-text">
                 <h2>ĀCHAR</h2>
-                <span class="accent">HERITAGE & GLOBAL PICKLES</span>
+                <span class="accent">HERITAGE &amp; GLOBAL PICKLES</span>
 
-                <!-- Summary -->
-                <p class="story-summary">True flavor comes from genuine craft, not chemical shortcuts. We skipped the refined sugars and artificial acidity regulators to build clean, gut-healthy crunch the traditional way.</p>
+                <!-- Visible summary -->
+                <p class="story-summary" id="sum-3">True flavor comes from genuine craft, not chemical shortcuts. We skipped the refined sugars and artificial acidity regulators to build clean, gut-healthy crunch the traditional way.</p>
 
-                <!-- Hidden Full Text -->
-                <div class="story-full-text">
+                <!-- Button row: toggle + In Development side by side -->
+                <div class="story-btn-row">
+                    <button class="story-toggle-btn" onclick="toggleStory(this,'sum-3','ft-3')" aria-expanded="false">
+                        <em>Long story short here</em> <span class="toggle-arrow">→</span>
+                    </button>
+                    <span class="btn-in-dev" title="Store coming soon">✦ In Development</span>
+                </div>
+
+                <!-- Hidden full text -->
+                <div class="story-full-text" id="ft-3">
                     <p>Our fermentation journey started with the imported kimchi craze. I was around eight or nine, watching my family blow serious cash on imported jars loaded with bizarre preservatives. My older sister stepped up, experimented in the kitchen, and dialed in an incredible preservative-free recipe. When she left for college, the sacred duty of keeping that family supply alive fell on me—and today, I'm sharing her exact recipe with you.</p>
                     <p>That kitchen obsession with fermentation naturally led back to my roots. Growing up in Hyderabad, bold pickles were already in my DNA—from fiery <em>Avakay</em> to tangy <em>Gongura</em> and <em>Nimmakaya</em>. Launching with our kimchi was just the beginning; these traditional South Indian staples are following right behind.</p>
                     <p>With lacto-fermentation dialed in and our spice cabinet locked down, taking on the classic cucumber pickle was the natural next step. It's an everyday staple on burgers and sandwiches, but standard store shelves only offer soggy spears drowned in refined sugar and chemical vinegar. We brought the same craft here: clean ingredients, genuine crunch, and zero junk.</p>
                     <p><em>Thank you for choosing ĀCHAR.</em></p>
-                </div>
-
-                <!-- Toggle + Store Buttons -->
-                <div class="story-btn-row">
-                    <button class="story-toggle-btn" onclick="toggleStory(this)" aria-expanded="false">
-                        Long story short here <span class="toggle-arrow">→</span>
-                    </button>
-                    <a href="#" class="btn store-btn">Enter Store</a>
                 </div>
             </div>
         </div>
@@ -291,23 +344,23 @@
                 <h2>SOMA</h2>
                 <span class="accent">LIVING PROBIOTIC TEA</span>
 
-                <!-- Summary -->
-                <p class="story-summary">Honest refreshment without the artificial crash. We traded lab-made flavoring syrups and synthetic preservatives for high-grade organic fruits and patient brewing, so you can hydrate completely guilt-free.</p>
+                <!-- Visible summary -->
+                <p class="story-summary" id="sum-4">Honest refreshment without the artificial crash. We traded lab-made flavoring syrups and synthetic preservatives for high-grade organic fruits and patient brewing, so you can hydrate completely guilt-free.</p>
 
-                <!-- Hidden Full Text -->
-                <div class="story-full-text">
+                <!-- Button row: toggle + In Development side by side -->
+                <div class="story-btn-row">
+                    <button class="story-toggle-btn" onclick="toggleStory(this,'sum-4','ft-4')" aria-expanded="false">
+                        <em>Long story short here</em> <span class="toggle-arrow">→</span>
+                    </button>
+                    <span class="btn-in-dev" title="Store coming soon">✦ In Development</span>
+                </div>
+
+                <!-- Hidden full text -->
+                <div class="story-full-text" id="ft-4">
                     <p>Kombucha is controversial—people either love it or hate it. But before you make up your mind, hear me out. It started with a simple craving: I wanted the crisp refreshment of cold sodas, but without the artificial chemicals and sugar crash. Fresh roadside lemonade is great, but you can't bottle it without adding synthetic preservatives. That dilemma led me straight to kombucha, and once I brewed that first batch, I was hooked.</p>
                     <p>I started with a classic black tea ferment and quickly realized you don't need lab-made flavoring syrups when real, fresh fruit exists. Every flavor—from classic Ginger Lemon to Litchi and Passion Fruit—is infused using strictly high-grade organic fruit. Getting the natural carbonation and fruit balance right took months of trial, error, and total kitchen exhaustion.</p>
                     <p>Now, we're expanding into hyper-local flavors like Mango Jackfruit, Karonda, and Jamun. Patiently fermented, naturally effervescent, and delivered fresh—so you can pull an ice-cold bottle from your fridge and enjoy pure refreshment, zero guilt.</p>
                     <p><em>Thank you for choosing Soma.</em></p>
-                </div>
-
-                <!-- Toggle + Store Buttons -->
-                <div class="story-btn-row">
-                    <button class="story-toggle-btn" onclick="toggleStory(this)" aria-expanded="false">
-                        Long story short here <span class="toggle-arrow">→</span>
-                    </button>
-                    <a href="#" class="btn store-btn">Enter Store</a>
                 </div>
             </div>
         </div>
@@ -319,22 +372,22 @@
             <span class="story-date" style="display: block; text-align: center; margin-top: 5px; margin-bottom: 35px; color: #8A2924; font-weight: bold; letter-spacing: 2px;">THE GROUNDED STANDARD</span>
 
             <div style="line-height: 1.8; color: #444; font-size: 1.1rem;">
-                <!-- Summary -->
-                <p class="story-summary" style="margin-bottom: 0;">It is time to stop eating processed shortcuts that act as health liabilities. We strip away the refined sugars and lab-made stabilizers so your everyday pantry staples actually fuel your life properly.</p>
+                <!-- Visible summary -->
+                <p class="story-summary" id="sum-5">It is time to stop eating processed shortcuts that act as health liabilities. We strip away the refined sugars and lab-made stabilizers so your everyday pantry staples actually fuel your life properly.</p>
 
-                <!-- Toggle Button -->
-                <button class="story-toggle-btn" onclick="toggleStory(this)" aria-expanded="false" style="margin-bottom: 8px;">
-                    Long story short here <span class="toggle-arrow">→</span>
+                <!-- Toggle button -->
+                <button class="story-toggle-btn" onclick="toggleStory(this,'sum-5','ft-5')" aria-expanded="false">
+                    <em>Long story short here</em> <span class="toggle-arrow">→</span>
                 </button>
 
-                <!-- Hidden Full Text -->
-                <div class="story-full-text">
+                <!-- Hidden full text -->
+                <div class="story-full-text" id="ft-5">
                     <p>Sometimes, life hits you with an uncomfortable truth. You realize you aren't eating right and decide to turn things around—usually right as you're halfway through a chocolate-loaded waffle. You finish the plate anyway so you don't waste money, ignoring the hospital bills down the road. I got tired of that cycle, so I took a risk and started making my own food.</p>
                     <p>I don't just mean everyday meals like dal, dosa, or rice. I mean taking on the processed staples people blindly grab off supermarket shelves: peanut butter, kimchi, kombucha, and everyday condiments. The moment you strip away the stabilizers, refined sugars, and lab-made shortcuts, food stops being a health liability and starts fueling your life properly.</p>
                     <p>Grounded exists to take that work off your plate. We craft real, uncompromised staples from scratch so you can enjoy pure food without sacrificing your health.</p>
                 </div>
 
-                <!-- Quote box (existing element, kept exactly as-is) -->
+                <!-- Quote box — always visible, never hidden -->
                 <div class="quote-block" style="margin: 35px 0; padding-left: 20px; border-left: 3px solid #1a1a1a;">
                     <p class="quote-text" style="font-style: italic; font-size: 1.2rem; color: #333; margin: 0;">"If it's not healthy enough for my kitchen, it's not going into yours."</p>
                 </div>
@@ -562,19 +615,20 @@
         function escapeHTML(str) { return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)); }
         function handleAIKeyPress(e) { if(e.key === 'Enter') sendAIMessage(); }
 
-        function toggleStory(btn) {
-            // The hidden text is always the next sibling .story-full-text of the button,
-            // OR inside a .story-btn-row the full-text is the previous sibling of the row.
-            let fullText = btn.nextElementSibling;
-            if (!fullText || !fullText.classList.contains('story-full-text')) {
-                // Button is inside a .story-btn-row — walk up to parent, then find sibling
-                const row = btn.closest('.story-btn-row');
-                if (row) fullText = row.previousElementSibling;
-            }
+        function toggleStory(btn, sumId, ftId) {
+            const summary  = document.getElementById(sumId);
+            const fullText = document.getElementById(ftId);
             if (!fullText) return;
 
             const isExpanded = fullText.classList.contains('expanded');
+
+            // Toggle full text open/closed
             fullText.classList.toggle('expanded', !isExpanded);
+
+            // Hide summary when open, show when closed
+            if (summary) summary.classList.toggle('hidden', !isExpanded);
+
+            // Rotate arrow on THIS button only
             btn.classList.toggle('open', !isExpanded);
             btn.setAttribute('aria-expanded', String(!isExpanded));
         }

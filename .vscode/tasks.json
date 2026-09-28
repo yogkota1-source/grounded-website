@@ -1,0 +1,20 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Launch omp (Qwen AI Agent)",
+      "type": "process",
+      "command": "C:\\Users\\Dell\\AppData\\Local\\omp\\omp.exe",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "focus": true,
+        "title": "omp — Qwen AI"
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
