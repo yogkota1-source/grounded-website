@@ -133,25 +133,97 @@
         </div>
     </nav>
 
+    <!-- TOGGLE EXPAND/COLLAPSE STYLES -->
+    <style>
+        .story-summary { margin-bottom: 0; }
+        .story-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 16px;
+            padding: 8px 18px;
+            background: transparent;
+            color: #1a1a1a;
+            border: 1.5px solid #1a1a1a;
+            border-radius: 3px;
+            font-family: Georgia, serif;
+            font-size: 0.92rem;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+            letter-spacing: 0.3px;
+        }
+        .story-toggle-btn:hover {
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .story-toggle-btn .toggle-arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        .story-toggle-btn.open .toggle-arrow {
+            transform: rotate(90deg);
+        }
+        .story-full-text {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.3s ease;
+            opacity: 0;
+            margin-top: 0;
+        }
+        .story-full-text.expanded {
+            max-height: 3000px;
+            opacity: 1;
+            margin-top: 20px;
+        }
+        .story-full-text p { margin-bottom: 18px; line-height: 1.85; color: #444; }
+        .story-full-text h3 {
+            font-family: Georgia, serif;
+            font-weight: normal;
+            font-size: 1.15rem;
+            margin: 24px 0 8px;
+            color: #1a1a1a;
+        }
+        .story-btn-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+        }
+    </style>
+
     <!-- MAGAZINE LAYOUT BODY -->
     <div class="magazine-section">
-        <!-- The Grounded Journey Section -->
+
+        <!-- ═══ SECTION 1: The Grounded Journey ═══ -->
         <div style="max-width: 800px; margin: 0 auto 80px auto;">
             <h2 style="font-family: Georgia, serif; font-size: 2.5rem; margin-bottom: 30px; text-align: center; color: #1a1a1a;">The Grounded Journey</h2>
             <div style="margin-top: 25px; text-align: left;">
-                <h3 style="font-family: Georgia, serif; font-weight: normal; font-size: 1.3rem; margin-bottom: 10px; color: #1a1a1a;">1. The Art of Subtraction</h3>
-                <p style="margin-bottom: 25px; line-height: 1.8; color: #444;">If you read the label on a standard supermarket jar today, you are usually met with a dense paragraph of stabilizers, palm oil, and refined syrups. I take the exact opposite approach. My <em>Simply Seeded</em> peanut butter relies on the quiet power of just three pure elements: deeply roasted peanuts, a pinch of Himalayan pink salt, and your choice of a clean sweetener—monk fruit or date powder. It is my exercise in letting real food speak for itself.</p>
 
-                <h3 style="font-family: Georgia, serif; font-weight: normal; font-size: 1.3rem; margin-bottom: 10px; color: #1a1a1a;">2. The Luxury of Patience</h3>
-                <p style="margin-bottom: 25px; line-height: 1.8; color: #444;">Pure ingredients only matter if the process respects them. The truth is, a jar of <em>Simply Seeded</em> doesn't actually exist until you ask for it. I rejected the traditional warehouse model to run strictly on micro-batches. Your jar is roasted, ground, and packed <em>only</em> after your order drops into my system. It demands a little more patience, but the reward is opening a jar at its absolute peak of freshness.</p>
+                <!-- Summary -->
+                <p class="story-summary" style="line-height: 1.8; color: #444; font-size: 1.05rem;">Real food speaks for itself when you strip away the junk. We rejected the dense paragraphs of stabilizers and warehouse delays to craft fresh, uncompromised staples that don't require a chemistry degree to understand.</p>
 
-                <h3 style="font-family: Georgia, serif; font-weight: normal; font-size: 1.3rem; margin-bottom: 10px; color: #1a1a1a;">3. The Bigger Blueprint</h3>
-                <p style="line-height: 1.8; color: #444;">This standard is not just a rule for my peanut butter—it is the blueprint for my entire kitchen. I am currently applying this exact philosophy to my upcoming lines of wild-fermented Kimchi (ĀCHAR) and slow-brewed Kombucha (Soma). Whether I am crafting a sweet spread, a complex spicy ferment, or a botanical elixir, my promise to you remains uncompromised: fewer ingredients, better sweeteners, and food crafted with absolute integrity.</p>
+                <!-- Toggle Button -->
+                <button class="story-toggle-btn" onclick="toggleStory(this)" aria-expanded="false">
+                    Long story short here <span class="toggle-arrow">→</span>
+                </button>
+
+                <!-- Hidden Full Text -->
+                <div class="story-full-text">
+                    <h3>1. The Art of Subtraction</h3>
+                    <p>If you read the label on a standard supermarket jar today, you are usually met with a dense paragraph of stabilizers, palm oil, and refined syrups. I take the exact opposite approach. My <em>Simply Seeded</em> peanut butter relies on the quiet power of just three pure elements: deeply roasted peanuts, a pinch of Himalayan pink salt, and your choice of a clean sweetener—monk fruit or date powder. It is my exercise in letting real food speak for itself.</p>
+
+                    <h3>2. The Luxury of Patience</h3>
+                    <p>Pure ingredients only matter if the process respects them. The truth is, a jar of <em>Simply Seeded</em> doesn't actually exist until you ask for it. I rejected the traditional warehouse model to run strictly on micro-batches. Your jar is roasted, ground, and packed only after your order drops into my system. It demands a little more patience, but the reward is opening a jar at its absolute peak of freshness.</p>
+
+                    <h3>3. The Bigger Blueprint</h3>
+                    <p>This standard is not just a rule for my peanut butter—it is the blueprint for my entire kitchen. I am currently applying this exact philosophy to my upcoming lines of wild-fermented Kimchi (ĀCHAR) and slow-brewed Kombucha (Soma). Whether I am crafting a sweet spread, a complex spicy ferment, or a botanical elixir, my promise to you remains uncompromised: fewer ingredients, better sweeteners, and food crafted with absolute integrity.</p>
+                </div>
             </div>
             <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 60px auto; width: 50%;">
         </div>
 
-        <!-- Simply Seeded Section -->
+        <!-- ═══ SECTION 2: Simply Seeded ═══ -->
         <div class="magazine-row">
             <div class="magazine-img-placeholder">
                 <img src="PBphoto.JPG" alt="Founder making Grounded peanut butter" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
@@ -159,16 +231,28 @@
             <div class="magazine-text">
                 <h2>Simply Seeded</h2>
                 <span class="accent">SMALL-BATCH CRAFTED PEANUT BUTTER</span>
-                <p>To be completely honest with you: I used to absolutely hate peanut butter. All of it.</p>
-                <p>Growing up, my only experience with it was the generic supermarket brands. I found them way too oily, cloyingly sweet, and completely artificial. If you read the label on a standard supermarket jar today, you are met with a dense, confusing paragraph of stabilizers, cheap palm oil, and refined syrups. It feels more like a chemistry lab experiment than breakfast.</p>
-                <p>That was until I tasted a truly authentic, pure version and realized I had been lied to. I thought to myself: <em>If real peanut butter only requires a couple of pure ingredients, why can't I just make it myself?</em> That single thought sparked an absolute obsession. I started taking over the kitchen, roasting my own peanuts, grinding my own batches, and fine-tuning the texture. When you strip away the junk, it becomes a pure, rich elixir. I completely fell in love with it, and that original kitchen recipe is exactly what I am sharing with you today.</p>
-                <p>Simply Seeded relies on the quiet power of just three pure elements: deeply roasted peanuts, a pinch of Himalayan pink salt, and your choice of a clean, natural sweetener (monk fruit or date powder). Because I refuse to compromise on freshness, I rejected the traditional warehouse model to run strictly on micro-batches. The truth is, your jar doesn’t actually exist until you ask for it. It is roasted, ground, and packed only <em>after</em> your order drops into my system. It takes a little more time, but the reward is opening a jar at its absolute peak.</p>
-                <p><em>Thank you for choosing Simply Seeded.</em></p>
-                <a href="simply-seeded.html" class="btn store-btn" style="margin-top: 15px;">Enter Store</a>
+
+                <!-- Summary -->
+                <p class="story-summary">Pure, rich fuel made from honest elements. We cut out the cloying sweetness, cheap palm oil, and artificial fillers—delivering just pure ingredients roasted and ground strictly to order.</p>
+
+                <!-- Hidden Full Text -->
+                <div class="story-full-text">
+                    <p>To be honest, I used to hate peanut butter. Growing up on generic supermarket jars, all I tasted was cloying sweetness, cheap palm oil, and stabilizers. It felt more like a chemistry lab experiment than food. That changed the moment I tried a truly pure version and realized we'd all been lied to. If real peanut butter only needs pure ingredients, why couldn't I make it myself? That sparked an obsession. I took over the kitchen—roasting nuts, fine-tuning the grind, and stripping away every single filler until it became pure, rich fuel.</p>
+                    <p>Simply Seeded is built on just three elements: deeply roasted peanuts, a pinch of Himalayan pink salt, and your choice of monk fruit or date powder. No warehouses. No dusty shelves. Your jar doesn't even exist until you order it—roasted, ground, and packed fresh so you get it at its absolute peak.</p>
+                    <p><em>Thank you for choosing Simply Seeded.</em></p>
+                </div>
+
+                <!-- Toggle + Store Buttons -->
+                <div class="story-btn-row">
+                    <button class="story-toggle-btn" onclick="toggleStory(this)" aria-expanded="false">
+                        Long story short here <span class="toggle-arrow">→</span>
+                    </button>
+                    <a href="simply-seeded.html" class="btn store-btn">Enter Store</a>
+                </div>
             </div>
         </div>
 
-        <!-- Achar Section -->
+        <!-- ═══ SECTION 3: ĀCHAR ═══ -->
         <div class="magazine-row reverse">
             <div class="magazine-img-placeholder">
                 <img src="Kimchi2.PNG" alt="Overhead view of small batch Grounded Achar fermenting in glass jars" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
@@ -176,15 +260,29 @@
             <div class="magazine-text">
                 <h2>ĀCHAR</h2>
                 <span class="accent">HERITAGE & GLOBAL PICKLES</span>
-                <p>Our fermentation journey actually began with the massive Korean food craze in India. I was just eight or nine years old, and my family was constantly buying expensive, imported kimchi. Not only was it making a serious impact on our bank account, but the ingredient lists were also packed with weird preservatives.</p>
-                <p>My older sister took matters into her own hands. After endless kitchen experiments and a few gloriously failed batches, she completely perfected the recipe. It tasted infinitely better than the store-bought jars, saved us a ton of money, and was 100% preservative-free. Now that she’s off at college, the massive and highly stressful responsibility of keeping the family kimchi supply alive has fallen entirely on my shoulders. Today, I'm proud to share her exact, original recipe with you.</p>
-                <p>But my roots demand equal attention. I am originally from Hyderabad, which means an absolute addiction to authentic South Indian pickles is literally in my DNA. From spicy <em>Avakay</em> to tangy <em>Gongura Pachadi</em> and classic <em>Nimmakaya</em>, these are the bold, handmade flavors I grew up on. While we are starting our launch with Kimchi, I promise you: these rich, traditional Indian flavors will soon be making their way right to your doorstep.</p>
-                <p>And finally, the classic cucumber pickle. It's a worldwide staple—perfect on burgers, sandwiches, and (if you're truly adventurous) maybe even pizza, though I personally wouldn't recommend it. The problem? Generic market brands are loaded with refined sugar, artificial preservatives, and emulsifiers. I realized that if our kitchen could master complex South Indian spices and Korean lacto-fermentation, there was no excuse not to make a clean, perfectly crunchy American pickle. No junk, just real flavor.</p>
-                <p><em>Thank you for choosing ĀCHAR.</em></p>
+
+                <!-- Summary -->
+                <p class="story-summary">True flavor comes from genuine craft, not chemical shortcuts. We skipped the refined sugars and artificial acidity regulators to build clean, gut-healthy crunch the traditional way.</p>
+
+                <!-- Hidden Full Text -->
+                <div class="story-full-text">
+                    <p>Our fermentation journey started with the imported kimchi craze. I was around eight or nine, watching my family blow serious cash on imported jars loaded with bizarre preservatives. My older sister stepped up, experimented in the kitchen, and dialed in an incredible preservative-free recipe. When she left for college, the sacred duty of keeping that family supply alive fell on me—and today, I'm sharing her exact recipe with you.</p>
+                    <p>That kitchen obsession with fermentation naturally led back to my roots. Growing up in Hyderabad, bold pickles were already in my DNA—from fiery <em>Avakay</em> to tangy <em>Gongura</em> and <em>Nimmakaya</em>. Launching with our kimchi was just the beginning; these traditional South Indian staples are following right behind.</p>
+                    <p>With lacto-fermentation dialed in and our spice cabinet locked down, taking on the classic cucumber pickle was the natural next step. It's an everyday staple on burgers and sandwiches, but standard store shelves only offer soggy spears drowned in refined sugar and chemical vinegar. We brought the same craft here: clean ingredients, genuine crunch, and zero junk.</p>
+                    <p><em>Thank you for choosing ĀCHAR.</em></p>
+                </div>
+
+                <!-- Toggle + Store Buttons -->
+                <div class="story-btn-row">
+                    <button class="story-toggle-btn" onclick="toggleStory(this)" aria-expanded="false">
+                        Long story short here <span class="toggle-arrow">→</span>
+                    </button>
+                    <a href="#" class="btn store-btn">Enter Store</a>
+                </div>
             </div>
         </div>
 
-        <!-- Soma Section -->
+        <!-- ═══ SECTION 4: Soma ═══ -->
         <div class="magazine-row">
             <div class="magazine-img-placeholder">
                 <img src="Kombucha6.PNG" alt="Glass bottles of Grounded Soma Kombucha presented in bright natural light" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
@@ -192,26 +290,53 @@
             <div class="magazine-text">
                 <h2>SOMA</h2>
                 <span class="accent">LIVING PROBIOTIC TEA</span>
-                <p>Kombucha is controversial—I will be the first to admit it. People either absolutely hate it from the bottom of their hearts, or they love it so much they could practically explode. But before you make your final decision, I just ask that you give ours a try.</p>
-                <p>It all started when I realized that while packaged cold drinks and sodas taste incredibly good, there <em>has</em> to be a healthier alternative for us. I started researching everywhere. I went to restaurants, cafes, and roadside lemonade stalls looking for the perfect drink. Then, something clicked: sodas are entirely artificial, and I couldn't exactly package fresh roadside lemonade without loading it with chemical preservatives to make it last.</p>
-                <p>That is when I stumbled across kombucha. I instantly fell in love and started brewing it like my life depended on it. I started with a simple, original tea brew, but quickly realized you don't need artificial laboratory syrups when you can flavor it using real, fresh fruit. I have perfected a whole range of recipes: Original Tea, Mango, Litchi, Ginger, Lemon, and Passion Fruit.</p>
-                <p>And when I say we use real fruit, I mean it. We source exclusively from organic dealers who sell the absolute highest quality organic produce, taking the necessary time to maintain strict standards of hygiene and quality. It takes endless recipe testing and absolute brain exhaustion just to get the flavor exactly right. Right now, we are busy developing hyper-local and combination flavors like Mango Litchi, Mango Jackfruit, Passion Fruit Lime, Karonda, and Jamun. Patiently fermented in the dark and presented in bright natural light, soon you will be able to pop these authentic beverages right in your fridge, pull one out when it's ice-cold, and drink it completely guilt-free.</p>
-                <p><em>Thank you for choosing Soma.</em></p>
+
+                <!-- Summary -->
+                <p class="story-summary">Honest refreshment without the artificial crash. We traded lab-made flavoring syrups and synthetic preservatives for high-grade organic fruits and patient brewing, so you can hydrate completely guilt-free.</p>
+
+                <!-- Hidden Full Text -->
+                <div class="story-full-text">
+                    <p>Kombucha is controversial—people either love it or hate it. But before you make up your mind, hear me out. It started with a simple craving: I wanted the crisp refreshment of cold sodas, but without the artificial chemicals and sugar crash. Fresh roadside lemonade is great, but you can't bottle it without adding synthetic preservatives. That dilemma led me straight to kombucha, and once I brewed that first batch, I was hooked.</p>
+                    <p>I started with a classic black tea ferment and quickly realized you don't need lab-made flavoring syrups when real, fresh fruit exists. Every flavor—from classic Ginger Lemon to Litchi and Passion Fruit—is infused using strictly high-grade organic fruit. Getting the natural carbonation and fruit balance right took months of trial, error, and total kitchen exhaustion.</p>
+                    <p>Now, we're expanding into hyper-local flavors like Mango Jackfruit, Karonda, and Jamun. Patiently fermented, naturally effervescent, and delivered fresh—so you can pull an ice-cold bottle from your fridge and enjoy pure refreshment, zero guilt.</p>
+                    <p><em>Thank you for choosing Soma.</em></p>
+                </div>
+
+                <!-- Toggle + Store Buttons -->
+                <div class="story-btn-row">
+                    <button class="story-toggle-btn" onclick="toggleStory(this)" aria-expanded="false">
+                        Long story short here <span class="toggle-arrow">→</span>
+                    </button>
+                    <a href="#" class="btn store-btn">Enter Store</a>
+                </div>
             </div>
         </div>
 
-        <!-- Founder's Letter -->
+        <!-- ═══ SECTION 5: Founder's Letter ═══ -->
         <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 60px auto; width: 50%;">
         <div style="max-width: 800px; margin: 0 auto 80px auto;">
             <h2 style="font-family: Georgia, serif; font-size: 2.5rem; color: #1a1a1a; text-align: center;">A Letter from the Founder</h2>
             <span class="story-date" style="display: block; text-align: center; margin-top: 5px; margin-bottom: 35px; color: #8A2924; font-weight: bold; letter-spacing: 2px;">THE GROUNDED STANDARD</span>
+
             <div style="line-height: 1.8; color: #444; font-size: 1.1rem;">
-                <p style="margin-bottom: 20px;">To be honest, I used to absolutely hate peanut butter. All of it.</p>
-                <p style="margin-bottom: 20px;">I found the generic supermarket brands too oily, cloyingly sweet, and completely artificial—and to be frank, I still hate them today. But I realized that real food doesn't need a chemistry lab, and it barely needs a recipe.</p>
-                <p style="margin-bottom: 20px;">I thought to myself: <em>If it only takes a couple of pure ingredients, why can't I just make it myself?</em></p>
-                <p style="margin-bottom: 30px;">That single thought sparked an obsession. I started roasting and grinding my own batches in my home kitchen, and it sparked a completely different taste. When you strip away the junk, it becomes a pure, rich elixir. I completely fell in love with it. What started as a quest to fix my own breakfast eventually became the foundation for Grounded.</p>
+                <!-- Summary -->
+                <p class="story-summary" style="margin-bottom: 0;">It is time to stop eating processed shortcuts that act as health liabilities. We strip away the refined sugars and lab-made stabilizers so your everyday pantry staples actually fuel your life properly.</p>
+
+                <!-- Toggle Button -->
+                <button class="story-toggle-btn" onclick="toggleStory(this)" aria-expanded="false" style="margin-bottom: 8px;">
+                    Long story short here <span class="toggle-arrow">→</span>
+                </button>
+
+                <!-- Hidden Full Text -->
+                <div class="story-full-text">
+                    <p>Sometimes, life hits you with an uncomfortable truth. You realize you aren't eating right and decide to turn things around—usually right as you're halfway through a chocolate-loaded waffle. You finish the plate anyway so you don't waste money, ignoring the hospital bills down the road. I got tired of that cycle, so I took a risk and started making my own food.</p>
+                    <p>I don't just mean everyday meals like dal, dosa, or rice. I mean taking on the processed staples people blindly grab off supermarket shelves: peanut butter, kimchi, kombucha, and everyday condiments. The moment you strip away the stabilizers, refined sugars, and lab-made shortcuts, food stops being a health liability and starts fueling your life properly.</p>
+                    <p>Grounded exists to take that work off your plate. We craft real, uncompromised staples from scratch so you can enjoy pure food without sacrificing your health.</p>
+                </div>
+
+                <!-- Quote box (existing element, kept exactly as-is) -->
                 <div class="quote-block" style="margin: 35px 0; padding-left: 20px; border-left: 3px solid #1a1a1a;">
-                    <p class="quote-text" style="font-style: italic; font-size: 1.2rem; color: #333; margin: 0;">"The only rule I implemented from day one was simple: If it's not healthy enough for my kitchen, it's not going into yours."</p>
+                    <p class="quote-text" style="font-style: italic; font-size: 1.2rem; color: #333; margin: 0;">"If it's not healthy enough for my kitchen, it's not going into yours."</p>
                 </div>
                 <p style="font-family: Georgia, serif; font-size: 1.2rem; color: #1a1a1a; margin-top: 30px;"><strong>— Yog Kota, Founder</strong></p>
             </div>
@@ -436,6 +561,23 @@
 
         function escapeHTML(str) { return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)); }
         function handleAIKeyPress(e) { if(e.key === 'Enter') sendAIMessage(); }
+
+        function toggleStory(btn) {
+            // The hidden text is always the next sibling .story-full-text of the button,
+            // OR inside a .story-btn-row the full-text is the previous sibling of the row.
+            let fullText = btn.nextElementSibling;
+            if (!fullText || !fullText.classList.contains('story-full-text')) {
+                // Button is inside a .story-btn-row — walk up to parent, then find sibling
+                const row = btn.closest('.story-btn-row');
+                if (row) fullText = row.previousElementSibling;
+            }
+            if (!fullText) return;
+
+            const isExpanded = fullText.classList.contains('expanded');
+            fullText.classList.toggle('expanded', !isExpanded);
+            btn.classList.toggle('open', !isExpanded);
+            btn.setAttribute('aria-expanded', String(!isExpanded));
+        }
     </script>
 
     <!-- FIREBASE AUTHENTICATION SCRIPT (WITH SIGN UP TOGGLE LOGIC) -->
