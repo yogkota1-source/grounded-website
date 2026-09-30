@@ -977,3 +977,192 @@ a { text-decoration: none; }
         top: calc(100% + 6px);
     }
 }
+
+/* --- STORY SUMMARY + EXPANDABLE FULL STORY --- */
+.story-summary {
+    margin-bottom: 8px;
+    transition: opacity 0.25s ease, max-height 0.3s ease;
+    max-height: 200px;
+    overflow: hidden;
+    opacity: 1;
+}
+
+.story-summary.hidden {
+    max-height: 0;
+    opacity: 0;
+    margin: 0;
+    pointer-events: none;
+}
+
+/* Premium-fun toggle button */
+.story-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding: 10px 22px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 2px;
+    font-family: Georgia, serif;
+    font-size: 0.87rem;
+    font-style: italic;
+    letter-spacing: 1.2px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: letter-spacing 0.25s ease, background 0.25s ease, padding 0.25s ease;
+}
+
+/* Subtle shimmer sweep on hover */
+.story-toggle-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; 
+    left: -75%;
+    width: 50%; 
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.45s ease;
+}
+
+.story-toggle-btn:hover::before { 
+    left: 130%; 
+}
+
+.story-toggle-btn:hover { 
+    background: #333; 
+    letter-spacing: 1.6px; 
+}
+
+/* Arrow: Completely hidden when closed so it never points toward adjacent buttons */
+.story-toggle-btn .toggle-arrow {
+    display: inline-block;
+    max-width: 0;
+    opacity: 0;
+    margin-left: 0;
+    transform: translateY(-4px) scale(0.5);
+    font-style: normal;
+    font-size: 1.05rem;
+    line-height: 1;
+    overflow: hidden;
+    transition: max-width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.22s ease,
+                transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                margin-left 0.25s ease;
+    will-change: transform, opacity, max-width;
+}
+
+/* When clicked/expanded: arrow pops up smoothly and points DOWN ↓ */
+.story-toggle-btn.open .toggle-arrow {
+    max-width: 20px;
+    opacity: 1;
+    margin-left: 4px;
+    transform: translateY(0) scale(1);
+}
+
+/* Full-text drawer */
+.story-full-text {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin-top: 0;
+    border-left: 2px solid transparent;
+    padding-left: 0;
+    transition: max-height 0.65s cubic-bezier(0.25, 1, 0.5, 1), 
+                opacity 0.4s ease, 
+                margin-top 0.3s ease, 
+                padding-left 0.35s ease,
+                border-color 0.35s ease;
+}
+
+.story-full-text.expanded {
+    max-height: 4000px;
+    opacity: 1;
+    margin-top: 22px;
+    border-left: 2px solid #8A2924;
+    padding-left: 18px;
+}
+
+.story-full-text p { 
+    margin-bottom: 18px; 
+    line-height: 1.85; 
+    color: #444; 
+}
+
+.story-full-text h3 {
+    font-family: Georgia, serif;
+    font-weight: normal;
+    font-size: 1.15rem;
+    margin: 24px 0 8px;
+    color: #1a1a1a;
+}
+
+/* "In Development" disabled button */
+.btn-in-dev {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 10px 22px;
+    background: transparent;
+    color: #999;
+    border: 1.5px dashed #ccc;
+    border-radius: 2px;
+    font-family: Georgia, serif;
+    font-size: 0.82rem;
+    font-style: italic;
+    letter-spacing: 1px;
+    cursor: not-allowed;
+    user-select: none;
+}
+
+/* Button row for sections that have 2 buttons side by side */
+.story-btn-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Floating Back to Top Button */
+#back-to-top-btn {
+    display: none; 
+    position: fixed; 
+    bottom: 100px; 
+    right: 25px; 
+    z-index: 999; 
+    background: #1A1A1A; 
+    color: white; 
+    border: none; 
+    border-radius: 50%; 
+    width: 45px; 
+    height: 45px; 
+    cursor: pointer; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+    align-items: center; 
+    justify-content: center;
+    transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
+}
+
+#back-to-top-btn:hover {
+    transform: translateY(-3px);
+    background: #333;
+}
+
+/* Mobile & Tablet Responsiveness */
+@media (max-width: 768px) {
+    .story-toggle-btn {
+        padding: 9px 18px;
+        font-size: 0.82rem;
+    }
+    .story-full-text.expanded {
+        padding-left: 12px;
+    }
+    #back-to-top-btn {
+        bottom: 85px; 
+        right: 22px;
+        width: 42px;
+        height: 42px;
+    }
+}

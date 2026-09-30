@@ -132,119 +132,6 @@
             <span class="nav-tagline">Living Probiotic Tea</span>
         </div>
     </nav>
-
-    <!-- TOGGLE EXPAND/COLLAPSE STYLES -->
-    <style>
-        /* Summary hides when story expands */
-        .story-summary {
-            margin-bottom: 8px;
-            transition: opacity 0.25s ease, max-height 0.3s ease;
-            max-height: 200px;
-            overflow: hidden;
-            opacity: 1;
-        }
-        .story-summary.hidden {
-            max-height: 0;
-            opacity: 0;
-            margin: 0;
-            pointer-events: none;
-        }
-
-        /* Premium-fun toggle button */
-        .story-toggle-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 14px;
-            padding: 10px 22px;
-            background: #1a1a1a;
-            color: #fff;
-            border: none;
-            border-radius: 2px;
-            font-family: Georgia, serif;
-            font-size: 0.87rem;
-            font-style: italic;
-            letter-spacing: 1.2px;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: letter-spacing 0.25s ease, background 0.25s ease;
-        }
-        /* Subtle shimmer sweep on hover */
-        .story-toggle-btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -75%;
-            width: 50%; height: 100%;
-            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.18), transparent);
-            transform: skewX(-20deg);
-            transition: left 0.45s ease;
-        }
-        .story-toggle-btn:hover::before { left: 130%; }
-        .story-toggle-btn:hover { background: #333; letter-spacing: 1.8px; }
-
-        /* Arrow that lives inside the button */
-        .story-toggle-btn .toggle-arrow {
-            display: inline-block;
-            font-style: normal;
-            font-size: 1.05rem;
-            transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
-            will-change: transform;
-            line-height: 1;
-        }
-        /* When button has .open, arrow rotates DOWN (→ becomes ↓) */
-        .story-toggle-btn.open .toggle-arrow {
-            transform: rotate(90deg);
-        }
-
-        /* Full-text drawer */
-        .story-full-text {
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-            margin-top: 0;
-            transition: max-height 0.55s ease, opacity 0.4s ease, margin-top 0.3s ease;
-        }
-        .story-full-text.expanded {
-            max-height: 3500px;
-            opacity: 1;
-            margin-top: 22px;
-        }
-        .story-full-text p  { margin-bottom: 18px; line-height: 1.85; color: #444; }
-        .story-full-text h3 {
-            font-family: Georgia, serif;
-            font-weight: normal;
-            font-size: 1.15rem;
-            margin: 24px 0 8px;
-            color: #1a1a1a;
-        }
-
-        /* "In Development" disabled button */
-        .btn-in-dev {
-            display: inline-block;
-            margin-top: 14px;
-            padding: 10px 22px;
-            background: transparent;
-            color: #999;
-            border: 1.5px dashed #ccc;
-            border-radius: 2px;
-            font-family: Georgia, serif;
-            font-size: 0.82rem;
-            font-style: italic;
-            letter-spacing: 1px;
-            cursor: not-allowed;
-            user-select: none;
-        }
-
-        /* Button row for sections that have 2 buttons side by side */
-        .story-btn-row {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-    </style>
-
     <!-- MAGAZINE LAYOUT BODY -->
     <div class="magazine-section">
 
@@ -258,7 +145,7 @@
 
                 <!-- Toggle button — sits directly above the hidden text -->
                 <button class="story-toggle-btn" onclick="toggleStory(this,'sum-1','ft-1')" aria-expanded="false">
-                    <em>Long story short here</em> <span class="toggle-arrow">→</span>
+                    <em>Long story short here</em> <span class="toggle-arrow">↓</span>
                 </button>
 
                 <!-- Hidden full text -->
@@ -291,7 +178,7 @@
                 <!-- Button row: toggle + Enter Store side by side -->
                 <div class="story-btn-row">
                     <button class="story-toggle-btn" onclick="toggleStory(this,'sum-2','ft-2')" aria-expanded="false">
-                        <em>Long story short here</em> <span class="toggle-arrow">→</span>
+                        <em>Long story short here</em> <span class="toggle-arrow">↓</span>
                     </button>
                     <a href="simply-seeded.html" class="btn store-btn">Enter Store</a>
                 </div>
@@ -320,7 +207,7 @@
                 <!-- Button row: toggle + In Development side by side -->
                 <div class="story-btn-row">
                     <button class="story-toggle-btn" onclick="toggleStory(this,'sum-3','ft-3')" aria-expanded="false">
-                        <em>Long story short here</em> <span class="toggle-arrow">→</span>
+                        <em>Long story short here</em> <span class="toggle-arrow">↓</span>
                     </button>
                     <span class="btn-in-dev" title="Store coming soon">✦ In Development</span>
                 </div>
@@ -350,7 +237,7 @@
                 <!-- Button row: toggle + In Development side by side -->
                 <div class="story-btn-row">
                     <button class="story-toggle-btn" onclick="toggleStory(this,'sum-4','ft-4')" aria-expanded="false">
-                        <em>Long story short here</em> <span class="toggle-arrow">→</span>
+                        <em>Long story short here</em> <span class="toggle-arrow">↓</span>
                     </button>
                     <span class="btn-in-dev" title="Store coming soon">✦ In Development</span>
                 </div>
@@ -377,7 +264,7 @@
 
                 <!-- Toggle button -->
                 <button class="story-toggle-btn" onclick="toggleStory(this,'sum-5','ft-5')" aria-expanded="false">
-                    <em>Long story short here</em> <span class="toggle-arrow">→</span>
+                    <em>Long story short here</em> <span class="toggle-arrow">↓</span>
                 </button>
 
                 <!-- Hidden full text -->
@@ -628,9 +515,39 @@
             // Hide summary when open, show when closed
             if (summary) summary.classList.toggle('hidden', !isExpanded);
 
-            // Rotate arrow on THIS button only
+            // Toggle arrow and open state on clicked button
             btn.classList.toggle('open', !isExpanded);
             btn.setAttribute('aria-expanded', String(!isExpanded));
+
+            if (!isExpanded) {
+                // Expanding: Smoothly glide viewport directly to the story so user doesn't have to scroll
+                setTimeout(() => {
+                    const nav = document.querySelector('.top-nav');
+                    const navHeight = nav ? nav.offsetHeight : 85;
+                    const headerOffset = navHeight + 20;
+                    const elementPosition = fullText.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: Math.max(0, offsetPosition),
+                        behavior: 'smooth'
+                    });
+                }, 100);
+            } else {
+                // Collapsing: Smoothly glide back to the button so user stays oriented
+                setTimeout(() => {
+                    const nav = document.querySelector('.top-nav');
+                    const navHeight = nav ? nav.offsetHeight : 85;
+                    const headerOffset = navHeight + 25;
+                    const btnPos = btn.getBoundingClientRect().top;
+                    const offsetPos = btnPos + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: Math.max(0, offsetPos),
+                        behavior: 'smooth'
+                    });
+                }, 80);
+            }
         }
     </script>
 
@@ -1012,44 +929,7 @@
             }
         });
     </script>
-    <!-- BACK TO TOP BUTTON & STYLES -->
-    <style>
-        #back-to-top-btn {
-            display: none; 
-            position: fixed; 
-            bottom: 100px; /* Sits directly above the TC chat bubble */
-            right: 25px; 
-            z-index: 999; 
-            background: #1A1A1A; 
-            color: white; 
-            border: none; 
-            border-radius: 50%; 
-            width: 45px; 
-            height: 45px; 
-            cursor: pointer; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
-            align-items: center; 
-            justify-content: center;
-            transition: transform 0.2s ease, opacity 0.2s ease;
-        }
-
-        #back-to-top-btn:hover {
-            transform: translateY(-3px);
-            background: #333;
-        }
-        
-        /* Mobile Phone Adjustments: Clear 15px vertical clearance to avoid collision with AI bubble */
-        @media (max-width: 768px) {
-            #back-to-top-btn {
-                bottom: 85px; 
-                right: 22px;
-                width: 42px;
-                height: 42px;
-                z-index: 999;
-            }
-        }
-    </style>
-    
+    <!-- BACK TO TOP BUTTON -->
     <button id="back-to-top-btn" title="Back to Top" type="button">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="margin-top: 2px;">
             <path d="M12 4l-8 8h6v8h4v-8h6z"/>
