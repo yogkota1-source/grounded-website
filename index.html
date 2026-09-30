@@ -520,11 +520,12 @@
             btn.setAttribute('aria-expanded', String(!isExpanded));
 
             if (!isExpanded) {
-                // Expanding: Smoothly glide viewport directly to the story so user doesn't have to scroll
+                // Expanding: Smoothly glide viewport so the first line is fully in view with comfortable breathing room
                 setTimeout(() => {
                     const nav = document.querySelector('.top-nav');
                     const navHeight = nav ? nav.offsetHeight : 85;
-                    const headerOffset = navHeight + 20;
+                    // Increased offset (+60px) so the first line has plenty of headroom and is never cut off
+                    const headerOffset = navHeight + 60;
                     const elementPosition = fullText.getBoundingClientRect().top;
                     const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -532,13 +533,13 @@
                         top: Math.max(0, offsetPosition),
                         behavior: 'smooth'
                     });
-                }, 100);
+                }, 180);
             } else {
                 // Collapsing: Smoothly glide back to the button so user stays oriented
                 setTimeout(() => {
                     const nav = document.querySelector('.top-nav');
                     const navHeight = nav ? nav.offsetHeight : 85;
-                    const headerOffset = navHeight + 25;
+                    const headerOffset = navHeight + 30;
                     const btnPos = btn.getBoundingClientRect().top;
                     const offsetPos = btnPos + window.pageYOffset - headerOffset;
 
@@ -546,7 +547,7 @@
                         top: Math.max(0, offsetPos),
                         behavior: 'smooth'
                     });
-                }, 80);
+                }, 100);
             }
         }
     </script>
