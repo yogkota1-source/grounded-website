@@ -317,6 +317,7 @@
                     <label for="sweetMonk" class="pill-label">
                         <div class="pill-title">Monk Fruit</div>
                         <div class="pill-sub">Keto Friendly</div>
+                        <span class="monk-price-badge" id="monkPriceBadge"></span>
                     </label>
                 </div>
             </div>
@@ -481,6 +482,19 @@
                 document.getElementById("sweetenerGroup").style.display = "none";
             } else {
                 document.getElementById("sweetenerGroup").style.display = "block";
+            }
+
+            // Update monk fruit surcharge badge based on weight in product name
+            const badge = document.getElementById("monkPriceBadge");
+            if (badge) {
+                const surcharge = pendingMonkPrice - pendingDatePrice;
+                if (type !== 'unsweet' && surcharge > 0) {
+                    badge.textContent = `(+ ₹${surcharge})`;
+                    badge.style.display = "inline";
+                } else {
+                    badge.textContent = "";
+                    badge.style.display = "none";
+                }
             }
             
             updateAddButtonPrice(); 

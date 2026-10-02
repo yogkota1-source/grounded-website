@@ -225,6 +225,17 @@ p.subtitle { font-family: Arial, sans-serif; letter-spacing: 2px; color: #555; m
 .pill-input:checked + .pill-label { background-color: #FFF; border-color: #A64B2A; box-shadow: 0 4px 12px rgba(166, 75, 42, 0.15); }
 .pill-input:checked + .pill-label .pill-title { color: #A64B2A; }
 
+/* Monk Fruit surcharge badge — visible only for sweetened variants */
+.monk-price-badge {
+    display: none;
+    margin-top: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 0.72rem;
+    color: #999;
+    letter-spacing: 0.3px;
+    line-height: 1;
+}
+
 .pay-btn { background-color: #1A1A1A; color: white; padding: 16px; width: 100%; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; font-weight: bold; margin-top: 10px; font-family: 'Playfair Display', serif; transition: background 0.3s; }
 .pay-btn:hover { background-color: #333; }
 .pay-btn:disabled { background-color: #D4CAB5; cursor: not-allowed; color: #888; }
