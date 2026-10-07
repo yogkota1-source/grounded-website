@@ -828,6 +828,10 @@
                     throw new Error(data.error || "Backend rejected request");
                 }
                 
+                if (typeof data.reply === 'string' && data.reply.startsWith('Security Error')) {
+                    throw new Error("AUTH_REQUIRED");
+                }
+                
                 botMsgDiv.innerHTML = `
                     <div class="ai-msg-content"></div>
                     <button class="ai-speaker-btn" onclick="speakText(this.previousElementSibling.innerText)" title="Read aloud">
@@ -838,7 +842,14 @@
                 
             } catch (error) {
                 console.error("API Error:", error);
-                document.getElementById(loadingId).innerHTML = `<div class="ai-msg-content">Your session expired. Please sign out and sign back in to continue!</div>`;
+                const isAuthErr = error.message === "AUTH_REQUIRED";
+                document.getElementById(loadingId).innerHTML = `<div class="ai-msg-content">${isAuthErr ? "Your login expired. Please sign in again to continue." : "Something went wrong. Please try again."}</div>`;
+                if (isAuthErr) {
+                    document.getElementById('auth-modal').style.display = 'flex';
+                    document.getElementById('modal-default-view').style.display = 'block';
+                    document.getElementById('modal-phone-view').style.display = 'none';
+                    document.getElementById('modal-otp-view').style.display = 'none';
+                }
             } finally {
                 input.disabled = false;
                 sendBtn.disabled = false;
