@@ -13,6 +13,7 @@
 
     <!-- LINK TO YOUR NEW CSS FILE -->
     <link rel="stylesheet" href="simply-seeded.style.css">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
     <div style="background-color: #A64B2A; color: white; text-align: center; padding: 12px; font-family: Arial, sans-serif; font-size: 0.85rem; letter-spacing: 2px; font-weight: bold;">🎉 ₹50 CASHBACK ON YOUR FIRST ORDER!</div>
@@ -382,6 +383,7 @@
                 <button class="ai-send" id="aiSendBtn" onclick="sendAIMessage()" disabled>SEND</button>
             </div>
             <div class="ai-char-counter" id="aiCharCounter">0/300</div>
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAEkrQTJTjGZllyNM" data-theme="light"></div>
         </div>
     </div>
 
@@ -784,6 +786,17 @@
             }
             // ----------------------------------------
             
+            // --- TURNSTILE (BOT PROTECTION) ---
+            const tsField = document.querySelector('[name="cf-turnstile-response"]');
+            const turnstileToken = tsField ? tsField.value : '';
+            if (!turnstileToken) {
+                const bodyEl = document.getElementById('aiChatBody');
+                bodyEl.innerHTML += `<div class="ai-msg-bot"><div class="ai-msg-content">Please complete the security check below, then send again.</div></div>`;
+                bodyEl.scrollTop = bodyEl.scrollHeight;
+                return;
+            }
+            // ----------------------------------
+
             if (aiBusy) return;
             aiBusy = true;
             if ('speechSynthesis' in window) window.speechSynthesis.cancel();
@@ -820,6 +833,7 @@
                         message: msg, 
                         persona: "roaster", 
                         pageContext: document.title,
+                        turnstileToken: turnstileToken,
                         token: userToken
                     })
                 });
@@ -855,6 +869,7 @@
                     document.getElementById('modal-otp-view').style.display = 'none';
                 }
             } finally {
+                if (window.turnstile) window.turnstile.reset();
                 aiBusy = false;
                 input.disabled = false;
                 sendBtn.disabled = false;
