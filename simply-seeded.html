@@ -13,28 +13,35 @@
 
     <!-- LINK TO YOUR NEW CSS FILE -->
     <link rel="stylesheet" href="simply-seeded.style.css">
+    <link rel="stylesheet" href="cart.css">
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
-    <div style="background-color: #A64B2A; color: white; text-align: center; padding: 12px; font-family: Arial, sans-serif; font-size: 0.85rem; letter-spacing: 2px; font-weight: bold;">🎉 ₹50 CASHBACK ON YOUR FIRST ORDER!</div>
+        <nav class="site-nav">
+        <a href="index.html" class="nav-item">
+            <h3>HOME</h3>
+            <span class="nav-tagline">The Grounded Story</span>
+        </a>
+        <a href="simply-seeded.html" class="nav-item active" aria-current="page">
+            <h3>SIMPLY SEEDED</h3>
+            <span class="nav-tagline">Small-Batch Peanut Butter</span>
+        </a>
+        <a href="achar.html" class="nav-item">
+            <h3>ĀCHAR</h3>
+            <span class="nav-tagline">Heritage &amp; Global Pickles</span>
+        </a>
+        <div class="nav-item locked">
+            <h3>SOMA</h3>
+            <span class="nav-tagline">Living Probiotic Tea</span>
+        </div>
+    </nav>
 
     <div class="content-wrapper">
         <div class="top-nav fade-section">
-            <a href="index.html" class="back-link"><span class="fun-text">← BACK</span> <span class="logo-text">G R O U N D E D</span></a>
             
             <div class="nav-actions">
                 <button class="cart-trigger compact-cart" onclick="openCartModal()">🛒 (<span id="cartCount">0</span>)</button>
-                <div class="category-dropdown compact" id="categoryDropdown">
-                    <button class="dropdown-btn" type="button" onclick="toggleCategoryDropdown(event)">Category <span>▼</span></button>
-                    <div class="dropdown-content">
-                        <a href="#peanut-butter" class="active-category" onclick="closeCategoryDropdown()">Peanut Butter</a>
-                        <a href="javascript:void(0)" class="coming-soon" title="Currently in development">Almond Butter (Soon)</a>
-                        <a href="javascript:void(0)" class="coming-soon" title="Currently in development">Pistachio Butter (Soon)</a>
-                        <a href="javascript:void(0)" class="coming-soon" title="Currently in development">Walnut Butter (Soon)</a>
-                        <a href="javascript:void(0)" class="coming-soon" title="Currently in development">Hazelnut Butter (Soon)</a>
-                    </div>
-                </div>
-
                 <!-- Sign In Button (Shows when logged out) -->
                 <button id="open-modal-btn" class="auth-btn" style="background: #1A1A1A; color: white;">SIGN IN</button>
 
@@ -91,7 +98,7 @@
                 <h2>250g Sweetened</h2>
                 <p class="ingredients">Roasted Peanuts • Date Powder / Monk Fruit • Salt</p>
                 <p class="price">From ₹279</p>
-                <button class="order-btn" onclick="openOptionsModal('250g Sweetened', 'sweet', 279, 404)">Customize & Add</button>
+                <div class="add-control" data-name="250g Sweetened" data-options="sweet" data-p1="279" data-p2="404"></div>
             </div>
             
             <div class="product-card">
@@ -107,7 +114,7 @@
                 <h2>500g Sweetened</h2>
                 <p class="ingredients">Roasted Peanuts • Date Powder / Monk Fruit • Salt</p>
                 <p class="price">From ₹499</p>
-                <button class="order-btn" onclick="openOptionsModal('500g Sweetened', 'sweet', 499, 749)">Customize & Add</button>
+                <div class="add-control" data-name="500g Sweetened" data-options="sweet" data-p1="499" data-p2="749"></div>
             </div>
 
             <div class="product-card">
@@ -123,7 +130,7 @@
                 <h2>1kg Sweetened</h2>
                 <p class="ingredients">Roasted Peanuts • Date Powder / Monk Fruit • Salt</p>
                 <p class="price">From ₹899</p>
-                <button class="order-btn" onclick="openOptionsModal('1kg Sweetened', 'sweet', 899, 1399)">Customize & Add</button>
+                <div class="add-control" data-name="1kg Sweetened" data-options="sweet" data-p1="899" data-p2="1399"></div>
             </div>
         </div>
 
@@ -142,7 +149,7 @@
                 <h2>250g Unsweetened</h2>
                 <p class="ingredients">Roasted Peanuts • Salt</p>
                 <p class="price">₹259</p>
-                <button class="order-btn" onclick="openOptionsModal('250g Unsweetened', 'unsweet', 259, 259)">Customize & Add</button>
+                <div class="add-control" data-name="250g Unsweetened" data-options="unsweet" data-p1="259" data-p2="259"></div>
             </div>
 
             <div class="product-card">
@@ -158,7 +165,7 @@
                 <h2>500g Unsweetened</h2>
                 <p class="ingredients">Roasted Peanuts • Salt</p>
                 <p class="price">₹459</p>
-                <button class="order-btn" onclick="openOptionsModal('500g Unsweetened', 'unsweet', 459, 459)">Customize & Add</button>
+                <div class="add-control" data-name="500g Unsweetened" data-options="unsweet" data-p1="459" data-p2="459"></div>
             </div>
 
             <div class="product-card">
@@ -174,13 +181,13 @@
                 <h2>1kg Unsweetened</h2>
                 <p class="ingredients">Roasted Peanuts • Salt</p>
                 <p class="price">₹819</p>
-                <button class="order-btn" onclick="openOptionsModal('1kg Unsweetened', 'unsweet', 819, 819)">Customize & Add</button>
+                <div class="add-control" data-name="1kg Unsweetened" data-options="unsweet" data-p1="819" data-p2="819"></div>
             </div>
         </div>
 
         <h2 class="section-title fade-section delay-3">Specialty Editions</h2>
         <div class="product-grid fade-section delay-3">
-            <div class="product-card" style="opacity: 0.9;">
+            <div class="product-card cocoa-card">
                 <div class="carousel-wrapper">
                     <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
                     <div class="carousel-track" data-slide="0">
@@ -192,11 +199,11 @@
                 </div>
                 <h2>250g Cocoa</h2>
                 <p class="ingredients">Roasted Peanuts • Dark Cocoa • Date Powder • Salt</p>
-                <p class="coming-soon-text">IN DEVELOPMENT</p>
-                <button class="order-btn btn-disabled" disabled>Coming Soon</button>
+                <p class="price">₹399</p>
+                <div class="add-control" data-name="250g Cocoa PB" data-options="cocoa" data-p1="399" data-p2="399"></div>
             </div>
 
-            <div class="product-card" style="opacity: 0.9;">
+            <div class="product-card cocoa-card">
                 <div class="carousel-wrapper">
                     <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
                     <div class="carousel-track" data-slide="0">
@@ -208,11 +215,11 @@
                 </div>
                 <h2>500g Cocoa</h2>
                 <p class="ingredients">Roasted Peanuts • Dark Cocoa • Date Powder • Salt</p>
-                <p class="coming-soon-text">IN DEVELOPMENT</p>
-                <button class="order-btn btn-disabled" disabled>Coming Soon</button>
+                <p class="price">₹749</p>
+                <div class="add-control" data-name="500g Cocoa PB" data-options="cocoa" data-p1="749" data-p2="749"></div>
             </div>
 
-            <div class="product-card" style="opacity: 0.9;">
+            <div class="product-card cocoa-card">
                 <div class="carousel-wrapper">
                     <button class="carousel-btn prev-btn" onclick="moveCarousel(this, -1)">❮</button>
                     <div class="carousel-track" data-slide="0">
@@ -224,10 +231,11 @@
                 </div>
                 <h2>1kg Cocoa</h2>
                 <p class="ingredients">Roasted Peanuts • Dark Cocoa • Date Powder • Salt</p>
-                <p class="coming-soon-text">IN DEVELOPMENT</p>
-                <button class="order-btn btn-disabled" disabled>Coming Soon</button>
+                <p class="price">₹1,399</p>
+                <div class="add-control" data-name="1kg Cocoa PB" data-options="cocoa" data-p1="1399" data-p2="1399"></div>
             </div>
         </div>
+
     </div>
 
     <!-- THE AUTHENTICATION MODAL (POP-UP) -->
@@ -342,7 +350,16 @@
                 <span>Subtotal:</span>
                 <span id="cartTotalDisplay">₹0</span>
             </div>
-            <button class="pay-btn" id="checkoutBtn" onclick="checkoutWhatsApp()" disabled>Sign in to Checkout</button>
+            <div class="shipping-fields" id="shippingFields">
+                <div class="shipping-row">
+                    <input type="text" id="shippingFirstName" class="shipping-input" placeholder="First Name *" autocomplete="given-name">
+                    <input type="text" id="shippingLastName" class="shipping-input" placeholder="Last Name *" autocomplete="family-name">
+                </div>
+                <input type="text" id="shippingAddress" class="shipping-input" placeholder="Full Delivery Address *" autocomplete="street-address">
+                <input type="text" id="shippingPincode" class="shipping-input" placeholder="Pincode *" autocomplete="postal-code">
+                <div class="shipping-error" id="shippingError" style="display: none;"></div>
+            </div>
+            <button class="pay-btn" id="checkoutBtn" disabled>Sign in to Checkout</button>
         </div>
     </div>
 
@@ -383,900 +400,13 @@
                 <button class="ai-send" id="aiSendBtn" onclick="sendAIMessage()" disabled>SEND</button>
             </div>
             <div class="ai-char-counter" id="aiCharCounter">0/300</div>
-            <div class="cf-turnstile" data-sitekey="0x4AAAAAAEkrQTJTjGZllyNM" data-theme="light"></div>
         </div>
     </div>
 
     <!-- LOGIC SCRIPT -->
-    <script>
-        function escapeHTML(str) { 
-            if (!str) return '';
-            return String(str).replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)); 
-        }
-
-        function moveCarousel(button, direction) { 
-            const track = button.parentElement.querySelector('.carousel-track'); 
-            const slides = track.children;
-            const totalSlides = slides.length || 1;
-            let currentSlide = parseInt(track.getAttribute('data-slide')) || 0; 
-            currentSlide = (currentSlide + direction + totalSlides) % totalSlides; 
-            track.setAttribute('data-slide', currentSlide); 
-            track.style.transform = `translateX(-${currentSlide * 100}%)`; 
-        }
-        
-        // Category Dropdown Toggle
-        function toggleCategoryDropdown(e) {
-            if (e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-            const dd = document.getElementById('categoryDropdown');
-            if (dd) dd.classList.toggle('open');
-        }
-
-        function closeCategoryDropdown() {
-            const dd = document.getElementById('categoryDropdown');
-            if (dd) dd.classList.remove('open');
-        }
-
-        document.addEventListener('click', function(e) {
-            const dd = document.getElementById('categoryDropdown');
-            if (dd && !dd.contains(e.target)) {
-                dd.classList.remove('open');
-            }
-        });
-
-        // Cart persistence with crash prevention (try-catch)
-        let cart = [];
-        try {
-            cart = JSON.parse(localStorage.getItem('groundedCart')) || [];
-            if (!Array.isArray(cart)) cart = [];
-        } catch (e) {
-            cart = [];
-        }
-
-        const FREE_SHIPPING_THRESHOLD = 1399; 
-        const whatsappNumber = "919381301413"; 
-        
-        let pendingName = ''; 
-        let pendingType = '';
-        let pendingDatePrice = 0; 
-        let pendingMonkPrice = 0;
-
-        function saveCart() {
-            try {
-                localStorage.setItem('groundedCart', JSON.stringify(cart));
-            } catch (e) {
-                console.error("Failed to save cart to localStorage:", e);
-            }
-            updateCartIcon();
-        }
-
-        // Listen for cart changes in other tabs
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'groundedCart') {
-                try {
-                    cart = JSON.parse(e.newValue) || [];
-                    if (!Array.isArray(cart)) cart = [];
-                } catch (err) {
-                    cart = [];
-                }
-                updateCartIcon();
-                const cartModal = document.getElementById('cartModal');
-                if (cartModal && cartModal.style.display === 'flex') {
-                    openCartModal();
-                }
-            }
-        });
-
-        updateCartIcon();
-
-        function openOptionsModal(name, type, price1, price2) { 
-            pendingName = name; 
-            pendingType = type; 
-            pendingDatePrice = price1; 
-            pendingMonkPrice = price2; 
-            
-            document.getElementById("modalSizeText").innerText = name; 
-            document.getElementById("texSmooth").checked = true;
-            document.getElementById("sweetDate").checked = true;
-            
-            if (type === 'unsweet') {
-                document.getElementById("sweetenerGroup").style.display = "none";
-            } else {
-                document.getElementById("sweetenerGroup").style.display = "block";
-            }
-
-            // Update monk fruit surcharge badge based on weight in product name
-            const badge = document.getElementById("monkPriceBadge");
-            if (badge) {
-                const surcharge = pendingMonkPrice - pendingDatePrice;
-                if (type !== 'unsweet' && surcharge > 0) {
-                    badge.textContent = `(+ ₹${surcharge})`;
-                    badge.style.display = "inline";
-                } else {
-                    badge.textContent = "";
-                    badge.style.display = "none";
-                }
-            }
-            
-            updateAddButtonPrice(); 
-            document.getElementById("optionsModal").style.display = "flex"; 
-        }
-
-        function updateAddButtonPrice() { 
-            let finalPrice;
-            if (pendingType === 'unsweet') {
-                finalPrice = pendingDatePrice;
-            } else {
-                let choice = document.querySelector('input[name="sweetenerOption"]:checked').value; 
-                finalPrice = (choice === "date") ? pendingDatePrice : pendingMonkPrice; 
-            }
-            document.getElementById("addToCartBtn").innerText = `Add to Cart (₹${finalPrice})`; 
-        }
-
-        function processOptionsAndAdd() { 
-            let textureRadio = document.querySelector('input[name="textureOption"]:checked');
-            let texture = textureRadio ? textureRadio.value : "Smooth";
-            let finalPrice;
-            let variantText = texture; 
-            
-            if (pendingType === 'sweet') {
-                let choiceRadio = document.querySelector('input[name="sweetenerOption"]:checked'); 
-                let choice = choiceRadio ? choiceRadio.value : "date";
-                let sweetenerText = (choice === "date") ? "Date Powder" : "Monk Fruit"; 
-                variantText = `${texture} | ${sweetenerText}`;
-                finalPrice = (choice === "date") ? pendingDatePrice : pendingMonkPrice; 
-            } else {
-                variantText = `${texture} | Unsweetened`;
-                finalPrice = pendingDatePrice;
-            }
-            
-            cart.push({ name: pendingName, variant: variantText, price: finalPrice }); 
-            saveCart(); 
-            closeModal('optionsModal'); 
-            openCartModal(); 
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1); 
-            saveCart(); 
-            openCartModal(); 
-        }
-
-        function updateCartIcon() { 
-            const countEl = document.getElementById("cartCount");
-            if (countEl) countEl.innerText = cart.length; 
-        }
-        
-        function openCartModal() { 
-            let listHTML = ''; 
-            let total = 0; 
-            
-            if (cart.length === 0) { 
-                listHTML = '<div style="color: #A0A0A0; text-align: center; margin-top: 80px; font-family: Georgia, serif;"><div style="font-size: 3rem; margin-bottom: 15px; opacity: 0.3;">🥜</div><p style="font-style: italic; font-size: 1.1rem; margin: 0;">Your pantry is waiting.</p></div>'; 
-                document.getElementById("checkoutBtn").style.display = "none"; 
-            } else { 
-                document.getElementById("checkoutBtn").style.display = "block"; 
-                cart.forEach((item, index) => { 
-                    total += item.price; 
-                    listHTML += `
-                    <div class="cart-item">
-                        <div class="cart-item-details">
-                            <div class="cart-item-title">${escapeHTML(item.name)}</div>
-                            <div class="cart-item-variant">${escapeHTML(item.variant)}</div>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 15px;">
-                            <div class="cart-item-price">₹${item.price}</div>
-                            <button onclick="removeFromCart(${index})" style="background: none; border: none; color: #D9534F; font-size: 1.5rem; font-weight: bold; cursor: pointer; padding: 0; line-height: 1;" title="Remove Item">&times;</button>
-                        </div>
-                    </div>`; 
-                }); 
-            } 
-            
-            document.getElementById("cartItemsList").innerHTML = listHTML; 
-            document.getElementById("cartTotalDisplay").innerText = `₹${total}`; 
-            updateProgressBar(total); 
-            document.getElementById("cartModal").style.display = "flex"; 
-        }
-
-        function updateProgressBar(total) { 
-            let bar = document.getElementById("shippingBar"); 
-            let text = document.getElementById("shippingText"); 
-            if (!bar || !text) return;
-            
-            // Safeguard against negative, undefined, or NaN totals
-            const safeTotal = (typeof total === 'number' && !isNaN(total) && total > 0) ? total : 0;
-            
-            if (safeTotal >= FREE_SHIPPING_THRESHOLD) { 
-                bar.style.width = "100%"; 
-                bar.classList.add("unlocked-bar"); 
-                text.classList.add("unlocked-text"); 
-                text.innerText = "🎉 You unlocked FREE Shipping!"; 
-            } else { 
-                let percentage = Math.max(0, Math.min(100, (safeTotal / FREE_SHIPPING_THRESHOLD) * 100)); 
-                let away = Math.max(0, FREE_SHIPPING_THRESHOLD - safeTotal); 
-                bar.style.width = percentage + "%"; 
-                bar.classList.remove("unlocked-bar"); 
-                text.classList.remove("unlocked-text"); 
-                text.innerText = `Add ₹${away} more for FREE Shipping!`; 
-            } 
-        }
-
-        function closeModal(modalId) { 
-            const el = document.getElementById(modalId);
-            if (el) el.style.display = "none"; 
-        }
-        
-        function checkoutWhatsApp() { 
-            if (!cart || cart.length === 0) {
-                alert("Your cart is empty! Please add a jar to checkout.");
-                return;
-            }
-
-            // SECURE TRUE PRICE CHECKER DICTIONARY
-            // Holds real prices for every product variation to defeat Inspect Element / ₹0 hacks
-            const TRUE_PRICES = {
-                // 250g Sweetened
-                "250g Sweetened - Smooth | Date Powder": 279,
-                "250g Sweetened - Crunchy | Date Powder": 279,
-                "250g Sweetened - Smooth | Monk Fruit": 404,
-                "250g Sweetened - Crunchy | Monk Fruit": 404,
-
-                // 500g Sweetened
-                "500g Sweetened - Smooth | Date Powder": 499,
-                "500g Sweetened - Crunchy | Date Powder": 499,
-                "500g Sweetened - Smooth | Monk Fruit": 749,
-                "500g Sweetened - Crunchy | Monk Fruit": 749,
-
-                // 1kg Sweetened
-                "1kg Sweetened - Smooth | Date Powder": 899,
-                "1kg Sweetened - Crunchy | Date Powder": 899,
-                "1kg Sweetened - Smooth | Monk Fruit": 1399,
-                "1kg Sweetened - Crunchy | Monk Fruit": 1399,
-
-                // 250g Unsweetened
-                "250g Unsweetened - Smooth | Unsweetened": 259,
-                "250g Unsweetened - Crunchy | Unsweetened": 259,
-
-                // 500g Unsweetened
-                "500g Unsweetened - Smooth | Unsweetened": 459,
-                "500g Unsweetened - Crunchy | Unsweetened": 459,
-
-                // 1kg Unsweetened
-                "1kg Unsweetened - Smooth | Unsweetened": 819,
-                "1kg Unsweetened - Crunchy | Unsweetened": 819
-            };
-
-            let total = 0; 
-            let orderDetails = ""; 
-            
-            for (let i = 0; i < cart.length; i++) {
-                const item = cart[i];
-                const key = `${item.name} - ${item.variant}`;
-                
-                // Authoritative price lookup
-                let verifiedPrice = TRUE_PRICES[key];
-                
-                if (typeof verifiedPrice !== 'number') {
-                    // Normalize lookup in case of minor casing differences
-                    const matchKey = Object.keys(TRUE_PRICES).find(k => 
-                        k.toLowerCase().replace(/\s+/g, '') === key.toLowerCase().replace(/\s+/g, '')
-                    );
-                    if (matchKey) {
-                        verifiedPrice = TRUE_PRICES[matchKey];
-                    } else {
-                        alert("Warning: An unrecognized or modified item was found in your cart. Please remove it and select again.");
-                        return;
-                    }
-                }
-                
-                total += verifiedPrice; 
-                orderDetails += `- ${item.name} (${item.variant}): ₹${verifiedPrice}\n`; 
-            }
-            
-            let message = `Hi Simply Seeded! 🥜 I would like to place an order:\n\n${orderDetails}\nTotal: ₹${total}\n\nPlease share your QR code so I can pay!`; 
-            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer'); 
-
-            // Clear cart from localStorage after checkout
-            cart = [];
-            saveCart();
-            closeModal('cartModal');
-        }
-
-        // --- AI LOGIC (Unchanged except Security Bouncer) ---
-        function toggleAIChat() {
-            const chat = document.getElementById('aiChatWindow');
-            if (chat.style.display === 'flex') {
-                chat.style.display = 'none';
-                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-            } else {
-                chat.style.display = 'flex';
-            }
-        }
-        
-        function updateCharCount() {
-            const input = document.getElementById('aiInput');
-            const counter = document.getElementById('aiCharCounter');
-            counter.innerText = `${input.value.length}/300`;
-        }
-
-        function speakText(text) {
-            if (!('speechSynthesis' in window)) return;
-            window.speechSynthesis.cancel(); 
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'en-IN'; 
-            utterance.rate = 1.0; 
-            utterance.pitch = 1.0;
-            window.speechSynthesis.speak(utterance);
-        }
-
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        let recognition = null;
-        let isRecording = false;
-
-        if (SpeechRecognition) {
-            recognition = new SpeechRecognition();
-            recognition.continuous = false;
-            recognition.interimResults = false;
-            recognition.lang = 'en-IN'; 
-
-            recognition.onstart = function() {
-                isRecording = true;
-                document.getElementById('micIconSvg').style.display = 'none';
-                document.getElementById('voiceVisualizer').style.display = 'flex';
-                document.getElementById('aiInput').placeholder = "Listening...";
-                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-            };
-
-            recognition.onresult = function(event) {
-                const transcript = event.results[0][0].transcript;
-                const inputField = document.getElementById('aiInput');
-                inputField.value = inputField.value ? inputField.value + " " + transcript : transcript;
-                updateCharCount();
-            };
-
-            recognition.onerror = function(event) {
-                console.error("Speech recognition error", event.error);
-                stopRecordingUI();
-            };
-
-            recognition.onend = function() {
-                stopRecordingUI();
-            };
-        }
-
-        function toggleSpeechRecognition() {
-            if (!recognition) {
-                alert("Sorry, your browser doesn't support voice dictation. Try using Chrome or Safari!");
-                return;
-            }
-            if (isRecording) {
-                recognition.stop();
-            } else {
-                recognition.start();
-            }
-        }
-
-        function stopRecordingUI() {
-            isRecording = false;
-            document.getElementById('micIconSvg').style.display = 'block';
-            document.getElementById('voiceVisualizer').style.display = 'none';
-            document.getElementById('aiInput').placeholder = "Ask a question...";
-        }
-
-        let aiBusy = false;
-        async function sendAIMessage() {
-            const input = document.getElementById('aiInput');
-            const sendBtn = document.getElementById('aiSendBtn');
-            const micBtn = document.getElementById('aiMicBtn');
-            const msg = input.value.trim();
-            
-            if (isRecording && recognition) recognition.stop();
-            if(!msg) return;
-
-            // --- THE NEW BOUNCER (SECURITY CHECK) ---
-            if (!window.firebaseAuth || !window.firebaseAuth.currentUser) {
-                // Not logged in? Open the login modal and stop the function.
-                document.getElementById('auth-modal').style.display = 'flex';
-                document.getElementById('modal-default-view').style.display = 'block';
-                document.getElementById('modal-phone-view').style.display = 'none';
-                document.getElementById('modal-otp-view').style.display = 'none';
-                return;
-            }
-            // ----------------------------------------
-            
-            // --- TURNSTILE (BOT PROTECTION) ---
-            const tsField = document.querySelector('[name="cf-turnstile-response"]');
-            const turnstileToken = tsField ? tsField.value : '';
-            if (!turnstileToken) {
-                const bodyEl = document.getElementById('aiChatBody');
-                bodyEl.innerHTML += `<div class="ai-msg-bot"><div class="ai-msg-content">Please complete the security check below, then send again.</div></div>`;
-                bodyEl.scrollTop = bodyEl.scrollHeight;
-                return;
-            }
-            // ----------------------------------
-
-            if (aiBusy) return;
-            aiBusy = true;
-            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-
-            const body = document.getElementById('aiChatBody');
-            
-            body.innerHTML += `<div class="ai-msg-user">${escapeHTML(msg)}</div>`;
-            input.value = ''; 
-            updateCharCount();
-            body.scrollTop = body.scrollHeight;
-
-            input.disabled = true;
-            sendBtn.disabled = true;
-            micBtn.disabled = true;
-
-            const loadingId = 'loading-' + Date.now();
-            
-            body.innerHTML += `
-                <div class="ai-msg-bot" id="${loadingId}">
-                    <div class="ai-msg-content ai-typing-indicator">
-                        <span></span><span></span><span></span>
-                    </div>
-                </div>`;
-            body.scrollTop = body.scrollHeight;
-
-            try {
-                // Grab the ultra-fresh VIP token (we already know they are logged in)
-                const userToken = await window.firebaseAuth.currentUser.getIdToken(true);
-
-                const response = await fetch("https://grounded-api.theteamgrounded.workers.dev/", {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        message: msg, 
-                        persona: "roaster", 
-                        pageContext: document.title,
-                        turnstileToken: turnstileToken,
-                        token: userToken
-                    })
-                });
-                
-                const data = await response.json();
-                const botMsgDiv = document.getElementById(loadingId);
-                
-                // If Cloudflare still rejects it (e.g. token expired mid-request)
-                if (!response.ok) {
-                    throw new Error(data.error || "Backend rejected request");
-                }
-                
-                if (typeof data.reply === 'string' && data.reply.startsWith('Security Error')) {
-                    throw new Error("AUTH_REQUIRED");
-                }
-                
-                botMsgDiv.innerHTML = `
-                    <div class="ai-msg-content"></div>
-                    <button class="ai-speaker-btn" onclick="speakText(this.previousElementSibling.innerText)" title="Read aloud">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-                    </button>
-                `;
-                botMsgDiv.querySelector('.ai-msg-content').innerText = data.reply;
-                
-            } catch (error) {
-                console.error("API Error:", error);
-                const isAuthErr = error.message === "AUTH_REQUIRED";
-                document.getElementById(loadingId).innerHTML = `<div class="ai-msg-content">${isAuthErr ? "Your login expired. Please sign in again to continue." : "Something went wrong. Please try again."}</div>`;
-                if (isAuthErr) {
-                    document.getElementById('auth-modal').style.display = 'flex';
-                    document.getElementById('modal-default-view').style.display = 'block';
-                    document.getElementById('modal-phone-view').style.display = 'none';
-                    document.getElementById('modal-otp-view').style.display = 'none';
-                }
-            } finally {
-                if (window.turnstile) window.turnstile.reset();
-                aiBusy = false;
-                input.disabled = false;
-                sendBtn.disabled = false;
-                micBtn.disabled = false;
-                input.focus();
-                body.scrollTop = body.scrollHeight;
-            }
-        }
-
-        function escapeHTML(str) { return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)); }
-        function handleAIKeyPress(e) { if(e.key === 'Enter') sendAIMessage(); }
-    </script>
+    <script type="module" src="simply-seeded.js"></script>
 
     <!-- FIREBASE AUTHENTICATION SCRIPT (WITH FULL AUTH MODAL INTEGRATION) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-        import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBKZz6FNizCDMf8LnG7-n9a0H26MU8ZN_I",
-            authDomain: "grounded-store.firebaseapp.com",
-            projectId: "grounded-store",
-            storageBucket: "grounded-store.firebasestorage.app",
-            messagingSenderId: "110467572354",
-            appId: "1:110467572354:web:86747ada335b7289e38a9b",
-            measurementId: "G-HB8L303TNC"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        window.firebaseAuth = auth;
-        const googleProvider = new GoogleAuthProvider();
-
-        const SESSION_KEY = 'grounded_user';
-
-        // UI Elements
-        const authModal = document.getElementById('auth-modal');
-        const openModalBtn = document.getElementById('open-modal-btn');
-        const closeModalBtn = document.getElementById('close-modal-btn');
-        const userProfile = document.getElementById('user-profile');
-        const userNameSpan = document.getElementById('user-name');
-        const userMenuBtn = document.getElementById('user-menu-btn');
-        const userDropdownMenu = document.getElementById('user-dropdown-menu');
-        const menuSignOut = document.getElementById('menu-sign-out');
-        const menuSwitchAccount = document.getElementById('menu-switch-account');
-        
-        // Modal Views
-        const defaultView = document.getElementById('modal-default-view');
-        const phoneView = document.getElementById('modal-phone-view');
-        const otpView = document.getElementById('modal-otp-view');
-
-        // Buttons & Inputs
-        const emailInput = document.getElementById('email-input');
-        const passwordInput = document.getElementById('password-input');
-        const emailActionBtn = document.getElementById('email-action-btn');
-        const tabSignUp = document.getElementById('tab-signup');
-        const tabSignIn = document.getElementById('tab-signin');
-        const modalActionTitle = document.getElementById('modal-action-title');
-        
-        const btnGoogle = document.getElementById('btn-google');
-        const btnPhone = document.getElementById('btn-phone');
-        
-        const phoneInput = document.getElementById('phone-number');
-        const sendOtpBtn = document.getElementById('send-code-btn');
-        const otpInput = document.getElementById('otp-code');
-        const verifyOtpBtn = document.getElementById('verify-code-btn');
-
-        // Store Elements
-        const chatInput = document.getElementById('aiInput');
-        const sendChatBtn = document.getElementById('aiSendBtn');
-        const micBtn = document.getElementById('aiMicBtn');
-        const checkoutBtn = document.getElementById('checkoutBtn');
-
-        // State Tracker
-        let isSignUpMode = true;
-
-        // Setup invisible reCAPTCHA for Phone Auth
-        if (document.getElementById('recaptcha-container')) {
-            window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { 'size': 'invisible' });
-        }
-
-        function showAuthModal() {
-            if (authModal) {
-                authModal.style.display = 'flex';
-                if (defaultView) defaultView.style.display = 'block';
-                if (phoneView) phoneView.style.display = 'none';
-                if (otpView) otpView.style.display = 'none';
-            }
-        }
-
-        function hideAuthModal() {
-            if (authModal) authModal.style.display = 'none';
-        }
-
-        // MODAL LOGIC
-        if (openModalBtn) openModalBtn.addEventListener('click', showAuthModal);
-        if (closeModalBtn) closeModalBtn.addEventListener('click', hideAuthModal);
-        
-        window.addEventListener('click', (event) => {
-            if (event.target === authModal) hideAuthModal();
-        });
-
-        // TAB SWITCH: CREATE ACCOUNT / SIGN IN
-        function setAuthMode(signUp) {
-            isSignUpMode = signUp;
-            if (tabSignUp) { tabSignUp.classList.toggle('active', signUp); tabSignUp.setAttribute('aria-selected', String(signUp)); }
-            if (tabSignIn) { tabSignIn.classList.toggle('active', !signUp); tabSignIn.setAttribute('aria-selected', String(!signUp)); }
-            if (modalActionTitle) modalActionTitle.innerText = signUp ? "Create an Account" : "Sign In with Email";
-            if (emailActionBtn) emailActionBtn.innerText = signUp ? "Sign Up" : "Sign In";
-        }
-        if (tabSignUp) tabSignUp.addEventListener('click', () => setAuthMode(true));
-        if (tabSignIn) tabSignIn.addEventListener('click', () => setAuthMode(false));
-
-        // EMAIL LOGIC (Sign In & Sign Up)
-        if (emailActionBtn) {
-            emailActionBtn.addEventListener('click', () => {
-                const email = emailInput.value.trim();
-                const password = passwordInput.value.trim();
-                
-                if (!email || !password) {
-                    return alert("Please enter both email and password.");
-                }
-
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    return alert("Please enter a valid email address (e.g., yourname@domain.com).");
-                }
-
-                if (password.length < 6) {
-                    return alert("Password must be at least 6 characters long.");
-                }
-                
-                emailActionBtn.innerText = "Processing...";
-                
-                if (isSignUpMode) {
-                    createUserWithEmailAndPassword(auth, email, password)
-                        .then((userCredential) => {
-                            const user = userCredential.user;
-                            const userData = {
-                                uid: user.uid,
-                                displayName: user.displayName || email.split('@')[0],
-                                email: user.email
-                            };
-                            localStorage.setItem(SESSION_KEY, JSON.stringify(userData));
-                            applyAuthState(userData);
-                            hideAuthModal();
-                        })
-                        .catch((error) => {
-                            alert("Sign Up failed: " + error.message);
-                            emailActionBtn.innerText = "Sign Up";
-                        });
-                } else {
-                    signInWithEmailAndPassword(auth, email, password)
-                        .then((userCredential) => {
-                            const user = userCredential.user;
-                            const userData = {
-                                uid: user.uid,
-                                displayName: user.displayName || email.split('@')[0],
-                                email: user.email
-                            };
-                            localStorage.setItem(SESSION_KEY, JSON.stringify(userData));
-                            applyAuthState(userData);
-                            hideAuthModal();
-                        })
-                        .catch((error) => {
-                            alert("Login failed: " + error.message);
-                            emailActionBtn.innerText = "Sign In";
-                        });
-                }
-            });
-        }
-
-        // GOOGLE LOGIC
-        if (btnGoogle) {
-            btnGoogle.addEventListener('click', () => {
-                signInWithPopup(auth, googleProvider)
-                    .then((result) => {
-                        const user = result.user;
-                        const userData = {
-                            uid: user.uid,
-                            displayName: user.displayName || user.email.split('@')[0],
-                            email: user.email
-                        };
-                        localStorage.setItem(SESSION_KEY, JSON.stringify(userData));
-                        applyAuthState(userData);
-                        hideAuthModal();
-                    })
-                    .catch((error) => console.error("Google Login failed: ", error));
-            });
-        }
-
-        // PHONE NAVIGATION LOGIC
-        if (btnPhone) {
-            btnPhone.addEventListener('click', () => {
-                defaultView.style.display = 'none';
-                phoneView.style.display = 'block';
-            });
-        }
-
-        if (sendOtpBtn) {
-            sendOtpBtn.addEventListener('click', () => {
-                const rawNumber = phoneInput.value.trim();
-                const phoneRegex = /^[0-9]{10}$/;
-                if (!phoneRegex.test(rawNumber)) {
-                    return alert("Please enter a valid 10-digit Indian mobile number.");
-                }
-
-                const fullPhoneNumber = "+91" + rawNumber;
-                sendOtpBtn.innerText = "SENDING...";
-                
-                signInWithPhoneNumber(auth, fullPhoneNumber, window.recaptchaVerifier)
-                    .then((confirmationResult) => {
-                        window.confirmationResult = confirmationResult;
-                        phoneView.style.display = 'none';
-                        otpView.style.display = 'block';
-                    }).catch((error) => {
-                        alert("Error: " + error.message); 
-                        sendOtpBtn.innerText = "SEND OTP";
-                    });
-            });
-        }
-
-        if (verifyOtpBtn) {
-            verifyOtpBtn.addEventListener('click', () => {
-                const code = otpInput.value.trim();
-                if (!/^\d{6}$/.test(code)) {
-                    return alert("Please enter a valid 6-digit OTP code.");
-                }
-                verifyOtpBtn.innerText = "VERIFYING...";
-
-                window.confirmationResult.confirm(code).then((result) => {
-                    const user = result.user;
-                    const userData = {
-                        uid: user.uid,
-                        displayName: user.displayName || user.phoneNumber || "User",
-                        phoneNumber: user.phoneNumber
-                    };
-                    localStorage.setItem(SESSION_KEY, JSON.stringify(userData));
-                    applyAuthState(userData);
-                    hideAuthModal();
-                }).catch((error) => {
-                    alert("Invalid OTP code.");
-                    verifyOtpBtn.innerText = "VERIFY";
-                });
-            });
-        }
-
-        // DROPDOWN MENU LOGIC
-        function closeDropdown() {
-            if (userDropdownMenu) userDropdownMenu.classList.remove('show');
-            if (userMenuBtn) {
-                userMenuBtn.classList.remove('active');
-                userMenuBtn.setAttribute('aria-expanded', 'false');
-            }
-        }
-
-        function toggleDropdown(e) {
-            e.stopPropagation();
-            if (!userDropdownMenu) return;
-            const isOpen = userDropdownMenu.classList.contains('show');
-            if (isOpen) {
-                closeDropdown();
-            } else {
-                userDropdownMenu.classList.add('show');
-                if (userMenuBtn) {
-                    userMenuBtn.classList.add('active');
-                    userMenuBtn.setAttribute('aria-expanded', 'true');
-                }
-            }
-        }
-
-        if (userMenuBtn) userMenuBtn.addEventListener('click', toggleDropdown);
-
-        document.addEventListener('click', (e) => {
-            if (userProfile && !userProfile.contains(e.target)) {
-                closeDropdown();
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeDropdown();
-        });
-
-        // GLOBAL SIGN OUT OPTION
-        if (menuSignOut) {
-            menuSignOut.addEventListener('click', () => {
-                closeDropdown();
-                localStorage.removeItem(SESSION_KEY);
-                applyAuthState(null);
-                signOut(auth).catch((error) => console.error("Sign Out failed: ", error));
-            });
-        }
-
-        // SIGN IN WITH ANOTHER ACCOUNT (Direct on Store Page)
-        if (menuSwitchAccount) {
-            menuSwitchAccount.addEventListener('click', () => {
-                closeDropdown();
-                localStorage.removeItem(SESSION_KEY);
-                applyAuthState(null);
-                googleProvider.setCustomParameters({ prompt: 'select_account' });
-                signOut(auth).then(() => {
-                    showAuthModal();
-                }).catch((error) => {
-                    console.error("Sign out before switch failed: ", error);
-                    showAuthModal();
-                });
-            });
-        }
-
-        function applyAuthState(user) {
-            if (user) {
-                const displayName = user.displayName || (user.email ? user.email.split('@')[0] : (user.phoneNumber || "User"));
-                if (openModalBtn) openModalBtn.style.display = 'none';
-                if (userProfile) userProfile.style.display = 'inline-block';
-                if (userNameSpan) userNameSpan.textContent = displayName;
-                hideAuthModal();
-                
-                if (chatInput) {
-                    chatInput.disabled = false;
-                    chatInput.placeholder = "Ask The Roaster a question...";
-                    if (sendChatBtn) sendChatBtn.disabled = false;
-                    if (micBtn) micBtn.disabled = false;
-                }
-                if (checkoutBtn) {
-                    checkoutBtn.disabled = false;
-                    checkoutBtn.innerText = "Checkout via WhatsApp";
-                    checkoutBtn.onclick = checkoutWhatsApp;
-                }
-            } else {
-                if (openModalBtn) openModalBtn.style.display = 'block';
-                if (userProfile) userProfile.style.display = 'none';
-                closeDropdown();
-
-                if (emailInput) emailInput.value = '';
-                if (passwordInput) passwordInput.value = '';
-                if (phoneInput) phoneInput.value = '';
-                if (otpInput) otpInput.value = '';
-                if (emailActionBtn) emailActionBtn.innerText = isSignUpMode ? "Sign Up" : "Sign In";
-                if (sendOtpBtn) sendOtpBtn.innerText = "SEND OTP";
-                if (verifyOtpBtn) verifyOtpBtn.innerText = "VERIFY";
-
-                if (chatInput) {
-                    chatInput.disabled = true;
-                    chatInput.placeholder = "Please sign in to chat...";
-                    if (sendChatBtn) sendChatBtn.disabled = true;
-                    if (micBtn) micBtn.disabled = true;
-                }
-                if (checkoutBtn) {
-                    checkoutBtn.disabled = false;
-                    checkoutBtn.innerText = "Sign In to Checkout";
-                    checkoutBtn.onclick = () => {
-                        showAuthModal();
-                    };
-                }
-            }
-        }
-
-        // Immediately apply shared session from localStorage
-        try {
-            const savedSession = localStorage.getItem(SESSION_KEY);
-            if (savedSession) {
-                applyAuthState(JSON.parse(savedSession));
-            } else {
-                applyAuthState(null);
-            }
-        } catch(e) {
-            applyAuthState(null);
-        }
-
-        // Check URL parameters for direct modal open
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('auth') === 'true' || window.location.hash === '#signin' || window.location.hash === '#auth') {
-            if (!localStorage.getItem(SESSION_KEY)) {
-                showAuthModal();
-            }
-        }
-
-        // Sync with Firebase auth state
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const displayName = user.displayName || (user.email ? user.email.split('@')[0] : (user.phoneNumber || "User"));
-                const userData = {
-                    uid: user.uid,
-                    displayName: displayName,
-                    email: user.email,
-                    phoneNumber: user.phoneNumber
-                };
-                localStorage.setItem(SESSION_KEY, JSON.stringify(userData));
-                applyAuthState(userData);
-            } else {
-                if (!localStorage.getItem(SESSION_KEY)) {
-                    applyAuthState(null);
-                }
-            }
-        });
-
-        // Cross-tab / cross-page synchronization via Storage Event
-        window.addEventListener('storage', (e) => {
-            if (e.key === SESSION_KEY) {
-                try {
-                    const sessionData = e.newValue ? JSON.parse(e.newValue) : null;
-                    applyAuthState(sessionData);
-                } catch(err) {
-                    applyAuthState(null);
-                }
-            }
-        });
-    </script>
+    <script type="module" src="simply-seeded-auth.js"></script>
 </body>
 </html>

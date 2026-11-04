@@ -1,0 +1,29 @@
+{
+    "name": "grounded-website",
+    "version": "1.0.0",
+    "description": "",
+    "main": "consent-gate.js",
+    "scripts": {
+        "test": "vitest run",
+        "deploy": "npx wrangler pages deploy . --project-name=grounded-store --commit-dirty=true",
+        "coverage": "vitest run --coverage"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/yogkota1-source/grounded-website.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "bugs": {
+        "url": "https://github.com/yogkota1-source/grounded-website/issues"
+    },
+    "homepage": "https://github.com/yogkota1-source/grounded-website#readme",
+    "devDependencies": {
+        "@vitest/coverage-v8": "^5.0.4",
+        "jsdom": "^30.1.2",
+        "vitest": "^5.0.4",
+        "wrangler": "^4.156.1"
+    }
+}

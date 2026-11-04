@@ -1,4 +1,4 @@
-(function () {
+function initConsentGate() {
     var KEY = 'grounded_terms_accepted';
     try { if (localStorage.getItem(KEY) === 'yes') return; } catch (e) {}
 
@@ -37,5 +37,9 @@
     }
 
     if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
-})();
+    return { overlay, mount };
+}
 
+initConsentGate();
+
+export { initConsentGate };

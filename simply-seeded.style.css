@@ -691,3 +691,25 @@ p.subtitle { font-family: Arial, sans-serif; letter-spacing: 2px; color: #555; m
 .auth-tab.active { color: #000; border-bottom-color: #000; }
 .auth-tab:focus-visible { outline: 1px solid #000; outline-offset: -3px; }
 .auth-tab-title { margin: 0 0 15px; font-size: 1rem; color: #333; font-weight: normal; }
+
+
+/* Orderable payment-link buttons (anchors styled like .order-btn) */
+a.order-link { display: block; box-sizing: border-box; text-align: center; text-decoration: none; transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; }
+a.order-link:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2); }
+.cocoa-card .order-link { background-color: #4A3B32; }
+.cocoa-card .order-link:hover { background-color: #33271F; }
+
+
+/* --- BRAND NAV (same bar as the ACHAR page) --- */
+.site-nav { display: flex; justify-content: center; align-items: center; gap: 40px; padding: 20px 40px; background: #fff; border-bottom: 1px solid #E0E0E0; position: sticky; top: 0; z-index: 1100; flex-wrap: wrap; }
+.site-nav .nav-item { text-decoration: none; color: #1A1A1A; display: flex; flex-direction: column; align-items: center; padding: 10px; transition: all 0.3s ease; position: relative; }
+.site-nav .nav-item h3 { margin: 0 0 4px 0; font-family: Georgia, serif; font-size: 1.1rem; font-weight: normal; letter-spacing: 1px; }
+.site-nav .nav-tagline { font-family: Arial, sans-serif; font-size: 0.7rem; color: #8A2924; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; }
+.site-nav .nav-item:hover:not(.locked) { opacity: 0.6; }
+.site-nav .nav-item.active h3 { color: #A64B2A; font-weight: bold; }
+.site-nav .nav-item.active::before { content: ""; position: absolute; left: 10px; right: 10px; bottom: -21px; height: 3px; background: #A64B2A; border-radius: 2px; }
+.site-nav .nav-item.locked { opacity: 0.4; cursor: not-allowed; }
+.site-nav .nav-item.locked::after { content: "IN DEVELOPMENT"; position: absolute; bottom: -35px; background: #1A1A1A; color: #fff; padding: 5px 10px; font-family: Arial, sans-serif; font-size: 0.7rem; letter-spacing: 1px; border-radius: 3px; opacity: 0; visibility: hidden; transition: opacity 0.3s; white-space: nowrap; }
+@media (hover: hover) and (pointer: fine) { .site-nav .nav-item.locked:hover::after { opacity: 1; visibility: visible; } }
+@media (max-width: 600px) { .site-nav { gap: 10px; padding: 12px 10px; } }
+.top-nav .nav-actions { margin-left: auto; }
