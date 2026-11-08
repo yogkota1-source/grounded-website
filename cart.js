@@ -116,11 +116,11 @@ function ensureCartModal() {
                 </div>
                 <div class="shipping-fields" id="shippingFields">
                     <div class="shipping-row">
-                        <input type="text" id="shippingFirstName" class="shipping-input" placeholder="First Name *" autocomplete="given-name">
-                        <input type="text" id="shippingLastName" class="shipping-input" placeholder="Last Name *" autocomplete="family-name">
+                        <input type="text" id="shippingFirstName" class="shipping-input" placeholder="First Name *" maxlength="80" autocomplete="given-name">
+                        <input type="text" id="shippingLastName" class="shipping-input" placeholder="Last Name *" maxlength="80" autocomplete="family-name">
                     </div>
-                    <input type="text" id="shippingAddress" class="shipping-input" placeholder="Full Delivery Address *" autocomplete="street-address">
-                    <input type="text" id="shippingPincode" class="shipping-input" placeholder="Pincode *" autocomplete="postal-code">
+                    <input type="text" id="shippingAddress" class="shipping-input" placeholder="Full Delivery Address *" maxlength="300" autocomplete="street-address">
+                    <input type="text" id="shippingPincode" class="shipping-input" placeholder="Pincode *" maxlength="10" autocomplete="postal-code">
                     <div class="shipping-error" id="shippingError" style="display: none;"></div>
                 </div>
                 <button class="pay-btn" id="checkoutBtn" disabled>Sign in to Checkout</button>
@@ -274,6 +274,7 @@ function handleSizeChipClick(chip) {
 }
 
 document.addEventListener('click', (e) => {
+    if (!e.target || typeof e.target.closest !== 'function') return;
     const controlBtn = e.target.closest('.ac-add, .ac-plus, .ac-minus');
     if (controlBtn) {
         handleControlClick(controlBtn);

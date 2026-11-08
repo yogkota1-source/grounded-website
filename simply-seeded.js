@@ -98,7 +98,8 @@ function updateAddButtonPrice() {
     if (pendingType === 'unsweet' || pendingType === 'cocoa') {
         finalPrice = pendingDatePrice;
     } else {
-        let choice = document.querySelector('input[name="sweetenerOption"]:checked').value; 
+        let choiceRadio = document.querySelector('input[name="sweetenerOption"]:checked');
+        let choice = choiceRadio ? choiceRadio.value : "date"; 
         finalPrice = (choice === "date") ? pendingDatePrice : pendingMonkPrice; 
     }
     document.getElementById("addToCartBtn").innerText = `Add to Cart (₹${finalPrice})`; 
@@ -151,7 +152,11 @@ function openCartModal() {
         if (checkoutBtn) checkoutBtn.style.display = "none"; 
         if (shippingFields) shippingFields.style.display = "none";
     } else { 
-        if (checkoutBtn) checkoutBtn.style.display = "block"; 
+        if (checkoutBtn) {
+            checkoutBtn.style.display = "block";
+            checkoutBtn.disabled = false;
+            checkoutBtn.innerText = localStorage.getItem('grounded_user') ? "Checkout" : "Sign In to Checkout";
+        }
         if (shippingFields) shippingFields.style.display = "flex"; 
         cart.forEach((item, index) => { 
             listHTML += `
@@ -413,8 +418,12 @@ async function startCheckout(cartItems) {
 const razorpayCheckoutBtn = document.getElementById('checkoutBtn');
 if (razorpayCheckoutBtn) {
     razorpayCheckoutBtn.addEventListener('click', () => {
-        // Only when the button is active and the user is signed in
-        if (razorpayCheckoutBtn.disabled || !window.firebaseAuth || !window.firebaseAuth.currentUser) return;
+        // Only when the button is active; if signed out, open the auth modal
+        if (razorpayCheckoutBtn.disabled) return;
+        if (!window.firebaseAuth || !window.firebaseAuth.currentUser) {
+            document.getElementById('auth-modal').style.display = 'flex';
+            return;
+        }
 
         // The live cart that renders the cart UI. Client prices are NOT sent;
         // the backend looks up prices itself from the item id.
@@ -431,6 +440,7 @@ if (razorpayCheckoutBtn) {
 // --- AI LOGIC (Unchanged except Security Bouncer) ---
 function toggleAIChat() {
     const chat = document.getElementById('aiChatWindow');
+    if (!chat) return;
     if (chat.style.display === 'flex') {
         chat.style.display = 'none';
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
@@ -442,7 +452,7 @@ function toggleAIChat() {
 function updateCharCount() {
     const input = document.getElementById('aiInput');
     const counter = document.getElementById('aiCharCounter');
-    counter.innerText = `${input.value.length}/300`;
+    if (input && counter) counter.innerText = `${input.value.length}/300`;
 }
 
 function speakText(text) {
@@ -594,7 +604,7 @@ async function sendAIMessage() {
         
     } catch (error) {
         console.error("API Error:", error);
-        const isAuthErr = error.status === 401 || error.message === "AUTH_REQUIRED" || error.message.startsWith("Security Error");
+        const isAuthErr = error.status === 401 || error.message === "AUTH_REQUIRED" || (typeof error.message === 'string' && error.message.startsWith("Security Error"));
         document.getElementById(loadingId).innerHTML = `<div class="ai-msg-content">${isAuthErr ? "Your login expired. Please sign in again to continue." : "Something went wrong. Please try again."}</div>`;
         if (isAuthErr) {
             document.getElementById('auth-modal').style.display = 'flex';

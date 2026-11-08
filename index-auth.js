@@ -503,6 +503,7 @@ async function startCheckout(cartItems) {
         const currentUser = window.firebaseAuth && window.firebaseAuth.currentUser;
         if (!currentUser) {
             alert("Please sign in to checkout.");
+            showAuthModal();
             return;
         }
 

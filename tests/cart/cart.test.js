@@ -219,8 +219,9 @@ describe("cart.js", () => {
     const ctrl = document.getElementById("ctrlKimchi");
     expect(ctrl.dataset.variant).toBe("500g");
 
-    // Click random non-control element
+    // Click random non-control element and non-Element target (document)
     document.body.click();
+    document.dispatchEvent(new MouseEvent("click"));
 
     // Click detached button
     const detached = document.createElement("button");

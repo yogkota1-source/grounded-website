@@ -227,6 +227,7 @@ describe("options modal, prices and cart", () => {
     const m = await load();
     m.openOptionsModal("250g Sweetened", "sweet", 279, 404);
     document.querySelectorAll("input[type=radio]").forEach((r) => (r.checked = false));
+    m.updateAddButtonPrice();
     m.processOptionsAndAdd();
     const [item] = JSON.parse(localStorage.getItem("groundedCart"));
     expect(item.variant).toBe("Smooth | Date Powder");
@@ -236,7 +237,12 @@ describe("options modal, prices and cart", () => {
     const m = await load();
     m.openOptionsModal("250g Unsweetened", "unsweet", 259, 259);
     m.processOptionsAndAdd();
+    localStorage.setItem("grounded_user", JSON.stringify({ displayName: "Asha" }));
     m.openCartModal();
+    expect($("checkoutBtn").innerText).toBe("Checkout");
+    localStorage.removeItem("grounded_user");
+    m.openCartModal();
+    expect($("checkoutBtn").innerText).toBe("Sign In to Checkout");
     expect($("cartItemsList").innerHTML).toContain("250g Unsweetened");
     expect($("cartItemsList").innerHTML).toContain("Smooth | Unsweetened");
     expect($("cartTotalDisplay").innerText).toBe("₹259");
@@ -367,7 +373,7 @@ describe("checkout button", () => {
     const f = vi.fn();
     vi.stubGlobal("fetch", f);
     $("checkoutBtn").disabled = true;
-    $("checkoutBtn").click();
+    $("checkoutBtn").dispatchEvent(new MouseEvent("click"));
     $("checkoutBtn").disabled = false;
     window.firebaseAuth = undefined;
     $("checkoutBtn").click();
@@ -612,6 +618,8 @@ describe("chat widget helpers", () => {
     delete window.speechSynthesis;
     m.toggleAIChat();
     expect($("aiChatWindow").style.display).toBe("none");
+    $("aiChatWindow").remove();
+    expect(() => m.toggleAIChat()).not.toThrow();
   });
 
   it("updates the character counter", async () => {
@@ -619,6 +627,8 @@ describe("chat widget helpers", () => {
     type("abcd");
     m.updateCharCount();
     expect($("aiCharCounter").innerText).toBe("4/300");
+    $("aiCharCounter").remove();
+    expect(() => m.updateCharCount()).not.toThrow();
   });
 
   it("speaks text only when speech synthesis exists", async () => {
@@ -818,6 +828,9 @@ describe("sendAIMessage", () => {
     type("hi");
     await m.sendAIMessage();
     expect($("aiChatBody").textContent).toContain("Something went wrong");
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue({}));
+    type("hi2");
+    await m.sendAIMessage();
   });
 });
 
