@@ -478,7 +478,7 @@ describe("checkout button", () => {
       it("blocks checkout and shows error for missing First Name", async () => {
         const m = await loadWithCart();
         window.firebaseAuth = signedInUser();
-        fillShippingDetails({ firstName: "", lastName: "Doe", address: "123 St", pincode: "411001" });
+        fillShippingDetails({ firstName: "", lastName: "Doe", address: "123 Grounded Lane, Koregaon Park", pincode: "411001" });
         const scrollSpy = vi.fn();
         const focusSpy = vi.fn();
         $("shippingFirstName").scrollIntoView = scrollSpy;
@@ -492,14 +492,36 @@ describe("checkout button", () => {
         expect(focusSpy).toHaveBeenCalled();
       });
 
+      it("blocks checkout and shows error for invalid First Name", async () => {
+        const m = await loadWithCart();
+        window.firebaseAuth = signedInUser();
+        for (const badName of ["12", "A.", "aa", "x".repeat(81)]) {
+          fillShippingDetails({ firstName: badName, lastName: "Doe", address: "123 Grounded Lane, Koregaon Park", pincode: "411001" });
+          await m.startCheckout([{ itemId: "x" }]);
+          expect($("shippingError").textContent).toBe("Please enter a valid First Name (2-80 letters, no digits or repeated characters).");
+          expect($("shippingFirstName").classList.contains("input-error")).toBe(true);
+        }
+      });
+
       it("blocks checkout and shows error for missing Last Name", async () => {
         const m = await loadWithCart();
         window.firebaseAuth = signedInUser();
-        fillShippingDetails({ firstName: "John", lastName: "", address: "123 St", pincode: "411001" });
+        fillShippingDetails({ firstName: "John", lastName: "", address: "123 Grounded Lane, Koregaon Park", pincode: "411001" });
 
         await m.startCheckout([{ itemId: "x" }]);
         expect($("shippingError").textContent).toBe("Last Name is required for shipping.");
         expect($("shippingLastName").classList.contains("input-error")).toBe(true);
+      });
+
+      it("blocks checkout and shows error for invalid Last Name", async () => {
+        const m = await loadWithCart();
+        window.firebaseAuth = signedInUser();
+        for (const badName of ["34", "A."]) {
+          fillShippingDetails({ firstName: "John", lastName: badName, address: "123 Grounded Lane, Koregaon Park", pincode: "411001" });
+          await m.startCheckout([{ itemId: "x" }]);
+          expect($("shippingError").textContent).toBe("Please enter a valid Last Name (2-80 letters, no digits or repeated characters).");
+          expect($("shippingLastName").classList.contains("input-error")).toBe(true);
+        }
       });
 
       it("blocks checkout and shows error for missing Address", async () => {
@@ -512,20 +534,40 @@ describe("checkout button", () => {
         expect($("shippingAddress").classList.contains("input-error")).toBe(true);
       });
 
+      it("blocks checkout and shows error for invalid Address", async () => {
+        const m = await loadWithCart();
+        window.firebaseAuth = signedInUser();
+        for (const badAddr of ["ABCD EFG", "12 34 56 78 90 12", "x".repeat(251), "aaaaaaaaaaaaaaa"]) {
+          fillShippingDetails({ firstName: "John", lastName: "Doe", address: badAddr, pincode: "411001" });
+          await m.startCheckout([{ itemId: "x" }]);
+          expect($("shippingError").textContent).toBe("Please enter a complete delivery address (min 15 chars, at least 3 words).");
+          expect($("shippingAddress").classList.contains("input-error")).toBe(true);
+        }
+      });
+
       it("blocks checkout and shows error for missing Pincode", async () => {
         const m = await loadWithCart();
         window.firebaseAuth = signedInUser();
-        fillShippingDetails({ firstName: "John", lastName: "Doe", address: "123 St", pincode: "" });
+        fillShippingDetails({ firstName: "John", lastName: "Doe", address: "123 Grounded Lane, Koregaon Park", pincode: "" });
 
         await m.startCheckout([{ itemId: "x" }]);
         expect($("shippingError").textContent).toBe("Pincode is required for shipping.");
         expect($("shippingPincode").classList.contains("input-error")).toBe(true);
       });
 
+      it("blocks checkout and shows error for invalid / blacklisted Pincode", async () => {
+        const m = await loadWithCart();
+        window.firebaseAuth = signedInUser();
+        fillShippingDetails({ firstName: "John", lastName: "Doe", address: "123 Grounded Lane, Koregaon Park", pincode: "123456" });
+        await m.startCheckout([{ itemId: "x" }]);
+        expect($("shippingError").textContent).toBe("Please enter a valid 6-digit Indian PIN code.");
+        expect($("shippingPincode").classList.contains("input-error")).toBe(true);
+      });
+
       it("clears error on input when user types", async () => {
         const m = await loadWithCart();
         window.firebaseAuth = signedInUser();
-        fillShippingDetails({ firstName: "", lastName: "Doe", address: "123 St", pincode: "411001" });
+        fillShippingDetails({ firstName: "", lastName: "Doe", address: "123 Grounded Lane, Koregaon Park", pincode: "411001" });
         await m.startCheckout([{ itemId: "x" }]);
         expect($("shippingFirstName").classList.contains("input-error")).toBe(true);
 
@@ -534,15 +576,86 @@ describe("checkout button", () => {
         $("shippingFirstName").dispatchEvent(new Event("input"));
         expect($("shippingFirstName").classList.contains("input-error")).toBe(true);
 
-        // Type real value
+        // Another field still has error
+        $("shippingLastName").classList.add("input-error");
         $("shippingFirstName").value = "John";
         $("shippingFirstName").dispatchEvent(new Event("input"));
         expect($("shippingFirstName").classList.contains("input-error")).toBe(false);
+        expect($("shippingError").style.display).toBe("block");
+
+        // No remaining error
+        $("shippingLastName").classList.remove("input-error");
+        $("shippingFirstName").dispatchEvent(new Event("input"));
+        expect($("shippingFirstName").classList.contains("input-error")).toBe(false);
         expect($("shippingError").style.display).toBe("none");
+
+        // Missing error element
+        const err = $("shippingError");
+        const errParent = err.parentNode;
+        const errNext = err.nextSibling;
+        err.remove();
+        $("shippingFirstName").dispatchEvent(new Event("input"));
+        errParent.insertBefore(err, errNext);
+      });
+
+      it("validates standalone shipping helpers isValidName, isValidAddress, isValidPincode", async () => {
+        const m = await loadWithCart();
+        // Name
+        expect(m.isValidName("John")).toBe(true);
+        expect(m.isValidName("Jane Doe")).toBe(true);
+        expect(m.isValidName(123)).toBe(false);
+        expect(m.isValidName(null)).toBe(false);
+        expect(m.isValidName("")).toBe(false);
+        expect(m.isValidName("12")).toBe(false);
+        expect(m.isValidName("aa")).toBe(false);
+        expect(m.isValidName("A.")).toBe(false);
+        expect(m.isValidName("x".repeat(81))).toBe(false);
+
+        // Address
+        expect(m.isValidAddress("123 Grounded Lane, Koregaon Park")).toBe(true);
+        expect(m.isValidAddress(123)).toBe(false);
+        expect(m.isValidAddress(null)).toBe(false);
+        expect(m.isValidAddress("")).toBe(false);
+        expect(m.isValidAddress("123 Main St")).toBe(false);
+        expect(m.isValidAddress("x".repeat(251))).toBe(false);
+        expect(m.isValidAddress("123456789012345")).toBe(false);
+        expect(m.isValidAddress("12 34 56 78 90 12")).toBe(false);
+        expect(m.isValidAddress("Flat 402, Building A, test address road")).toBe(false);
+        expect(m.isValidAddress("aaaaaaaaaaaaaaa")).toBe(false);
+        expect(m.isValidAddress("a a a a a a a a a a a a a a a")).toBe(false);
+
+        // Pincode
+        expect(m.isValidPincode("411001")).toBe(true);
+        expect(m.isValidPincode(411001)).toBe(false);
+        expect(m.isValidPincode(null)).toBe(false);
+        expect(m.isValidPincode("")).toBe(false);
+        expect(m.isValidPincode("012345")).toBe(false);
+        expect(m.isValidPincode("123456")).toBe(false);
       });
 
       it("handles missing DOM elements and missing scroll/focus gracefully", async () => {
-        const m = await load({ mutateDom: () => $("shippingFields")?.remove() });
+        const m = await loadWithCart();
+        fillShippingDetails();
+        $("shippingFirstName").scrollIntoView = vi.fn();
+        $("shippingFirstName").value = "";
+        expect(m.validateShippingDetails()).toBeNull();
+        expect($("shippingFirstName").scrollIntoView).toHaveBeenCalled();
+
+        // Without scrollIntoView
+        delete $("shippingFirstName").scrollIntoView;
+        expect(m.validateShippingDetails()).toBeNull();
+
+        const ids = ["shippingFirstName", "shippingLastName", "shippingAddress", "shippingPincode", "shippingError"];
+        for (const id of ids) {
+          const el = document.getElementById(id);
+          const parent = el.parentNode;
+          const next = el.nextSibling;
+          el.remove();
+          expect(m.validateShippingDetails()).toBeNull();
+          parent.insertBefore(el, next);
+        }
+
+        $("shippingFields")?.remove();
         window.firebaseAuth = signedInUser();
         expect(m.validateShippingDetails()).toBeNull();
       });

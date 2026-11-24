@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+# /soma is intentionally NOT blocked here: Google must be able to crawl it
+# to see its "noindex" tag. Do not add "Disallow: /soma".
+
+Sitemap: https://grounded.kinduz.com/sitemap.xml

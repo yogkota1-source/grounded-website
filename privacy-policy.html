@@ -7,86 +7,98 @@
     <link rel="stylesheet" href="legal.css">
 </head>
 <body class="legal-body">
-    <header class="legal-header"><a href="index.html">GROUNDED</a></header>
+    <header class="legal-header"><a href="/">GROUNDED</a></header>
 
     <main class="legal-main">
-        <nav class="legal-nav"><a href="index.html">&larr; Back to Home</a></nav>
+        <nav class="legal-nav"><a href="/">&larr; Back to Home</a></nav>
         <h1>Privacy Policy</h1>
-        <p class="legal-updated">How we collect, use, and protect your personal data.</p>
+        <p class="legal-updated">How we collect, process, and safeguard your personal data.</p>
 
         <section>
-            <h2>1. Introduction &amp; Commitment to Privacy</h2>
-            <p>Welcome to Grounded. We respect your privacy and are deeply committed to protecting your personal data. This Privacy Policy outlines how we collect, use, and protect your information when you visit our website or purchase our consumables. This document is strictly compliant with the Digital Personal Data Protection Act (DPDPA), 2023, and the Information Technology Act, 2000 of India. By using our website, you explicitly consent to the collection and processing of your data as described below.</p>
+            <h2>3.1 Introduction &amp; Legal Compliance</h2>
+            <p>Welcome to Grounded. We respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, process, store, and safeguard your information when you browse our website, authenticate your account, chat with our AI assistants, or purchase our consumables. This policy is drafted in strict compliance with the Digital Personal Data Protection Act (DPDPA), 2023, and the Information Technology Act, 2000 (along with the IT Reasonable Security Practices and Procedures Rules, 2011) of India. By using our website, you provide your free, specific, informed, and unambiguous consent to the data practices described below.</p>
         </section>
 
         <section>
-            <h2>2. The "No Data Selling" Guarantee</h2>
-            <p>Let us be absolutely clear: <strong>Grounded will never sell, rent, lease, or trade your personal data</strong> to any third-party data brokers, marketing agencies, or advertisers. The data you share with us is used exclusively to fulfill your order, improve our artisanal consumables, and communicate directly with you.</p>
+            <h2>3.2 The "Zero Data Selling" Guarantee</h2>
+            <p>Grounded will never sell, rent, lease, or trade your personal data to third-party data brokers, ad networks, or external marketing agencies. Your information is used strictly to authenticate your session, fulfill and deliver your orders, provide customer support, and secure our platform against fraud.</p>
         </section>
 
         <section>
-            <h2>3. What Data We Collect &amp; Why (Purpose Limitation)</h2>
-            <p>We practice strict data minimization. We only collect the personal data absolutely necessary to process and deliver your food products:</p>
+            <h2>3.3 Personal Data We Collect &amp; Purpose Limitation</h2>
+            <p>We practice strict data minimization and collect only the information required to operate our store safely:</p>
             <ul>
-                <li><strong>Identity &amp; Contact Data:</strong> Name, email address, shipping address, and phone number. <em>Purpose:</em> To process your order, print shipping labels, and send you delivery updates.</li>
-                <li><strong>Transaction Data:</strong> Order history, items purchased, and transaction IDs. <em>Purpose:</em> For accounting, processing refunds (if applicable under our strict terms), and customer support.</li>
-                <li><strong>Technical Data:</strong> IP address, browser type, and device information. <em>Purpose:</em> To ensure our website functions correctly, secure our platform against fraud, and load checkout pages smoothly.</li>
+                <li><strong>Identity &amp; Delivery Data:</strong> First name, last name, email address, phone number, physical shipping address, and PIN code. <em>Purpose:</em> To verify account identity, validate order authenticity, print courier shipping labels, and coordinate physical delivery.</li>
+                <li><strong>Authentication &amp; Security Data:</strong> Unique user identifiers (UIDs), authentication tokens (via Google Sign-In / Firebase), IP addresses, and rate-limit counters. <em>Purpose:</em> To keep your session secure, prevent unauthorized access, and block automated spam or abuse on our checkout and AI endpoints.</li>
+                <li><strong>Transaction Data:</strong> Items ordered, order totals, Razorpay Order IDs, Payment IDs, and cryptographic verification signatures. <em>Purpose:</em> Order fulfillment, statutory accounting, tax compliance, and customer support.</li>
+                <li><strong>AI Chat Interaction Data:</strong> Text prompts submitted to our AI assistants (TC, TR, TA). <em>Purpose:</em> To generate real-time answers to your product questions. Chat prompts are processed transiently and are not used to build advertising profiles.</li>
             </ul>
         </section>
 
         <section>
-            <h2>4. Payment Gateway Security &amp; Financial Data Isolation</h2>
-            <p>Grounded does not collect, process, or store your raw payment credentials.</p>
+            <h2>3.4 Financial Data Isolation &amp; Payment Security</h2>
+            <p>Grounded does not collect, view, or store your raw credit card numbers, debit card credentials, netbanking passwords, or UPI PINs.</p>
+            <p>All payment transactions are executed directly on the encrypted servers of our RBI-authorized, PCI-DSS compliant payment processor (Razorpay).</p>
+            <p>Grounded only receives a payment confirmation token and cryptographic signature to verify whether your transaction succeeded.</p>
+        </section>
+
+        <section>
+            <h2>3.5 Trusted Third-Party Data Processors</h2>
+            <p>To operate a secure, modern e-commerce platform, we share strictly necessary data subsets with the following categories of vetted service providers:</p>
             <ul>
-                <li>All electronic transactions are routed through our RBI-authorized, PCI-DSS compliant third-party payment processor (Razorpay).</li>
-                <li>When you enter your credit card number, debit card details, or UPI PIN, that data goes directly to Razorpay's encrypted servers. Grounded never sees, touches, or stores your financial information. Our liability regarding financial data breaches is therefore fully separated and deferred to the payment gateway.</li>
+                <li><strong>Payment Gateways:</strong> Razorpay (to authorize payments, detect payment fraud, and process approved refunds).</li>
+                <li><strong>Logistics &amp; Courier Partners:</strong> Delivery providers (such as BlueDart, Delhivery, India Post, or local hyperlocal couriers) who require your name, address, PIN code, and phone number to deliver your package.</li>
+                <li><strong>Cloud, Authentication &amp; AI Infrastructure:</strong>
+                    <ul>
+                        <li>Cloudflare (Content delivery, DDoS protection, serverless API execution, and anti-spam KV rate-limiting).</li>
+                        <li>Google Firebase (Secure user authentication and session token verification).</li>
+                        <li>Google Workspace / Sheets (Encrypted, automated internal order fulfillment logging).</li>
+                        <li>Google Gemini API (Processing customer questions sent to our storefront AI assistants).</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>All operational partners process data solely to perform their designated technical or logistical function for Grounded.</p>
+        </section>
+
+        <section>
+            <h2>3.6 Cookies, Local Storage &amp; Consent Management</h2>
+            <p>Our website uses strictly necessary first-party browser storage (localStorage and session cookies) to:</p>
+            <ul>
+                <li>Remember the items and quantities in your shopping cart across pages;</li>
+                <li>Maintain your authenticated login session during checkout; and</li>
+                <li>Record your acceptance of our legal terms and privacy consent gate.</li>
+            </ul>
+            <p>We do not use invasive third-party advertising pixels to track your behavior across unrelated websites. Disabling browser storage or cookies may prevent the cart and checkout system from functioning.</p>
+        </section>
+
+        <section>
+            <h2>3.7 Data Security &amp; Retention</h2>
+            <p><strong>Security Safeguards:</strong> We enforce HTTPS/TLS encryption in transit, strict Cross-Origin Resource Sharing (CORS) policies, server-side input sanitization, and HMAC-SHA256 signature verification.</p>
+            <p><strong>Retention Period:</strong> We retain order and transaction records only for as long as necessary to fulfill your order, resolve disputes, enforce our terms, and comply with mandatory Indian tax and accounting laws (typically up to 8 financial years where required by statute). Security rate-limit logs in our edge cache automatically expire after 24 hours.</p>
+        </section>
+
+        <section>
+            <h2>3.8 Your Rights as a Data Principal (Under DPDPA 2023)</h2>
+            <p>Under the Digital Personal Data Protection Act, 2023, you have the right to:</p>
+            <ul>
+                <li><strong>Right to Access:</strong> Request a summary of the personal data we hold about you and the processing activities undertaken.</li>
+                <li><strong>Right to Correction &amp; Updating:</strong> Request correction of inaccurate or incomplete contact or account details.</li>
+                <li><strong>Right to Erasure:</strong> Request deletion of your personal data from our active systems, unless retention is legally mandated for completed financial transactions, tax audits, or active dispute resolution.</li>
+                <li><strong>Right to Withdraw Consent:</strong> Withdraw your consent for future data processing at any time by contacting our Grievance Officer (note that withdrawing consent does not affect the lawfulness of processing prior to withdrawal).</li>
+                <li><strong>Right to Grievance Redressal &amp; Nomination:</strong> Register a complaint with our Data Protection Officer and nominate an individual to exercise your rights in the event of death or incapacity.</li>
             </ul>
         </section>
 
         <section>
-            <h2>5. Who We Share Your Data With</h2>
-            <p>To operate our e-commerce store, we must share specific pieces of your data with highly trusted third-party service providers. These include:</p>
+            <h2>3.9 Data Protection &amp; Grievance Officer</h2>
+            <p>To exercise any of your statutory rights or report a privacy concern, please contact our designated Grievance Officer:</p>
             <ul>
-                <li><strong>Logistics &amp; Delivery Partners:</strong> (e.g., BlueDart, Delhivery, Swiggy Genie) who need your name, address, and phone number to physically deliver your consumables.</li>
-                <li><strong>Payment Processors:</strong> (e.g., Razorpay) to securely authorize your payment.</li>
-            </ul>
-            <p><strong>Note:</strong> We mandate that our operational partners only use your data to fulfill their specific service to Grounded and are legally barred from using it for their own independent marketing.</p>
-        </section>
-
-        <section>
-            <h2>6. Cookies &amp; Tracking Technologies</h2>
-            <p>Our website uses essential first-party cookies to remember what items are in your cart, keep you logged in during checkout, and monitor website crashes. We do not use invasive third-party tracking pixels to monitor your browsing behavior across other unrelated websites. You can disable cookies in your browser settings, but doing so may prevent you from checking out successfully.</p>
-        </section>
-
-        <section>
-            <h2>7. Data Retention &amp; Security</h2>
-            <ul>
-                <li><strong>Security:</strong> We utilize industry-standard encryption (HTTPS/SSL) to protect data transmitted between your browser and our servers.</li>
-                <li><strong>Retention:</strong> We retain your personal data only for as long as necessary to fulfill the purposes outlined in this policy, resolve disputes, and comply with mandatory Indian tax and accounting laws. Once the retention period expires, your data is securely deleted or anonymized.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>8. Your Rights as a Data Principal (Under DPDPA 2023)</h2>
-            <p>Under Indian law, you have specific rights regarding your personal data. You have the right to:</p>
-            <ul>
-                <li><strong>Access:</strong> Request a summary of the personal data we hold about you.</li>
-                <li><strong>Correction:</strong> Ask us to fix inaccurate or incomplete shipping or contact details.</li>
-                <li><strong>Erasure (Right to be Forgotten):</strong> Request that we permanently delete your personal data from our systems, provided that retaining it is no longer required for legal, tax, or active order fulfillment purposes.</li>
-                <li><strong>Withdraw Consent:</strong> Withdraw your consent for non-essential communications (like email newsletters) at any time.</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>9. Grievance Officer &amp; Contact Information</h2>
-            <p>If you have any questions about this Privacy Policy, wish to exercise your data rights, or have a privacy grievance, please contact our designated Data Protection / Grievance Officer:</p>
-            <ul>
-                <li><strong>Company Name:</strong> Grounded</li>
-                <li><strong>Grievance Officer:</strong> [Insert Name]</li>
+                <li><strong>Entity Name:</strong> Grounded</li>
+                <li><strong>Data Protection / Grievance Officer:</strong> [Insert Name]</li>
                 <li><strong>Email Address:</strong> [Insert Email]</li>
-                <li><strong>Registered Address:</strong> Pune, Maharashtra, India.</li>
+                <li><strong>Location:</strong> Pune, Maharashtra, India</li>
+                <li><strong>Response Timeline:</strong> We will acknowledge your request within 48 hours and resolve it within the statutory timelines prescribed under Indian law.</li>
             </ul>
-            <p>We will acknowledge all privacy-related requests within 48 hours and resolve them within the timelines mandated by law.</p>
         </section>
     </main>
 
@@ -100,4 +112,3 @@
     </footer>
 </body>
 </html>
-

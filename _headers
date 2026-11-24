@@ -1,0 +1,11 @@
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), geolocation=(), microphone=(self)
+
+/soma
+  X-Robots-Tag: noindex, nofollow
+
+/soma.html
+  X-Robots-Tag: noindex, nofollow

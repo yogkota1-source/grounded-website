@@ -228,6 +228,57 @@ function setCheckoutBusy(busy) {
     if (btn) btn.disabled = busy;
 }
 
+const BLOCKED_ADDRESS_PATTERNS = [
+    /abcdefg/i,
+    /asdfgh/i,
+    /qwerty/i,
+    /test address/i,
+    /\bnone\b/i,
+    /\bna\b/i,
+    /\bnull\b/i
+];
+
+const BLOCKED_PINCODES = new Set([
+    "111111", "222222", "333333", "444444", "555555",
+    "666666", "777777", "888888", "999999", "123456",
+    "654321", "121212", "100000", "101010"
+]);
+
+function isValidName(name) {
+    if (typeof name !== "string") return false;
+    const trimmed = name.trim();
+    if (trimmed.length < 2 || trimmed.length > 80) return false;
+    if (!/^[A-Za-z][A-Za-z\s.'-]{1,79}$/.test(trimmed)) return false;
+    const letterChars = trimmed.toLowerCase().replace(/[^a-z]/g, "");
+    if (letterChars.length < 2) return false;
+    if (new Set(letterChars).size < 2) return false;
+    return true;
+}
+
+function isValidAddress(address) {
+    if (typeof address !== "string") return false;
+    const trimmed = address.trim();
+    if (trimmed.length < 15 || trimmed.length > 250) return false;
+    const words = trimmed.split(/\s+/).filter(Boolean);
+    if (words.length < 3) return false;
+    const letterCount = trimmed.replace(/[^A-Za-z]/g, "").length;
+    if (letterCount < 5) return false;
+    for (const pattern of BLOCKED_ADDRESS_PATTERNS) {
+        if (pattern.test(trimmed)) return false;
+    }
+    const nonSpace = trimmed.replace(/\s+/g, "").toLowerCase();
+    if (new Set(nonSpace).size <= 1) return false;
+    return true;
+}
+
+function isValidPincode(pincode) {
+    if (typeof pincode !== "string") return false;
+    const trimmed = pincode.trim();
+    if (!/^[1-9][0-9]{5}$/.test(trimmed)) return false;
+    if (BLOCKED_PINCODES.has(trimmed)) return false;
+    return true;
+}
+
 function clearShippingInputErrors() {
     ['shippingFirstName', 'shippingLastName', 'shippingAddress', 'shippingPincode'].forEach(id => {
         const el = document.getElementById(id);
@@ -255,54 +306,70 @@ function validateShippingDetails() {
     const pinInput = document.getElementById('shippingPincode');
     const errEl = document.getElementById('shippingError');
 
-    const firstName = fnInput ? fnInput.value.trim() : '';
-    const lastName = lnInput ? lnInput.value.trim() : '';
-    const address = addrInput ? addrInput.value.trim() : '';
-    const pincode = pinInput ? pinInput.value.trim() : '';
+    if (!fnInput || !lnInput || !addrInput || !pinInput || !errEl) return null;
 
-    [fnInput, lnInput, addrInput, pinInput].forEach(el => {
-        if (el) el.classList.remove('input-error');
-    });
-    if (errEl) {
-        errEl.textContent = '';
-        errEl.style.display = 'none';
-    }
+    const firstName = fnInput.value.trim();
+    const lastName = lnInput.value.trim();
+    const address = addrInput.value.trim();
+    const pincode = pinInput.value.trim();
+
+    fnInput.classList.remove('input-error');
+    lnInput.classList.remove('input-error');
+    addrInput.classList.remove('input-error');
+    pinInput.classList.remove('input-error');
+    errEl.textContent = '';
+    errEl.style.display = 'none';
 
     let firstMissing = null;
     let errorMsg = '';
 
     if (!pincode) {
-        if (pinInput) pinInput.classList.add('input-error');
-        firstMissing = pinInput || true;
+        pinInput.classList.add('input-error');
+        firstMissing = pinInput;
         errorMsg = 'Pincode is required for shipping.';
-    }
-    if (!address) {
-        if (addrInput) addrInput.classList.add('input-error');
-        firstMissing = addrInput || true;
-        errorMsg = 'Full Delivery Address is required for shipping.';
-    }
-    if (!lastName) {
-        if (lnInput) lnInput.classList.add('input-error');
-        firstMissing = lnInput || true;
-        errorMsg = 'Last Name is required for shipping.';
-    }
-    if (!firstName) {
-        if (fnInput) fnInput.classList.add('input-error');
-        firstMissing = fnInput || true;
-        errorMsg = 'First Name is required for shipping.';
+    } else if (!isValidPincode(pincode)) {
+        pinInput.classList.add('input-error');
+        firstMissing = pinInput;
+        errorMsg = 'Please enter a valid 6-digit Indian PIN code.';
     }
 
-    if (firstMissing) {
-        if (errEl) {
-            errEl.textContent = errorMsg;
-            errEl.style.display = 'block';
-        }
-        if (firstMissing !== true && typeof firstMissing.scrollIntoView === 'function') {
+    if (!address) {
+        addrInput.classList.add('input-error');
+        firstMissing = addrInput;
+        errorMsg = 'Full Delivery Address is required for shipping.';
+    } else if (!isValidAddress(address)) {
+        addrInput.classList.add('input-error');
+        firstMissing = addrInput;
+        errorMsg = 'Please enter a complete delivery address (min 15 chars, at least 3 words).';
+    }
+
+    if (!lastName) {
+        lnInput.classList.add('input-error');
+        firstMissing = lnInput;
+        errorMsg = 'Last Name is required for shipping.';
+    } else if (!isValidName(lastName)) {
+        lnInput.classList.add('input-error');
+        firstMissing = lnInput;
+        errorMsg = 'Please enter a valid Last Name (2-80 letters, no digits or repeated characters).';
+    }
+
+    if (!firstName) {
+        fnInput.classList.add('input-error');
+        firstMissing = fnInput;
+        errorMsg = 'First Name is required for shipping.';
+    } else if (!isValidName(firstName)) {
+        fnInput.classList.add('input-error');
+        firstMissing = fnInput;
+        errorMsg = 'Please enter a valid First Name (2-80 letters, no digits or repeated characters).';
+    }
+
+    if (errorMsg) {
+        errEl.textContent = errorMsg;
+        errEl.style.display = 'block';
+        if (firstMissing.scrollIntoView) {
             firstMissing.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        if (firstMissing !== true && typeof firstMissing.focus === 'function') {
-            firstMissing.focus();
-        }
+        firstMissing.focus();
         return null;
     }
 
@@ -646,5 +713,6 @@ export {
     openOptionsModal, updateAddButtonPrice, processOptionsAndAdd, removeFromCart,
     updateCartIcon, openCartModal, changeCartQty, updateProgressBar, closeModal, buildItemId,
     startCheckout, toggleAIChat, updateCharCount, speakText, toggleSpeechRecognition,
-    stopRecordingUI, sendAIMessage, handleAIKeyPress, validateShippingDetails
+    stopRecordingUI, sendAIMessage, handleAIKeyPress, validateShippingDetails,
+    isValidName, isValidAddress, isValidPincode
 };

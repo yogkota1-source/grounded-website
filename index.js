@@ -140,7 +140,7 @@ async function sendAIMessage() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
                 message: msg, 
-                persona: "curator", 
+                persona: window.aiPersona || "curator", 
                 token: userToken
             })
         });
@@ -266,9 +266,17 @@ const exposed = {
 };
 Object.assign(window, exposed);
 
+// Āchar Kimchi Product Reference for The Curator
+const ACHAR_KIMCHI_DETAILS = {
+    name: "Āchar — Artisanal Napa Cabbage Kimchi",
+    positioning: "Small-batch, wild-fermented, probiotic-rich, and 100% natural with zero artificial preservatives.",
+    ingredients: "Fresh Napa cabbage, authentic Korean Gochugaru chili flakes, Asian pear, naturally brewed soy sauce, orange carrots, white radish, fresh ginger, garlic, spring onions, and non-iodized salt.",
+    prices: { "250g": 399, "500g": 749, "1kg": 1299 }
+};
+
 export {
     toggleAIChat, updateCharCount, speakText, toggleSpeechRecognition,
     stopRecordingUI, sendAIMessage, handleAIKeyPress, toggleStory,
-    escapeHTML, initBackToTop
+    escapeHTML, initBackToTop, ACHAR_KIMCHI_DETAILS
 };
 

@@ -308,27 +308,6 @@ body {
 
 
 /* --- HEADER & BRAND ACCENTS --- */
-.side-accent { 
-    position: fixed; 
-    top: 50%; 
-    font-size: 0.75rem; 
-    color: #B3B3B3; 
-    letter-spacing: 5px; 
-    display: flex; 
-    align-items: center; 
-    gap: 15px; 
-    animation: fadeIn 1s ease-out 0.5s both; 
-}
-.side-accent::before, .side-accent::after { 
-    content: ""; 
-    display: block; 
-    width: 40px; 
-    height: 1px; 
-    background-color: #E0E0E0; 
-}
-.left-side { left: 20px; transform: translateY(-50%) rotate(-90deg); }
-.right-side { right: 20px; transform: translateY(-50%) rotate(90deg); }
-
 .header-section { animation: fadeUp 0.8s ease-out both; }
 h1.logo { 
     font-size: 2.5rem; 
@@ -774,7 +753,6 @@ a { text-decoration: none; }
 /* --- MOBILE OPTIMIZATION (THE UPSIDE-DOWN PYRAMID) --- */
 @media (max-width: 768px) {
     /* General UI Shrinking */
-    .side-accent { display: none; } 
     h1.logo { font-size: 1.8rem; letter-spacing: 6px; margin-top: 40px; }
     
     /* 1. Shrink Navigation & Auth */

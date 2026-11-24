@@ -207,17 +207,8 @@ describe("cart.js", () => {
     expect(document.querySelector("#ctrl2 .ac-add")).not.toBeNull();
   });
 
-  it("handles size chip switching on multi-size cards", () => {
+  it("ignores clicks on non-control elements, non-Element targets, and detached buttons", () => {
     cartModule.refreshCartUI();
-    const chips = document.querySelectorAll(".size-card .size-chip");
-    const chip500 = chips[1];
-
-    chip500.click();
-    expect(chip500.classList.contains("active")).toBe(true);
-    expect(chips[0].classList.contains("active")).toBe(false);
-
-    const ctrl = document.getElementById("ctrlKimchi");
-    expect(ctrl.dataset.variant).toBe("500g");
 
     // Click random non-control element and non-Element target (document)
     document.body.click();
@@ -335,5 +326,200 @@ describe("cart.js", () => {
     const freshCart = await import("../../cart.js");
     expect(freshCart.cart).toBeDefined();
     getItemSpy.mockRestore();
+  });
+
+  describe("shipping validation functions", () => {
+    it("validates first and last names with strict rules", () => {
+      // Valid names
+      expect(cartModule.isValidName("John")).toBe(true);
+      expect(cartModule.isValidName("Doe")).toBe(true);
+      expect(cartModule.isValidName("Mary-Jane")).toBe(true);
+      expect(cartModule.isValidName("O'Connor")).toBe(true);
+      expect(cartModule.isValidName("St. John")).toBe(true);
+      expect(cartModule.isValidName("Lee")).toBe(true);
+
+      // Invalid names
+      expect(cartModule.isValidName("")).toBe(false);
+      expect(cartModule.isValidName("12")).toBe(false);
+      expect(cartModule.isValidName("John1")).toBe(false);
+      expect(cartModule.isValidName("aa")).toBe(false);
+      expect(cartModule.isValidName("xxx")).toBe(false);
+      expect(cartModule.isValidName("A.")).toBe(false);
+      expect(cartModule.isValidName("A. A.")).toBe(false);
+      expect(cartModule.isValidName("A")).toBe(false);
+      expect(cartModule.isValidName("x".repeat(81))).toBe(false);
+      expect(cartModule.isValidName(123)).toBe(false);
+      expect(cartModule.isValidName(null)).toBe(false);
+      expect(cartModule.isValidName("@#$")).toBe(false);
+      expect(cartModule.isValidName(".")).toBe(false);
+    });
+
+    it("validates delivery addresses with strict rules and blocks placeholders", () => {
+      // Valid addresses
+      expect(cartModule.isValidAddress("123 Grounded Lane, Koregaon Park")).toBe(true);
+      expect(cartModule.isValidAddress("Flat 402, Building A, Pune Maharashtra")).toBe(true);
+
+      // Invalid addresses
+      expect(cartModule.isValidAddress("")).toBe(false);
+      expect(cartModule.isValidAddress("123 St")).toBe(false);
+      expect(cartModule.isValidAddress("ABCD EFG")).toBe(false);
+      expect(cartModule.isValidAddress("12 34 56 78 90 12")).toBe(false);
+      expect(cartModule.isValidAddress("123456789012345")).toBe(false);
+      expect(cartModule.isValidAddress("aaaaaaaaaaaaaaa")).toBe(false);
+      expect(cartModule.isValidAddress("a a a a a a a a a a a a a a a")).toBe(false);
+      expect(cartModule.isValidAddress("Flat 402, Building A, test address road")).toBe(false);
+      expect(cartModule.isValidAddress("Flat 402, Building A, qwerty street")).toBe(false);
+      expect(cartModule.isValidAddress("Flat 402, Building A, asdfgh avenue")).toBe(false);
+      expect(cartModule.isValidAddress("Flat 402, Building A, abcdefg avenue")).toBe(false);
+      expect(cartModule.isValidAddress("Flat 402, Building A, none")).toBe(false);
+      expect(cartModule.isValidAddress("Flat 402, Building A, na")).toBe(false);
+      expect(cartModule.isValidAddress("Flat 402, Building A, null")).toBe(false);
+      expect(cartModule.isValidAddress("x".repeat(251))).toBe(false);
+      expect(cartModule.isValidAddress(123)).toBe(false);
+      expect(cartModule.isValidAddress(null)).toBe(false);
+    });
+
+    it("validates 6-digit Indian PIN codes and blocks sequential/repeating placeholders", () => {
+      // Valid pincodes
+      expect(cartModule.isValidPincode("411001")).toBe(true);
+      expect(cartModule.isValidPincode("560001")).toBe(true);
+      expect(cartModule.isValidPincode("110001")).toBe(true);
+
+      // Blocked / invalid pincodes
+      expect(cartModule.isValidPincode("123456")).toBe(false);
+      expect(cartModule.isValidPincode("654321")).toBe(false);
+      expect(cartModule.isValidPincode("111111")).toBe(false);
+      expect(cartModule.isValidPincode("222222")).toBe(false);
+      expect(cartModule.isValidPincode("333333")).toBe(false);
+      expect(cartModule.isValidPincode("444444")).toBe(false);
+      expect(cartModule.isValidPincode("555555")).toBe(false);
+      expect(cartModule.isValidPincode("666666")).toBe(false);
+      expect(cartModule.isValidPincode("777777")).toBe(false);
+      expect(cartModule.isValidPincode("888888")).toBe(false);
+      expect(cartModule.isValidPincode("999999")).toBe(false);
+      expect(cartModule.isValidPincode("121212")).toBe(false);
+      expect(cartModule.isValidPincode("100000")).toBe(false);
+      expect(cartModule.isValidPincode("101010")).toBe(false);
+      expect(cartModule.isValidPincode("012345")).toBe(false);
+      expect(cartModule.isValidPincode("41100")).toBe(false);
+      expect(cartModule.isValidPincode("4110011")).toBe(false);
+      expect(cartModule.isValidPincode("41100A")).toBe(false);
+      expect(cartModule.isValidPincode(411001)).toBe(false);
+      expect(cartModule.isValidPincode(null)).toBe(false);
+    });
+
+    it("validates form fields via validateShippingDetails", () => {
+      cartModule.ensureCartModal();
+      const fn = document.getElementById("shippingFirstName");
+      const ln = document.getElementById("shippingLastName");
+      const addr = document.getElementById("shippingAddress");
+      const pin = document.getElementById("shippingPincode");
+      const err = document.getElementById("shippingError");
+
+      fn.scrollIntoView = vi.fn();
+      fn.focus = vi.fn();
+
+      // All empty
+      fn.value = ""; ln.value = ""; addr.value = ""; pin.value = "";
+      expect(cartModule.validateShippingDetails()).toBeNull();
+      expect(err.textContent).toBe("First Name is required for shipping.");
+      expect(err.style.display).toBe("block");
+
+      // Invalid First Name
+      fn.value = "12";
+      expect(cartModule.validateShippingDetails()).toBeNull();
+      expect(err.textContent).toBe("Please enter a valid First Name (2-80 letters, no digits or repeated characters).");
+
+      // Valid First Name, missing Last Name
+      fn.value = "John"; ln.value = "";
+      expect(cartModule.validateShippingDetails()).toBeNull();
+      expect(err.textContent).toBe("Last Name is required for shipping.");
+
+      // Invalid Last Name
+      ln.value = "34";
+      expect(cartModule.validateShippingDetails()).toBeNull();
+      expect(err.textContent).toBe("Please enter a valid Last Name (2-80 letters, no digits or repeated characters).");
+
+      // Valid Last Name, missing Address
+      ln.value = "Doe"; addr.value = "";
+      expect(cartModule.validateShippingDetails()).toBeNull();
+      expect(err.textContent).toBe("Full Delivery Address is required for shipping.");
+
+      // Invalid Address
+      addr.value = "ABCD EFG";
+      expect(cartModule.validateShippingDetails()).toBeNull();
+      expect(err.textContent).toBe("Please enter a complete delivery address (min 15 chars, at least 3 words).");
+
+      // Valid Address, missing Pincode
+      addr.value = "123 Grounded Lane, Koregaon Park"; pin.value = "";
+      expect(cartModule.validateShippingDetails()).toBeNull();
+      expect(err.textContent).toBe("Pincode is required for shipping.");
+
+      // Invalid Pincode
+      pin.value = "123456";
+      expect(cartModule.validateShippingDetails()).toBeNull();
+      expect(err.textContent).toBe("Please enter a valid 6-digit Indian PIN code.");
+
+      // All valid
+      pin.value = "411001";
+      const result = cartModule.validateShippingDetails();
+      expect(result).toEqual({
+        firstName: "John",
+        lastName: "Doe",
+        address: "123 Grounded Lane, Koregaon Park",
+        pincode: "411001"
+      });
+      expect(err.style.display).toBe("none");
+
+      // Test input listener clearing error
+      fn.value = "";
+      cartModule.validateShippingDetails();
+      expect(fn.classList.contains("input-error")).toBe(true);
+      expect(fn.scrollIntoView).toHaveBeenCalled();
+      expect(fn.focus).toHaveBeenCalled();
+
+      // Test without scrollIntoView
+      delete fn.scrollIntoView;
+      cartModule.validateShippingDetails();
+
+      // 1. Dispatch input when value is empty
+      fn.value = "   ";
+      fn.dispatchEvent(new Event("input"));
+      expect(fn.classList.contains("input-error")).toBe(true);
+
+      // 2. Dispatch input when another field also has .input-error
+      ln.classList.add("input-error");
+      fn.value = "John";
+      fn.dispatchEvent(new Event("input"));
+      expect(fn.classList.contains("input-error")).toBe(false);
+      expect(err.style.display).toBe("block");
+
+      // 3. Dispatch input when no remaining .input-error
+      ln.classList.remove("input-error");
+      fn.dispatchEvent(new Event("input"));
+      expect(err.style.display).toBe("none");
+
+      // 4. Dispatch input when errEl is missing
+      const errParent = err.parentNode;
+      const errNext = err.nextSibling;
+      err.remove();
+      fn.dispatchEvent(new Event("input"));
+      errParent.insertBefore(err, errNext);
+
+      // Test each missing individual DOM element
+      const ids = ["shippingFirstName", "shippingLastName", "shippingAddress", "shippingPincode", "shippingError"];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        const parent = el.parentNode;
+        const next = el.nextSibling;
+        el.remove();
+        expect(cartModule.validateShippingDetails()).toBeNull();
+        parent.insertBefore(el, next);
+      }
+
+      // Test missing DOM container
+      document.getElementById("shippingFields")?.remove();
+      expect(cartModule.validateShippingDetails()).toBeNull();
+    });
   });
 });

@@ -16,7 +16,7 @@ function initConsentGate() {
                 '<span>I have read and agree to the ' +
                 '<a href="terms-of-service.html" target="_blank" rel="noopener">Terms of Service</a>, ' +
                 '<a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>, and ' +
-                '<a href="refund-policy.html" target="_blank" rel="noopener">Refund &amp; Cancellation Policy</a>.</span>' +
+                '<a href="refund-policy.html" target="_blank" rel="noopener">Refund, Replacement &amp; Cancellation Policy</a>.</span>' +
             '</label>' +
             '<button type="button" class="consent-btn" id="consent-btn" disabled>Continue to Website</button>' +
         '</div>';

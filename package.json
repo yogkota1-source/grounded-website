@@ -5,7 +5,8 @@
     "main": "consent-gate.js",
     "scripts": {
         "test": "vitest run",
-        "deploy": "npx wrangler pages deploy . --project-name=grounded-store --commit-dirty=true",
+        "build": "node scripts/build.mjs",
+        "deploy": "node scripts/build.mjs && npx wrangler pages deploy dist --project-name=grounded-store --commit-dirty=true",
         "coverage": "vitest run --coverage"
     },
     "repository": {

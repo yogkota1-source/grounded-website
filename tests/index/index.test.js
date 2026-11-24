@@ -24,6 +24,16 @@ describe("index.js", () => {
     return loadPage("index.html", "index.js", opts);
   }
 
+  describe("ACHAR_KIMCHI_DETAILS", () => {
+    it("exports complete product details, ingredients and pricing", async () => {
+      const m = await load();
+      expect(m.ACHAR_KIMCHI_DETAILS.name).toBe("Āchar — Artisanal Napa Cabbage Kimchi");
+      expect(m.ACHAR_KIMCHI_DETAILS.prices).toEqual({ "250g": 399, "500g": 749, "1kg": 1299 });
+      expect(m.ACHAR_KIMCHI_DETAILS.ingredients).toContain("Gochugaru");
+      expect(m.ACHAR_KIMCHI_DETAILS.positioning).toContain("probiotic-rich");
+    });
+  });
+
   describe("escapeHTML", () => {
     it("handles falsy and special character strings", async () => {
       const m = await load();
@@ -288,6 +298,27 @@ describe("index.js", () => {
       expect($("aiInput").disabled).toBe(false);
     });
 
+    it("sends message with custom persona when window.aiPersona is set", async () => {
+      const m = await load();
+      window.aiPersona = "archer";
+      setupAuth(true);
+      $("aiInput").value = "Tell me about Kimchi";
+
+      const mockFetch = vi.fn().mockResolvedValue({
+        ok: true,
+        status: 200,
+        json: async () => ({ reply: "Kimchi is fermented Napa cabbage!" })
+      });
+      vi.stubGlobal("fetch", mockFetch);
+
+      await m.sendAIMessage();
+
+      expect(mockFetch).toHaveBeenCalled();
+      const payload = JSON.parse(mockFetch.mock.calls[0][1].body);
+      expect(payload.persona).toBe("archer");
+      delete window.aiPersona;
+    });
+
     it("handles 401 / Security Error response and prompts auth modal", async () => {
       const m = await load();
       setupAuth(true);
@@ -433,6 +464,17 @@ describe("index.js", () => {
       } finally {
         if (origDescriptor) Object.defineProperty(document, "readyState", origDescriptor);
       }
+    });
+  });
+
+  describe("homepage story section UX", () => {
+    it("does not render direct-purchase size-card or add-control widgets and links ĀCHAR to achar.html", async () => {
+      await load();
+      expect(document.querySelector(".size-card")).toBeNull();
+      expect(document.querySelector(".add-control")).toBeNull();
+      const acharStoreBtn = document.querySelector('a.store-btn[href="/achar"]');
+      expect(acharStoreBtn).not.toBeNull();
+      expect(acharStoreBtn.textContent.trim()).toBe("Enter Store");
     });
   });
 });
